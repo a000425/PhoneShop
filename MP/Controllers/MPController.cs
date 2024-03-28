@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
@@ -17,9 +18,9 @@ namespace MP.Controllers
     {
         private readonly PhoneContext _phoneContext;
         private readonly IMapper _mapper;
-        private readonly RegisterService _services;
+        private readonly MemberService _services;
         private readonly MailService _mail;
-        public MPController(PhoneContext phoneContext,IMapper mapper, RegisterService services,MailService mail)
+        public MPController(PhoneContext phoneContext,IMapper mapper, MemberService services,MailService mail)
         {
             _phoneContext = phoneContext;
             _mapper = mapper;
@@ -77,7 +78,7 @@ namespace MP.Controllers
             if(!_services.CheckAccount(newmember.Account1)){
                 await _services.RegisterAsync(newmember);
                 string TempMail = System.IO.File.ReadAllText("../MP/MailBody/MailBody.html");
-                string ValidateUrl = $"{Request.Scheme}://{Request.Host}/api/MP?Account={newmember.Account1}&AuthCode={newmember.AuthCode}";
+                string ValidateUrl = $"{Request.Scheme}://{Request.Host}/api/MP/EmailValidate?Account={newmember.Account1}&AuthCode={newmember.AuthCode}";
                 string mailBody = _mail.GetMailBody(TempMail,newmember.Account1,ValidateUrl);
                 _mail.SendMail(mailBody,newmember.Email);
                 return Ok("註冊成功");
@@ -87,7 +88,7 @@ namespace MP.Controllers
             }
             
         }
-        [HttpGet]
+        [HttpGet("EmailValidate")]
         public async Task<IActionResult> Get([FromQuery]string Account, string AuthCode)
         {
             if (await _services.EmailValidateAsync(Account, AuthCode))
@@ -99,7 +100,17 @@ namespace MP.Controllers
                 return BadRequest("驗證失敗");
             }   
         }
-
+        /*[HttpPut("PasswordChange")] 
+        [Authorize]
+        public async Task<IActionResult> Put([FromForm]PasswordChangeDto ChangePassword)
+        {
+            if(_services.CheckPassword(ChangePassword.OldPassword))
+            {
+                await _services.PasswordChange(ChangePassword.Password, User.Identity.Name);
+                return Ok("更改成功");
+            }
+            return BadRequest("更改失敗");
+        }*/
         // PUT api/<MPController>/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)

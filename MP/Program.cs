@@ -11,9 +11,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddDbContext<PhoneContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("MPDatabase")));
 builder.Services.AddAutoMapper(typeof(Program));
-builder.Services.AddScoped<RegisterService>();
+builder.Services.AddScoped<MemberService>();
 builder.Services.AddScoped<MailService>();
 builder.Services.AddScoped<RegisterRepository>();
+builder.Services.AddScoped<MemberChangeRepository>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
