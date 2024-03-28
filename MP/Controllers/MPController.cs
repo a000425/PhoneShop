@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore.Internal;
 using MP.Dtos;
 using MP.Models;
 using MP.Services;
+using System.Security;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -17,14 +18,17 @@ namespace MP.Controllers
         private readonly PhoneContext _phoneContext;
         private readonly IMapper _mapper;
         private readonly RegisterService _services;
-        public MPController(PhoneContext phoneContext,IMapper mapper, RegisterService services)
+        private readonly MailService _mail;
+        public MPController(PhoneContext phoneContext,IMapper mapper, RegisterService services,MailService mail)
         {
             _phoneContext = phoneContext;
             _mapper = mapper;
             _services = services;
+            _mail = mail;
         }
         // GET: api/<MPController>
-        [HttpGet]
+        // 偵錯用 保留
+        [HttpGet("Test")]
         public IEnumerable<RegisterDto> Get()
         {
             var result = _phoneContext.Account
@@ -70,9 +74,30 @@ namespace MP.Controllers
             //{
             //    return BadRequest("帳號密碼不得為空");
             //}
-            await _services.RegisterAsync(newmember);
-            return Ok("註冊成功");
+            if(!_services.CheckAccount(newmember.Account1)){
+                await _services.RegisterAsync(newmember);
+                string TempMail = System.IO.File.ReadAllText("../MP/MailBody/MailBody.html");
+                string ValidateUrl = $"{Request.Scheme}://{Request.Host}/api/MP?Account={newmember.Account1}&AuthCode={newmember.AuthCode}";
+                string mailBody = _mail.GetMailBody(TempMail,newmember.Account1,ValidateUrl);
+                _mail.SendMail(mailBody,newmember.Email);
+                return Ok("註冊成功");
+            }
+            else{
+                return BadRequest("帳號已註冊");
+            }
             
+        }
+        [HttpGet]
+        public async Task<IActionResult> Get([FromQuery]string Account, string AuthCode)
+        {
+            if (await _services.EmailValidateAsync(Account, AuthCode))
+            {
+                return Ok("驗證成功");
+            }
+                else
+            {
+                return BadRequest("驗證失敗");
+            }   
         }
 
         // PUT api/<MPController>/5

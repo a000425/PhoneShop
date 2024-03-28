@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MP.Models;
 using MP.Repository;
@@ -11,6 +12,7 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<PhoneContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("MPDatabase")));
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddScoped<RegisterService>();
+builder.Services.AddScoped<MailService>();
 builder.Services.AddScoped<RegisterRepository>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
