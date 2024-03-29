@@ -275,3 +275,4 @@ C:\Users\User\source\repos\0323\PhoneShop\MP\obj\Debug\net8.0\refint\MP.dll
 C:\Users\User\source\repos\0323\PhoneShop\MP\obj\Debug\net8.0\MP.pdb
 C:\Users\User\source\repos\0323\PhoneShop\MP\obj\Debug\net8.0\MP.genruntimeconfig.cache
 C:\Users\User\source\repos\0323\PhoneShop\MP\obj\Debug\net8.0\ref\MP.dll
+C:\Users\user\source\repos\MP\MP\obj\Debug\net8.0\MP.sourcelink.json

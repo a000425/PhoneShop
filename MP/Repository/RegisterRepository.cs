@@ -10,11 +10,14 @@ namespace MP.Repository
         {
             _phoneContext = phoneContext;
         }
+        #region 新增資料
         public async Task AddAccountAsync(Account account)
         {
             _phoneContext.Account.Add(account);
             await _phoneContext.SaveChangesAsync();
         }
+        #endregion
+        #region 查詢此資料是否存在
         public bool GetAccountAsync(string account){
             var result = (from a in _phoneContext.Account
                           where a.Account1 == account
@@ -24,6 +27,8 @@ namespace MP.Repository
             }
             return true;
         }
+        #endregion
+        #region 信箱驗證
         public async Task<bool> ValidateEmail(string Account, string AuthCode)
         {
             var result = await _phoneContext.Account.SingleOrDefaultAsync(a => a.Account1 == Account && a.AuthCode == AuthCode);
@@ -45,6 +50,36 @@ namespace MP.Repository
                 return false;
             }
         }
-
+        #endregion
+        #region 取得一筆資料
+        public Account GetAccountData (string account){
+            var data = _phoneContext.Account.SingleOrDefault(a=>a.Account1==account);
+            return data;
+        }
+        #endregion
+        #region 更改密碼
+        public async Task<bool> PasswordChange(string Account, string newpassword)
+        {
+            var result = await _phoneContext.Account.SingleOrDefaultAsync(a => a.Account1 == Account);
+            if (result != null)
+            {
+                result.Password = newpassword;
+                try
+                {
+                    await _phoneContext.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    throw;
+                }
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        #endregion
+        
     }
 }

@@ -1,50 +1,50 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\User\\source\\repos\\0323\\PhoneShop\\",
+  "WorkspaceRootPath": "C:\\Users\\user\\source\\repos\\MP\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{8F7F3747-5D3F-40EE-8B4D-1D41CBAE076D}|MP\\MP.csproj|c:\\users\\user\\source\\repos\\0323\\phoneshop\\mp\\controllers\\mpcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8F7F3747-5D3F-40EE-8B4D-1D41CBAE076D}|MP\\MP.csproj|solutionrelative:mp\\controllers\\mpcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\user\\source\\repos\\MP\\MP\\Services\\RegisterService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:MP\\Services\\RegisterService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8F7F3747-5D3F-40EE-8B4D-1D41CBAE076D}|MP\\MP.csproj|c:\\users\\user\\source\\repos\\0323\\phoneshop\\mp\\services\\registerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8F7F3747-5D3F-40EE-8B4D-1D41CBAE076D}|MP\\MP.csproj|solutionrelative:mp\\services\\registerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\user\\source\\repos\\MP\\MP\\Services\\MailService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:MP\\Services\\MailService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8F7F3747-5D3F-40EE-8B4D-1D41CBAE076D}|MP\\MP.csproj|c:\\users\\user\\source\\repos\\0323\\phoneshop\\mp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8F7F3747-5D3F-40EE-8B4D-1D41CBAE076D}|MP\\MP.csproj|solutionrelative:mp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\user\\source\\repos\\MP\\MP\\Controllers\\MPController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:MP\\Controllers\\MPController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8F7F3747-5D3F-40EE-8B4D-1D41CBAE076D}|MP\\MP.csproj|c:\\users\\user\\source\\repos\\0323\\phoneshop\\mp\\profiles\\mpprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8F7F3747-5D3F-40EE-8B4D-1D41CBAE076D}|MP\\MP.csproj|solutionrelative:mp\\profiles\\mpprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\user\\source\\repos\\MP\\MP\\Repository\\RegisterRepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:MP\\Repository\\RegisterRepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8F7F3747-5D3F-40EE-8B4D-1D41CBAE076D}|MP\\MP.csproj|c:\\users\\user\\source\\repos\\0323\\phoneshop\\mp\\dtos\\registerdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8F7F3747-5D3F-40EE-8B4D-1D41CBAE076D}|MP\\MP.csproj|solutionrelative:mp\\dtos\\registerdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\user\\source\\repos\\MP\\MP\\Program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:MP\\Program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8F7F3747-5D3F-40EE-8B4D-1D41CBAE076D}|MP\\MP.csproj|c:\\users\\user\\source\\repos\\0323\\phoneshop\\mp\\repository\\registerrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8F7F3747-5D3F-40EE-8B4D-1D41CBAE076D}|MP\\MP.csproj|solutionrelative:mp\\repository\\registerrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\user\\source\\repos\\MP\\MP\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:MP\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8F7F3747-5D3F-40EE-8B4D-1D41CBAE076D}|MP\\MP.csproj|c:\\users\\user\\source\\repos\\0323\\phoneshop\\mp\\models\\account.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8F7F3747-5D3F-40EE-8B4D-1D41CBAE076D}|MP\\MP.csproj|solutionrelative:mp\\models\\account.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\user\\source\\repos\\MP\\MP\\Models\\Account.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:MP\\Models\\Account.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8F7F3747-5D3F-40EE-8B4D-1D41CBAE076D}|MP\\MP.csproj|c:\\users\\user\\source\\repos\\0323\\phoneshop\\mp\\services\\mailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8F7F3747-5D3F-40EE-8B4D-1D41CBAE076D}|MP\\MP.csproj|solutionrelative:mp\\services\\mailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\user\\source\\repos\\MP\\MP\\Dtos\\RegisterDto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:MP\\Dtos\\RegisterDto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8F7F3747-5D3F-40EE-8B4D-1D41CBAE076D}|MP\\MP.csproj|c:\\users\\user\\source\\repos\\0323\\phoneshop\\mp\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{8F7F3747-5D3F-40EE-8B4D-1D41CBAE076D}|MP\\MP.csproj|solutionrelative:mp\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\user\\source\\repos\\MP\\MP\\Profiles\\MPProfile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:MP\\Profiles\\MPProfile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8F7F3747-5D3F-40EE-8B4D-1D41CBAE076D}|MP\\MP.csproj|c:\\users\\user\\source\\repos\\0323\\phoneshop\\mp\\dtos\\logindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8F7F3747-5D3F-40EE-8B4D-1D41CBAE076D}|MP\\MP.csproj|solutionrelative:mp\\dtos\\logindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\user\\source\\repos\\MP\\MP\\Dtos\\LoginDto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:MP\\Dtos\\LoginDto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8F7F3747-5D3F-40EE-8B4D-1D41CBAE076D}|MP\\MP.csproj|c:\\users\\user\\source\\repos\\0323\\phoneshop\\mp\\models\\phonecontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8F7F3747-5D3F-40EE-8B4D-1D41CBAE076D}|MP\\MP.csproj|solutionrelative:mp\\models\\phonecontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\user\\source\\repos\\MP\\MP\\Models\\PhoneContext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:MP\\Models\\PhoneContext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -54,145 +54,140 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "MailService.cs",
-              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\0323\\PhoneShop\\MP\\Services\\MailService.cs",
-              "RelativeDocumentMoniker": "MP\\Services\\MailService.cs",
-              "ToolTip": "C:\\Users\\User\\source\\repos\\0323\\PhoneShop\\MP\\Services\\MailService.cs",
-              "RelativeToolTip": "MP\\Services\\MailService.cs",
-              "ViewState": "AQIAABAAAAAAAAAAAAAAwBkAAAAVAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-03-28T11:17:42.003Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Account.cs",
-              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\0323\\PhoneShop\\MP\\Models\\Account.cs",
-              "RelativeDocumentMoniker": "MP\\Models\\Account.cs",
-              "ToolTip": "C:\\Users\\User\\source\\repos\\0323\\PhoneShop\\MP\\Models\\Account.cs",
-              "RelativeToolTip": "MP\\Models\\Account.cs",
-              "ViewState": "AQIAAAoAAAAAAAAAAAAowBYAAAAyAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-03-28T09:03:51.92Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "LoginDto.cs",
-              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\0323\\PhoneShop\\MP\\Dtos\\LoginDto.cs",
-              "RelativeDocumentMoniker": "MP\\Dtos\\LoginDto.cs",
-              "ToolTip": "C:\\Users\\User\\source\\repos\\0323\\PhoneShop\\MP\\Dtos\\LoginDto.cs",
-              "RelativeToolTip": "MP\\Dtos\\LoginDto.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAA1AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-03-28T09:03:41.954Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "MailService.cs",
+              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\MP\\MP\\Services\\MailService.cs",
+              "RelativeDocumentMoniker": "MP\\Services\\MailService.cs",
+              "ToolTip": "C:\\Users\\user\\source\\repos\\MP\\MP\\Services\\MailService.cs",
+              "RelativeToolTip": "MP\\Services\\MailService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-29T04:24:20.671Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
               "Title": "RegisterService.cs",
-              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\0323\\PhoneShop\\MP\\Services\\RegisterService.cs",
+              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\MP\\MP\\Services\\RegisterService.cs",
               "RelativeDocumentMoniker": "MP\\Services\\RegisterService.cs",
-              "ToolTip": "C:\\Users\\User\\source\\repos\\0323\\PhoneShop\\MP\\Services\\RegisterService.cs",
+              "ToolTip": "C:\\Users\\user\\source\\repos\\MP\\MP\\Services\\RegisterService.cs",
               "RelativeToolTip": "MP\\Services\\RegisterService.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAyAAAA",
+              "ViewState": "AQIAABsAAAAAAAAAAAAAwDcAAABDAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-03-28T03:06:35.086Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "MPController.cs",
-              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\0323\\PhoneShop\\MP\\Controllers\\MPController.cs",
+              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\MP\\MP\\Controllers\\MPController.cs",
               "RelativeDocumentMoniker": "MP\\Controllers\\MPController.cs",
-              "ToolTip": "C:\\Users\\User\\source\\repos\\0323\\PhoneShop\\MP\\Controllers\\MPController.cs",
+              "ToolTip": "C:\\Users\\user\\source\\repos\\MP\\MP\\Controllers\\MPController.cs",
               "RelativeToolTip": "MP\\Controllers\\MPController.cs",
-              "ViewState": "AQIAADsAAAAAAAAAAAAQwE8AAAA5AAAA",
+              "ViewState": "AQIAAF0AAAAAAAAAAAAqwEoAAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-03-27T17:43:05.544Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "MPProfile.cs",
-              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\0323\\PhoneShop\\MP\\Profiles\\MPProfile.cs",
-              "RelativeDocumentMoniker": "MP\\Profiles\\MPProfile.cs",
-              "ToolTip": "C:\\Users\\User\\source\\repos\\0323\\PhoneShop\\MP\\Profiles\\MPProfile.cs",
-              "RelativeToolTip": "MP\\Profiles\\MPProfile.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAArAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-03-28T01:54:28.074Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "RegisterDto.cs",
-              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\0323\\PhoneShop\\MP\\Dtos\\RegisterDto.cs",
-              "RelativeDocumentMoniker": "MP\\Dtos\\RegisterDto.cs",
-              "ToolTip": "C:\\Users\\User\\source\\repos\\0323\\PhoneShop\\MP\\Dtos\\RegisterDto.cs",
-              "RelativeToolTip": "MP\\Dtos\\RegisterDto.cs",
-              "ViewState": "AQIAAA0AAAAAAAAAAAAYwBQAAAAyAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-03-27T17:44:21.29Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 5,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\MP\\MP\\appsettings.json",
+              "RelativeDocumentMoniker": "MP\\appsettings.json",
+              "ToolTip": "C:\\Users\\user\\source\\repos\\MP\\MP\\appsettings.json",
+              "RelativeToolTip": "MP\\appsettings.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAADAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-03-27T17:36:54.507Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Account.cs",
+              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\MP\\MP\\Models\\Account.cs",
+              "RelativeDocumentMoniker": "MP\\Models\\Account.cs",
+              "ToolTip": "C:\\Users\\user\\source\\repos\\MP\\MP\\Models\\Account.cs",
+              "RelativeToolTip": "MP\\Models\\Account.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAhAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-28T09:03:51.92Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "RegisterRepository.cs",
-              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\0323\\PhoneShop\\MP\\Repository\\RegisterRepository.cs",
+              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\MP\\MP\\Repository\\RegisterRepository.cs",
               "RelativeDocumentMoniker": "MP\\Repository\\RegisterRepository.cs",
-              "ToolTip": "C:\\Users\\User\\source\\repos\\0323\\PhoneShop\\MP\\Repository\\RegisterRepository.cs",
+              "ToolTip": "C:\\Users\\user\\source\\repos\\MP\\MP\\Repository\\RegisterRepository.cs",
               "RelativeToolTip": "MP\\Repository\\RegisterRepository.cs",
-              "ViewState": "AQIAABEAAAAAAAAAAAAAwCIAAAAwAAAA",
+              "ViewState": "AQIAAAkAAAAAAAAAAAAAAAoAAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-03-28T03:28:47.903Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\0323\\PhoneShop\\MP\\Program.cs",
+              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\MP\\MP\\Program.cs",
               "RelativeDocumentMoniker": "MP\\Program.cs",
-              "ToolTip": "C:\\Users\\User\\source\\repos\\0323\\PhoneShop\\MP\\Program.cs",
+              "ToolTip": "C:\\Users\\user\\source\\repos\\MP\\MP\\Program.cs",
               "RelativeToolTip": "MP\\Program.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAuAAAA",
+              "ViewState": "AQIAAAEAAAAAAAAAAAAAABIAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-03-27T17:38:04.643Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "RegisterDto.cs",
+              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\MP\\MP\\Dtos\\RegisterDto.cs",
+              "RelativeDocumentMoniker": "MP\\Dtos\\RegisterDto.cs",
+              "ToolTip": "C:\\Users\\user\\source\\repos\\MP\\MP\\Dtos\\RegisterDto.cs",
+              "RelativeToolTip": "MP\\Dtos\\RegisterDto.cs",
+              "ViewState": "AQIAAA0AAAAAAAAAAAAYwBQAAAAyAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-27T17:44:21.29Z"
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 8,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\0323\\PhoneShop\\MP\\appsettings.json",
-              "RelativeDocumentMoniker": "MP\\appsettings.json",
-              "ToolTip": "C:\\Users\\User\\source\\repos\\0323\\PhoneShop\\MP\\appsettings.json",
-              "RelativeToolTip": "MP\\appsettings.json",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2024-03-27T17:36:54.507Z",
-              "EditorCaption": ""
+              "Title": "MPProfile.cs",
+              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\MP\\MP\\Profiles\\MPProfile.cs",
+              "RelativeDocumentMoniker": "MP\\Profiles\\MPProfile.cs",
+              "ToolTip": "C:\\Users\\user\\source\\repos\\MP\\MP\\Profiles\\MPProfile.cs",
+              "RelativeToolTip": "MP\\Profiles\\MPProfile.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAArAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-28T01:54:28.074Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "LoginDto.cs",
+              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\MP\\MP\\Dtos\\LoginDto.cs",
+              "RelativeDocumentMoniker": "MP\\Dtos\\LoginDto.cs",
+              "ToolTip": "C:\\Users\\user\\source\\repos\\MP\\MP\\Dtos\\LoginDto.cs",
+              "RelativeToolTip": "MP\\Dtos\\LoginDto.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAA1AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-28T09:03:41.954Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 10,
               "Title": "PhoneContext.cs",
-              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\0323\\PhoneShop\\MP\\Models\\PhoneContext.cs",
+              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\MP\\MP\\Models\\PhoneContext.cs",
               "RelativeDocumentMoniker": "MP\\Models\\PhoneContext.cs",
-              "ToolTip": "C:\\Users\\User\\source\\repos\\0323\\PhoneShop\\MP\\Models\\PhoneContext.cs",
+              "ToolTip": "C:\\Users\\user\\source\\repos\\MP\\MP\\Models\\PhoneContext.cs",
               "RelativeToolTip": "MP\\Models\\PhoneContext.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",

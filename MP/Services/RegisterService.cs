@@ -49,5 +49,67 @@ namespace MP.Services
 
         }
         #endregion
+        #region 登入
+        public string Login(string account,string password){
+            bool result = _repository.GetAccountAsync(account);
+            if(result){
+                Account data = _repository.GetAccountData(account);
+                if(string.IsNullOrEmpty(data.AuthCode)){
+                    if(PasswordCheck(data,password)){
+                        return "登入成功";
+                    }
+                    else{
+                        return "密碼錯誤，請重新輸入";
+                    }
+                }
+                else{
+                    return "此會員帳號還沒經過Email驗證，請去收信";
+                }
+            }
+            else{
+                return "無此會員帳號，請去註冊";
+            }
+        }
+        #endregion
+        #region 取得一筆資料
+        public Account GetDataByAccount(string account){
+            Account data = _repository.GetAccountData(account);
+            return data;
+        }
+        #endregion
+        #region 密碼確認
+        public bool PasswordCheck(Account data,string password)
+        {
+            if(data.Password == HashPassword(password))
+            {
+                return true;
+            }else
+            {
+                return false;
+            }
+        }
+        #endregion
+        #region 密碼變更
+        public async Task<string> ChangePassword(string account,string oldpassword,string newpassword)
+        {
+            Account data = _repository.GetAccountData(account);
+            if(PasswordCheck(data,oldpassword))
+            {
+                newpassword = HashPassword(newpassword);
+                if(await _repository.PasswordChange(account,newpassword))
+                {
+                    return "密碼更改成功";
+                }else
+                {
+                    return "密碼修改失敗";
+                }
+                
+            }else
+            {
+                return "舊密碼輸入錯誤";
+            }
+        }
+        #endregion
+        
     }
 }

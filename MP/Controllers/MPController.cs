@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 using MP.Dtos;
 using MP.Models;
+using MP.Repository;
 using MP.Services;
 using System.Security;
 
@@ -32,9 +33,6 @@ namespace MP.Controllers
         public IEnumerable<RegisterDto> Get()
         {
             var result = _phoneContext.Account
-                //.Include(a=>a.Cart)
-                //.Include(a=>a.Order)
-                //.Include(a=>a.QA)
                 .Select(a => a);
             var map = _mapper.Map<IEnumerable<RegisterDto>>(result);
             return map;
@@ -45,35 +43,14 @@ namespace MP.Controllers
         public RegisterDto Get(string account)
         {
             var result = (from a in _phoneContext.Account where a.Account1 == account select a)
-                //.Include(a => a.Cart)
-                //.Include(a => a.Order)
-                //.Include(a => a.QA)
                 .SingleOrDefault();  //傳回序列唯一的項目，若序列是空的則傳回預設值
             return _mapper.Map<RegisterDto>(result);
         }
-
-        //[HttpGet("Login/{account}")]
-        //public LoginDto Get(string account, string password)
-        //{
-        //    var member= (from a in _phoneContext.Account where a.Account1==account select a)
-        //        .Include(a=>a.Cart)
-        //        .Include(a=>a.Order)
-        //        .Include(a=>a.QA)
-        //        .SingleOrDefault();
-        //    if (member == null)
-        //    {
-        //        return Dto.NotFound();
-        //    }
-        //}
 
         // POST api/<MPController>
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Account newmember)
         {
-            //if(newmember == null || string.IsNullOrWhiteSpace(newmember.Account1) || string.IsNullOrWhiteSpace(newmember.Password))
-            //{
-            //    return BadRequest("帳號密碼不得為空");
-            //}
             if(!_services.CheckAccount(newmember.Account1)){
                 await _services.RegisterAsync(newmember);
                 string TempMail = System.IO.File.ReadAllText("../MP/MailBody/MailBody.html");
@@ -100,9 +77,21 @@ namespace MP.Controllers
             }   
         }
 
+        [HttpPost("Login")]
+        public string Post(LoginDto loginDto){
+            var result = _services.Login(loginDto.Account1,loginDto.Password);
+            return result;
+        }
+
+        [HttpPost("ChangePassword")]
+        public async Task<string> ChangePassword(ChangePasswordDto changeDto){
+            var result =await _services.ChangePassword(changeDto.Account,changeDto.OldPassword,changeDto.NewPassword);
+            return result;
+        }
+
         // PUT api/<MPController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut]
+        public void Put(int id)
         {
         }
 
