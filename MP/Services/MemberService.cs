@@ -114,22 +114,6 @@ namespace MP.Services
         }
         #endregion
         
-=======
-        /*#region 舊密碼確認
-        public bool CheckPassword(string OldPassword)
-        {
-            OldPassword = HashPassword(OldPassword);
-            return _MCrepository.CheckPassword(OldPassword);
-        }
-        #endregion
-        #region 修改密碼
-        public  async Task<bool> PasswordChange(string Password, string Account)
-        {
-            Password = HashPassword(Password);
-            bool result = await _MCrepository.PasswordChange(Password,Account);
-            return result;
-        }
-        #endregion*/
->>>>>>> efbfaac0852b871f873b7b31eb31f0c409d6c545:MP/Services/MemberService.cs
+        
     }
 }

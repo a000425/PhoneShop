@@ -77,7 +77,6 @@ namespace MP.Controllers
                 return BadRequest("驗證失敗");
             }   
         }
-<<<<<<< HEAD
 
         [HttpPost("Login")]
         public string Post(LoginDto loginDto){
@@ -91,19 +90,6 @@ namespace MP.Controllers
             return result;
         }
 
-=======
-        /*[HttpPut("PasswordChange")] 
-        [Authorize]
-        public async Task<IActionResult> Put([FromForm]PasswordChangeDto ChangePassword)
-        {
-            if(_services.CheckPassword(ChangePassword.OldPassword))
-            {
-                await _services.PasswordChange(ChangePassword.Password, User.Identity.Name);
-                return Ok("更改成功");
-            }
-            return BadRequest("更改失敗");
-        }*/
->>>>>>> efbfaac0852b871f873b7b31eb31f0c409d6c545
         // PUT api/<MPController>/5
         [HttpPut]
         public void Put(int id)
