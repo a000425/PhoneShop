@@ -3,10 +3,10 @@ using MP.Models;
 
 namespace MP.Repository
 {
-    public class RegisterRepository
+    public class MemberRepository
     {
         private readonly PhoneContext _phoneContext;
-        public RegisterRepository(PhoneContext phoneContext)
+        public MemberRepository(PhoneContext phoneContext)
         {
             _phoneContext = phoneContext;
         }

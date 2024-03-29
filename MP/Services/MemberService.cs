@@ -11,13 +11,11 @@ namespace MP.Services
     {
 
         private readonly MailService _mailService;
-        private readonly RegisterRepository _repository;
-        private readonly MemberChangeRepository _MCrepository;
-        public MemberService(RegisterRepository repository, MailService mailService, MemberChangeRepository MCrepository)
+        private readonly MemberRepository _repository;
+        public MemberService(MemberRepository repository, MailService mailService)
         {
             _repository = repository;
             _mailService = mailService;
-            _MCrepository = MCrepository;
         }
         #region 註冊
         public async Task RegisterAsync(Account account)
@@ -51,7 +49,7 @@ namespace MP.Services
 
         }
         #endregion
-<<<<<<< HEAD:MP/Services/RegisterService.cs
+        // HEAD:MP/Services/RegisterService.cs
         #region 登入
         public string Login(string account,string password){
             bool result = _repository.GetAccountAsync(account);
