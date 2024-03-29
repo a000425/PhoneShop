@@ -7,15 +7,17 @@ using System.Text;
 
 namespace MP.Services
 {
-    public class RegisterService
+    public class MemberService
     {
 
         private readonly MailService _mailService;
         private readonly RegisterRepository _repository;
-        public RegisterService(RegisterRepository repository, MailService mailService)
+        private readonly MemberChangeRepository _MCrepository;
+        public MemberService(RegisterRepository repository, MailService mailService, MemberChangeRepository MCrepository)
         {
             _repository = repository;
             _mailService = mailService;
+            _MCrepository = MCrepository;
         }
         #region 註冊
         public async Task RegisterAsync(Account account)
@@ -49,6 +51,7 @@ namespace MP.Services
 
         }
         #endregion
+<<<<<<< HEAD:MP/Services/RegisterService.cs
         #region 登入
         public string Login(string account,string password){
             bool result = _repository.GetAccountAsync(account);
@@ -111,5 +114,22 @@ namespace MP.Services
         }
         #endregion
         
+=======
+        /*#region 舊密碼確認
+        public bool CheckPassword(string OldPassword)
+        {
+            OldPassword = HashPassword(OldPassword);
+            return _MCrepository.CheckPassword(OldPassword);
+        }
+        #endregion
+        #region 修改密碼
+        public  async Task<bool> PasswordChange(string Password, string Account)
+        {
+            Password = HashPassword(Password);
+            bool result = await _MCrepository.PasswordChange(Password,Account);
+            return result;
+        }
+        #endregion*/
+>>>>>>> efbfaac0852b871f873b7b31eb31f0c409d6c545:MP/Services/MemberService.cs
     }
 }
