@@ -4,6 +4,11 @@ using MP.Services;
 using MP.Repository;
 using System.Security.Cryptography;
 using System.Text;
+using Azure;
+using Microsoft.IdentityModel.Tokens;
+using MP.Dtos;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace MP.Services
 {
@@ -12,10 +17,12 @@ namespace MP.Services
 
         private readonly MailService _mailService;
         private readonly MemberRepository _repository;
-        public MemberService(MemberRepository repository, MailService mailService)
+        private readonly IConfiguration _configuration;
+        public MemberService(MemberRepository repository,MailService mailService, IConfiguration configuration)
         {
             _repository = repository;
             _mailService = mailService;
+            _configuration = configuration;
         }
         #region 註冊
         public async Task RegisterAsync(Account account)
@@ -35,7 +42,13 @@ namespace MP.Services
             string HashPassword = Convert.ToBase64String(Hashed);
             return HashPassword;
         }
-        #endregion     
+        #endregion  
+        #region 取得一筆資料
+        public Account GetDataByAccount(string account){
+            Account data = _repository.GetAccountData(account);
+            return data;
+        }
+        #endregion   
         #region 重複帳號確認
         public bool CheckAccount(string Account){
             bool result = _repository.GetAccountAsync(Account);
@@ -72,10 +85,36 @@ namespace MP.Services
             }
         }
         #endregion
-        #region 取得一筆資料
-        public Account GetDataByAccount(string account){
-            Account data = _repository.GetAccountData(account);
-            return data;
+        #region 使用者權限
+        public string IsAdmin(string Account)
+        {
+            if(_repository.GetRole(Account)){
+                return "Admin";
+            }
+            return "";
+        }
+        #endregion
+        #region 產生權限
+        public string GenerateToken(LoginDto loginDto)
+        {
+            var claims = new List<Claim>
+            {
+                new Claim(JwtRegisteredClaimNames.NameId, loginDto.Account1),
+                new Claim("IsAdmin",IsAdmin(loginDto.Account1))
+            };
+
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:KEY"]));
+
+            var jwt = new JwtSecurityToken
+            (
+                issuer: _configuration["JWT:Issuer"],
+                audience: _configuration["JWT:Audience"],
+                claims: claims,
+                expires: DateTime.Now.AddMinutes(30),
+                signingCredentials: new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256)
+            );
+            string token = new JwtSecurityTokenHandler().WriteToken(jwt).ToString();
+            return token;
         }
         #endregion
         #region 密碼確認

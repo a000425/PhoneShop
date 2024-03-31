@@ -80,6 +80,14 @@ namespace MP.Repository
             }
         }
         #endregion
-        
+        #region 使用者權限
+        public bool GetRole(string Account)
+        {
+            var result = (from a in _phoneContext.Account
+                        where a.Account1 == Account
+                        select a.IsAdmin).SingleOrDefault();
+            return result;
+        }
+        #endregion
     }
 }
