@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +10,11 @@ using MP.Models;
 using MP.Repository;
 using MP.Services;
 using System.Security;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using Microsoft.AspNetCore.Routing.Tree;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -31,6 +38,7 @@ namespace MP.Controllers
         // GET: api/<MPController>
         // 偵錯用 保留
         [HttpGet("Test")]
+        [Authorize]
         public IEnumerable<RegisterDto> Get()
         {
             var result = _phoneContext.Account
@@ -50,7 +58,7 @@ namespace MP.Controllers
 
         // POST api/<MPController>
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Account newmember)
+        public async Task<IActionResult> Register([FromBody] Account newmember)
         {
             if(!_services.CheckAccount(newmember.Account1)){
                 await _services.RegisterAsync(newmember);
@@ -79,8 +87,19 @@ namespace MP.Controllers
         }
 
         [HttpPost("Login")]
-        public string Post(LoginDto loginDto){
+        public string Login(LoginDto loginDto){
             var result = _services.Login(loginDto.Account1,loginDto.Password);
+            if (result == "登入成功")
+            {
+                string token = _services.GenerateToken(loginDto);
+                var cookieOption = new CookieOptions
+                {
+                    Expires = DateTime.Now.AddMinutes(30),
+                    HttpOnly = true
+                };
+                Response.Cookies.Append("Token", token, cookieOption);
+                return "已登入";
+            }
             return result;
         }
 
@@ -88,6 +107,18 @@ namespace MP.Controllers
         public async Task<string> ChangePassword(ChangePasswordDto changeDto){
             var result =await _services.ChangePassword(changeDto.Account,changeDto.OldPassword,changeDto.NewPassword);
             return result;
+        }
+
+        [HttpDelete]
+        [Authorize]
+        public string  logout()
+        {
+            var cookieOption = new CookieOptions{
+                Expires = DateTime.Now.AddDays(-1),
+                HttpOnly = true
+            };
+            Response.Cookies.Append("Token", "", cookieOption);
+            return "已登出";
         }
 
         // PUT api/<MPController>/5
