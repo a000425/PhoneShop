@@ -22,13 +22,14 @@ namespace MP.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class MPController : ControllerBase
+    public class MemberController : ControllerBase
     {
+        //_phoneContext做完要後要從Controller刪除
         private readonly PhoneContext _phoneContext;
         private readonly IMapper _mapper;
         private readonly MemberService _services;
         private readonly MailService _mail;
-        public MPController(PhoneContext phoneContext,IMapper mapper, MemberService services,MailService mail)
+        public MemberController(PhoneContext phoneContext,IMapper mapper, MemberService services,MailService mail)
         {
             _phoneContext = phoneContext;
             _mapper = mapper;
@@ -36,7 +37,7 @@ namespace MP.Controllers
             _mail = mail;
         }
         // GET: api/<MPController>
-        // 偵錯用 保留
+        // 偵錯用 保留 開發完要刪掉
         [HttpGet("Test")]
         [Authorize]
         public IEnumerable<RegisterDto> Get()
@@ -46,18 +47,9 @@ namespace MP.Controllers
             var map = _mapper.Map<IEnumerable<RegisterDto>>(result);
             return map;
         }
-
-        // GET api/<MPController>/5
-        [HttpGet("Register/{account}")]
-        public RegisterDto Get(string account)
-        {
-            var result = (from a in _phoneContext.Account where a.Account1 == account select a)
-                .SingleOrDefault();  //傳回序列唯一的項目，若序列是空的則傳回預設值
-            return _mapper.Map<RegisterDto>(result);
-        }
-
+        #region 註冊
         // POST api/<MPController>
-        [HttpPost]
+        [HttpPost("Register")]
         public async Task<IActionResult> Register([FromBody] Account newmember)
         {
             if(!_services.CheckAccount(newmember.Account1)){
@@ -73,6 +65,8 @@ namespace MP.Controllers
             }
             
         }
+        #endregion
+        #region 驗證結果
         [HttpGet("EmailValidate")]
         public async Task<IActionResult> Get([FromQuery]string Account, string AuthCode)
         {
@@ -85,7 +79,8 @@ namespace MP.Controllers
                 return BadRequest("驗證失敗");
             }   
         }
-
+        #endregion
+        #region 登入
         [HttpPost("Login")]
         public string Login(LoginDto loginDto){
             var result = _services.Login(loginDto.Account1,loginDto.Password);
@@ -102,13 +97,15 @@ namespace MP.Controllers
             }
             return result;
         }
-
+        #endregion
+        #region 密碼修改
         [HttpPost("ChangePassword")]
         public async Task<string> ChangePassword(ChangePasswordDto changeDto){
             var result =await _services.ChangePassword(changeDto.Account,changeDto.OldPassword,changeDto.NewPassword);
             return result;
         }
-
+        #endregion
+        #region 登出
         [HttpDelete]
         [Authorize]
         public string  logout()
@@ -120,17 +117,6 @@ namespace MP.Controllers
             Response.Cookies.Append("Token", "", cookieOption);
             return "已登出";
         }
-
-        // PUT api/<MPController>/5
-        [HttpPut]
-        public void Put(int id)
-        {
-        }
-
-        // DELETE api/<MPController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+        #endregion
     }
 }

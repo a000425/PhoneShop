@@ -18,6 +18,7 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<PhoneContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("MPDatabase")));
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddScoped<MemberService>();
+builder.Services.AddScoped<ProductService>();
 builder.Services.AddScoped<MailService>();
 builder.Services.AddScoped<MemberRepository>();
 builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
@@ -57,8 +58,6 @@ builder.Services.AddAuthentication(options =>
     });
 
 var app = builder.Build();
-
-
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

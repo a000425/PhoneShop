@@ -14,7 +14,6 @@ namespace MP.Services
 {
     public class MemberService
     {
-
         private readonly MailService _mailService;
         private readonly MemberRepository _repository;
         private readonly IConfiguration _configuration;
@@ -62,7 +61,6 @@ namespace MP.Services
 
         }
         #endregion
-        // HEAD:MP/Services/RegisterService.cs
         #region 登入
         public string Login(string account,string password){
             bool result = _repository.GetAccountAsync(account);
