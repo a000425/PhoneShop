@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\user\\source\\repos\\MP\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{8F7F3747-5D3F-40EE-8B4D-1D41CBAE076D}|MP\\MP.csproj|c:\\users\\user\\source\\repos\\mp\\mp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8F7F3747-5D3F-40EE-8B4D-1D41CBAE076D}|MP\\MP.csproj|solutionrelative:mp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8F7F3747-5D3F-40EE-8B4D-1D41CBAE076D}|MP\\MP.csproj|c:\\users\\user\\source\\repos\\mp\\mp\\controllers\\membercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8F7F3747-5D3F-40EE-8B4D-1D41CBAE076D}|MP\\MP.csproj|solutionrelative:mp\\controllers\\membercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8F7F3747-5D3F-40EE-8B4D-1D41CBAE076D}|MP\\MP.csproj|c:\\users\\user\\source\\repos\\mp\\mp\\controllers\\mpcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8F7F3747-5D3F-40EE-8B4D-1D41CBAE076D}|MP\\MP.csproj|solutionrelative:mp\\controllers\\mpcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8F7F3747-5D3F-40EE-8B4D-1D41CBAE076D}|MP\\MP.csproj|c:\\users\\user\\source\\repos\\mp\\mp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8F7F3747-5D3F-40EE-8B4D-1D41CBAE076D}|MP\\MP.csproj|solutionrelative:mp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8F7F3747-5D3F-40EE-8B4D-1D41CBAE076D}|MP\\MP.csproj|c:\\users\\user\\source\\repos\\mp\\mp\\services\\memberservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -41,6 +41,10 @@
     {
       "AbsoluteMoniker": "D:0:0:{8F7F3747-5D3F-40EE-8B4D-1D41CBAE076D}|MP\\MP.csproj|c:\\users\\user\\source\\repos\\mp\\mp\\models\\phonecontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8F7F3747-5D3F-40EE-8B4D-1D41CBAE076D}|MP\\MP.csproj|solutionrelative:mp\\models\\phonecontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\user\\source\\repos\\MP\\MP\\Controllers\\MPController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:MP\\Controllers\\MPController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -50,8 +54,21 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 0,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MemberController.cs",
+              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\MP\\MP\\Controllers\\MemberController.cs",
+              "RelativeDocumentMoniker": "MP\\Controllers\\MemberController.cs",
+              "ToolTip": "C:\\Users\\user\\source\\repos\\MP\\MP\\Controllers\\MemberController.cs",
+              "RelativeToolTip": "MP\\Controllers\\MemberController.cs",
+              "ViewState": "AQIAAEoAAAAAAAAAAAAAwFgAAAAmAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-02T00:01:24.626Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Document",
               "DocumentIndex": 2,
@@ -78,7 +95,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 10,
               "Title": "MPController.cs",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\MP\\MP\\Controllers\\MPController.cs",
               "RelativeDocumentMoniker": "MP\\Controllers\\MPController.cs",
@@ -86,8 +103,7 @@
               "RelativeToolTip": "MP\\Controllers\\MPController.cs",
               "ViewState": "AQIAAFcAAAAAAAAAAAAYwFsAAAANAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-03-27T17:43:05.544Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-03-27T17:43:05.544Z"
             },
             {
               "$type": "Document",
@@ -115,7 +131,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\MP\\MP\\Program.cs",
               "RelativeDocumentMoniker": "MP\\Program.cs",

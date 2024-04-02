@@ -1,4 +1,3 @@
-C:\Users\user\source\repos\MP\MP\bin\Debug\net8.0\appsettings.Development.json
 C:\Users\user\source\repos\MP\MP\bin\Debug\net8.0\appsettings.json
 C:\Users\user\source\repos\MP\MP\bin\Debug\net8.0\MP.exe
 C:\Users\user\source\repos\MP\MP\bin\Debug\net8.0\MP.deps.json
@@ -277,3 +276,7 @@ C:\Users\User\source\repos\0323\PhoneShop\MP\obj\Debug\net8.0\ref\MP.dll
 C:\Users\user\source\repos\MP\MP\obj\Debug\net8.0\MP.sourcelink.json
 C:\Users\user\source\repos\MP\MP\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\Users\User\source\repos\0323\PhoneShop\MP\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\user\source\repos\MP\MP\bin\Debug\net8.0\Newtonsoft.Json.dll
+C:\Users\user\source\repos\MP\MP\bin\Debug\net8.0\Microsoft.AspNetCore.JsonPatch.dll
+C:\Users\user\source\repos\MP\MP\bin\Debug\net8.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+C:\Users\user\source\repos\MP\MP\bin\Debug\net8.0\Newtonsoft.Json.Bson.dll

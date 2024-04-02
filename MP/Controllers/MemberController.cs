@@ -15,6 +15,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Routing.Tree;
+using Newtonsoft.Json;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -36,17 +37,7 @@ namespace MP.Controllers
             _services = services;
             _mail = mail;
         }
-        // GET: api/<MPController>
-        // 偵錯用 保留 開發完要刪掉
-        [HttpGet("Test")]
-        [Authorize]
-        public IEnumerable<RegisterDto> Get()
-        {
-            var result = _phoneContext.Account
-                .Select(a => a);
-            var map = _mapper.Map<IEnumerable<RegisterDto>>(result);
-            return map;
-        }
+        
         #region 註冊
         // POST api/<MPController>
         [HttpPost("Register")]
@@ -55,7 +46,7 @@ namespace MP.Controllers
             if(!_services.CheckAccount(newmember.Account1)){
                 await _services.RegisterAsync(newmember);
                 string TempMail = System.IO.File.ReadAllText("../MP/MailBody/MailBody.html");
-                string ValidateUrl = $"{Request.Scheme}://{Request.Host}/api/MP/EmailValidate?Account={newmember.Account1}&AuthCode={newmember.AuthCode}";
+                string ValidateUrl = $"{Request.Scheme}://{Request.Host}/api/Member/EmailValidate?Account={newmember.Account1}&AuthCode={newmember.AuthCode}";
                 string mailBody = _mail.GetMailBody(TempMail,newmember.Account1,ValidateUrl);
                 _mail.SendMail(mailBody,newmember.Email);
                 return Ok("註冊成功");
@@ -82,7 +73,7 @@ namespace MP.Controllers
         #endregion
         #region 登入
         [HttpPost("Login")]
-        public string Login(LoginDto loginDto){
+        public IActionResult Login(LoginDto loginDto){
             var result = _services.Login(loginDto.Account1,loginDto.Password);
             if (result == "登入成功")
             {
@@ -93,15 +84,20 @@ namespace MP.Controllers
                     HttpOnly = true
                 };
                 Response.Cookies.Append("Token", token, cookieOption);
-                return "已登入";
+                var goodresponse = new { status = 200, Message = "已登入" };
+                var jsongoodResponse = JsonConvert.SerializeObject(goodresponse); // 序列化為 JSON 格式的字符串
+                return Content(jsongoodResponse, "application/json"); // 返回 JSON 格式的響應
             }
-            return result;
+            var response = new { status = 400, Message = result };
+            var jsonResponse = JsonConvert.SerializeObject(response); // 序列化為 JSON 格式的字符串
+            return Content(jsonResponse, "application/json");
         }
         #endregion
         #region 密碼修改
         [HttpPost("ChangePassword")]
+        [Authorize]
         public async Task<string> ChangePassword(ChangePasswordDto changeDto){
-            var result =await _services.ChangePassword(changeDto.Account,changeDto.OldPassword,changeDto.NewPassword);
+            var result =await _services.ChangePassword(User.Identity.Name,changeDto.OldPassword,changeDto.NewPassword);
             return result;
         }
         #endregion
