@@ -49,10 +49,14 @@ namespace MP.Controllers
                 string ValidateUrl = $"{Request.Scheme}://{Request.Host}/api/Member/EmailValidate?Account={newmember.Account1}&AuthCode={newmember.AuthCode}";
                 string mailBody = _mail.GetMailBody(TempMail,newmember.Account1,ValidateUrl);
                 _mail.SendMail(mailBody,newmember.Email);
-                return Ok("註冊成功");
+                var success = new{Status=200,Message="註冊成功"};
+                var jsonsuccess = JsonConvert.SerializeObject(success);
+                return Content(jsonsuccess,"application/json");
             }
             else{
-                return BadRequest("帳號已註冊");
+                var success = new{Status=400,Message="帳號已註冊"};
+                var jsonsuccess = JsonConvert.SerializeObject(success);
+                return Content(jsonsuccess,"application/json");
             }
             
         }
@@ -63,11 +67,15 @@ namespace MP.Controllers
         {
             if (await _services.EmailValidateAsync(Account, AuthCode))
             {
-                return Ok("驗證成功");
+                var success = new{Status=200,Message="驗證成功"};
+                var jsonsuccess = JsonConvert.SerializeObject(success);
+                return Content(jsonsuccess,"application/json");
             }
-                else
+            else
             {
-                return BadRequest("驗證失敗");
+                var fail = new{Status=400,Message="驗證失敗"};
+                var jsonfail = JsonConvert.SerializeObject(fail);
+                return Content(jsonfail,"application/json");
             }   
         }
         #endregion
@@ -84,34 +92,47 @@ namespace MP.Controllers
                     HttpOnly = true
                 };
                 Response.Cookies.Append("Token", token, cookieOption);
-                var goodresponse = new { status = 200, Message = "已登入" };
-                var jsongoodResponse = JsonConvert.SerializeObject(goodresponse); // 序列化為 JSON 格式的字符串
+                var response = new { Status = 200, Message = "已登入" };
+                var jsongoodResponse = JsonConvert.SerializeObject(response); // 序列化為 JSON 格式的字符串
                 return Content(jsongoodResponse, "application/json"); // 返回 JSON 格式的響應
             }
-            var response = new { status = 400, Message = result };
-            var jsonResponse = JsonConvert.SerializeObject(response); // 序列化為 JSON 格式的字符串
-            return Content(jsonResponse, "application/json");
+            else{
+                var response = new { Status = 400, Message = result };
+                var jsongoodResponse = JsonConvert.SerializeObject(response); // 序列化為 JSON 格式的字符串
+                return Content(jsongoodResponse, "application/json");
+            }
         }
         #endregion
         #region 密碼修改
         [HttpPost("ChangePassword")]
         [Authorize]
-        public async Task<string> ChangePassword(ChangePasswordDto changeDto){
+        public async Task<IActionResult> ChangePassword(ChangePasswordDto changeDto){
             var result =await _services.ChangePassword(User.Identity.Name,changeDto.OldPassword,changeDto.NewPassword);
-            return result;
+            if(result=="密碼更改成功"){
+                var response = new{Status=200,Messsage=result};
+                var jsonresponse = JsonConvert.SerializeObject(response);
+                return Content(jsonresponse,"application/json");
+            }
+            else{
+                var response = new{Status=200,Messsage=result};
+                var jsonresponse = JsonConvert.SerializeObject(response);
+                return Content(jsonresponse,"application/json");
+            }
         }
         #endregion
         #region 登出
         [HttpDelete]
         [Authorize]
-        public string  logout()
+        public IActionResult  logout()
         {
             var cookieOption = new CookieOptions{
                 Expires = DateTime.Now.AddDays(-1),
                 HttpOnly = true
             };
             Response.Cookies.Append("Token", "", cookieOption);
-            return "已登出";
+            var response = new{Status=200,Message="已登出"};
+            var jsonresponse = JsonConvert.SerializeObject(response);
+            return Content(jsonresponse,"application/json");
         }
         #endregion
     }
