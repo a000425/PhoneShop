@@ -21,6 +21,7 @@ builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddScoped<MemberService>();
 builder.Services.AddScoped<ProductService>();
 builder.Services.AddScoped<MailService>();
+builder.Services.AddScoped<CartService>();
 builder.Services.AddScoped<MemberRepository>();
 builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

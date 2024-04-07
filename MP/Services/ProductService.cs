@@ -42,6 +42,7 @@ namespace MP.Services
         #endregion
         
         
+        
     }
 }
 //查詢所有商品LINQ傳SQL寫法
