@@ -40,30 +40,8 @@ namespace MP.Services
             return result;
         }
         #endregion
-        #region 商品詳細頁
-        public IEnumerable<ItemDto> Item(string color, string space)
-        {
-            var query = from item in _phoneContext.Item
-            join img in _phoneContext.Img on item.FormatId equals img.FormatId
-            join format in _phoneContext.Format on item.FormatId equals format.FormatId
-            where format.Color == color && format.Space == space
-            group new { item, img, format } by new { item.ItemName,format.FormatId } into grouped
-            select new ItemDto
-            {
-                ItemName = grouped.Key.ItemName,
-                ItemImg = grouped.Select(x => x.img.ItemImg).FirstOrDefault(),
-                Brand = grouped.Select(x => x.format.Brand).FirstOrDefault(),
-                Color = grouped.Select(x => x.format.Color).FirstOrDefault(),
-                Space = grouped.Select(x => x.format.Space).FirstOrDefault(),
-                Store = grouped.Select(x => x.format.Store).FirstOrDefault(),
-                Instruction = grouped.Select(x => x.format.Instruction).FirstOrDefault(),
-                ItemPrice = grouped.Select(x => x.item.ItemPrice).FirstOrDefault()
-            };
-
-            return query.ToList();
-        }
-
-        #endregion
+        
+        
     }
 }
 //查詢所有商品LINQ傳SQL寫法
