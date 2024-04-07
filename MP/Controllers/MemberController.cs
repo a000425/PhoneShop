@@ -30,12 +30,14 @@ namespace MP.Controllers
         private readonly IMapper _mapper;
         private readonly MemberService _services;
         private readonly MailService _mail;
-        public MemberController(PhoneContext phoneContext,IMapper mapper, MemberService services,MailService mail)
+        private readonly IConfiguration _configuration;
+        public MemberController(PhoneContext phoneContext,IMapper mapper, MemberService services,MailService mail, IConfiguration configuration)
         {
             _phoneContext = phoneContext;
             _mapper = mapper;
             _services = services;
             _mail = mail;
+            _configuration = configuration;
         }
         
         #region 註冊
@@ -103,11 +105,20 @@ namespace MP.Controllers
             }
         }
         #endregion
+
         #region 密碼修改
         [HttpPost("ChangePassword")]
         [Authorize]
         public async Task<IActionResult> ChangePassword(ChangePasswordDto changeDto){
-            var result =await _services.ChangePassword(User.Identity.Name,changeDto.OldPassword,changeDto.NewPassword);
+            var context = HttpContext;
+            var UserAccount = _services.GetUserAccountFromToken(context);
+            if (UserAccount == null)
+            {
+                var response = new { Status = 400, Message = "密碼修改失敗" };
+                var jsongoodResponse = JsonConvert.SerializeObject(response); // 序列化為 JSON 格式的字符串
+                return Content(jsongoodResponse, "application/json");
+            }
+            var result =await _services.ChangePassword(UserAccount,changeDto.OldPassword,changeDto.NewPassword);
             if(result=="密碼更改成功"){
                 var response = new{Status=200,Messsage=result};
                 var jsonresponse = JsonConvert.SerializeObject(response);
@@ -135,5 +146,18 @@ namespace MP.Controllers
             return Content(jsonresponse,"application/json");
         }
         #endregion
+        #region 取得帳號測試
+        [Authorize]
+        [HttpGet("trytrysee")]
+        public IActionResult trytrysee() 
+        {
+            var context = HttpContext;
+            var UserAccount = _services.GetUserAccountFromToken(context);
+            var response = new { Status = 200, Messsage = UserAccount };
+            var jsonresponse = JsonConvert.SerializeObject(response);
+            return Content(jsonresponse, "application/json");
+        }
+        #endregion
+        
     }
 }

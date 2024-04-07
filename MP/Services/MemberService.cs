@@ -115,6 +115,45 @@ namespace MP.Services
             return token;
         }
         #endregion
+
+        #region 獲得當前使用帳號
+        public string GetAccountFromToken(string token) 
+        {
+            try
+            {
+                // 解析 JWT
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var jwtToken = tokenHandler.ReadJwtToken(token);
+
+                // 從 Claims 中獲取使用者帳號
+                var userAccount = jwtToken.Claims.FirstOrDefault(claim => claim.Type == JwtRegisteredClaimNames.NameId)?.Value;
+
+                return userAccount;
+            }
+            catch (Exception ex)
+            {
+                // 處理解析 JWT 時的異常
+                // 在實際應用中，根據您的需求進行適當的錯誤處理
+                Console.WriteLine($"Failed to parse JWT: {ex.Message}");
+                return null;
+            }
+        }
+        #endregion
+        #region 從Token中取得帳號
+        public string GetUserAccountFromToken(HttpContext context)
+        {
+            // 從 Request 的 Cookies 中獲取 Token
+            var token = context.Request.Cookies["Token"];
+            if (string.IsNullOrEmpty(token))
+            {
+                // 如果 Token 為空，返回 null 或者空字符串，視您的需求而定
+                return null;
+            }
+            var UserAccount = GetAccountFromToken(token);
+            return UserAccount;
+        }
+        #endregion
+
         #region 密碼確認
         public bool PasswordCheck(Account data,string password)
         {
