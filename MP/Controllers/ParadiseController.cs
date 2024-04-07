@@ -15,6 +15,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Routing.Tree;
+using Newtonsoft.Json;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -36,5 +37,15 @@ namespace MP.Controllers
             return result;
         }
         #endregion
+        #region 商品詳細頁
+        [HttpPost]
+        public IEnumerable<ItemDto> Item(string color,string space){
+            
+            var ItemDto = _service.Item(color,space);
+            // var result = ItemDto.Select(itemDto=>JsonConvert.SerializeObject(itemDto));
+            return ItemDto;
+        }
+        #endregion
+
     }
 }
