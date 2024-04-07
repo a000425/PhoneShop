@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\user\\source\\repos\\MP\\MP\\MP.csproj": {}
+    "C:\\Users\\user\\OneDrive\\文件\\MP\\MP\\MP\\MP\\MP.csproj": {}
   },
   "projects": {
-    "C:\\Users\\user\\source\\repos\\MP\\MP\\MP.csproj": {
+    "C:\\Users\\user\\OneDrive\\文件\\MP\\MP\\MP\\MP\\MP.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\user\\source\\repos\\MP\\MP\\MP.csproj",
+        "projectUniqueName": "C:\\Users\\user\\OneDrive\\文件\\MP\\MP\\MP\\MP\\MP.csproj",
         "projectName": "MP",
-        "projectPath": "C:\\Users\\user\\source\\repos\\MP\\MP\\MP.csproj",
+        "projectPath": "C:\\Users\\user\\OneDrive\\文件\\MP\\MP\\MP\\MP\\MP.csproj",
         "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\user\\source\\repos\\MP\\MP\\obj\\",
+        "outputPath": "C:\\Users\\user\\OneDrive\\文件\\MP\\MP\\MP\\MP\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

@@ -4,7 +4,7 @@ namespace MP.Dtos
 {
     public class ChangePasswordDto
     {
-        public string Account{get;set;}
+        
         [Required(ErrorMessage ="請輸入舊密碼")]
         public string OldPassword{get;set;}
         [Required(ErrorMessage ="請輸入新密碼")]

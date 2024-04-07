@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "TwOX2O1zx4/Vgkt1K/YUvhl7luTfcpvpQV/H6yDTtJKYUBpO/tD+gt6veAQdvuiomVRGRjTJu1hWevK3DzrsNg==",
+  "dgSpecHash": "4cEYZrFRDonoJzE4GUJl3MLocfdDWrHPiRSuM8Zw9Uvzn5Aag3WSvCh0N9mY6ToQB4dr8jswea7lFEjfAX9SRA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\user\\source\\repos\\MP\\MP\\MP.csproj",
+  "projectFilePath": "C:\\Users\\user\\OneDrive\\文件\\MP\\MP\\MP\\MP\\MP.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\user\\.nuget\\packages\\automapper\\12.0.0\\automapper.12.0.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.0\\automapper.extensions.microsoft.dependencyinjection.12.0.0.nupkg.sha512",
