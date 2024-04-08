@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.Identity.Client;
+using MP.Models;
 
 namespace MP.Dtos
 {
@@ -12,5 +13,6 @@ namespace MP.Dtos
         public string Space { get; set; } = null!;
         public string ItemName { get; set; } = null!;
         public int ItemPrice { get; set; }
+        public List<Img>? ImgList{get;set;}
     }
 }

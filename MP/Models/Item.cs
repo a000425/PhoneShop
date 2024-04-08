@@ -9,15 +9,13 @@ public partial class Item
 
     public string ItemName { get; set; } = null!;
 
-    public int ItemPrice { get; set; }
+    public string Instruction { get; set; } = null!;
 
-    public bool IsAvailable { get; set; }
-
-    public int FormatId { get; set; }
+    public bool? IsAvailable { get; set; }
 
     public virtual ICollection<Cart> Cart { get; set; } = new List<Cart>();
 
-    public virtual Format Format { get; set; } = null!;
+    public virtual ICollection<Format> Format { get; set; } = new List<Format>();
 
     public virtual ICollection<QA> QA { get; set; } = new List<QA>();
 }

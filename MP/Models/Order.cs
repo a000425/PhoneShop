@@ -13,9 +13,9 @@ public partial class Order
 
     public DateTime OrderTime { get; set; }
 
-    public string OrderStatus { get; set; } = null!;
+    public string OrderStatus { get; set; }
 
-    public string Address { get; set; } = null!;
+    public string Address { get; set; }
 
     public virtual Account AccountNavigation { get; set; } = null!;
 

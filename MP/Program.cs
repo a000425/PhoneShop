@@ -24,6 +24,7 @@ builder.Services.AddScoped<MailService>();
 builder.Services.AddScoped<CartService>();
 builder.Services.AddScoped<MemberRepository>();
 builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
+builder.Services.AddHttpContextAccessor();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -67,7 +68,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
 app.UseCookiePolicy();
 app.UseAuthentication();
 app.UseAuthorization();

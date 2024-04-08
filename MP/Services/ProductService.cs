@@ -18,61 +18,62 @@ namespace MP.Services
         #region 取得所有商品
         public IEnumerable<ProductDto> GetProduct()
         {
-            var result = (from p in _phoneContext.Item
-                        join pi in (from img in _phoneContext.Img
-                                    group img by img.FormatId into imgGroup
-                                    select new
-                                    {
-                                        FormatId = imgGroup.Key,
-                                        ItemImg = imgGroup.OrderBy(img => img.Id).FirstOrDefault().ItemImg
-                                    })
-                        on p.FormatId equals pi.FormatId into joined
-                        from pi in joined.DefaultIfEmpty()
-                        group new { p, pi } by new { p.ItemName, pi.ItemImg } into grouped
-                        select new ProductDto
-                        {
-                            ItemName = grouped.Key.ItemName,
-                            ItemPriceMax = grouped.Max(x => x.p.ItemPrice),
-                            ItemPriceMin = grouped.Min(x => x.p.ItemPrice),
-                            ItemImg = grouped.Key.ItemImg
-                        });
+        var result = (from p in _phoneContext.Item
+                  join f in _phoneContext.Format on p.ItemId equals f.ItemId
+                  group new { p, f } by new { p.ItemId, p.ItemName } into g
+                  select new ProductDto
+                  {
+                      ItemId = g.Key.ItemId,
+                      ItemName = g.Key.ItemName,
+                      ItemPriceMax = g.Max(x => x.f.ItemPrice),
+                      ItemPriceMin = g.Min(x => x.f.ItemPrice),
+                      ItemImg = (from img in _phoneContext.Img
+                             where img.FormatId == g.Min(x => x.f.FormatId)
+                             orderby img.Id
+                             select img.ItemImg).FirstOrDefault()
+                  }).ToList();
 
             return result;
         }
+
         #endregion
+        #region 取得單筆商品規格
+
+        #endregion
+        #region 取得商品介紹
         
-        
-        
+        #endregion
     }
 }
 //查詢所有商品LINQ傳SQL寫法
 /*SELECT
-    ProductName,
+	ItemId,
+    ItemName,
     MaxPrice,
     MinPrice,
     Img
 FROM (
     SELECT
-        p.ItemName AS ProductName,
-        MAX(p.ItemPrice) AS MaxPrice,
-        MIN(p.ItemPrice) AS MinPrice,
-        pi.ItemImg AS Img,
-        ROW_NUMBER() OVER (PARTITION BY p.ItemName ORDER BY p.ItemName) AS RowNum
+		p.ItemId,
+        p.ItemName,
+        MAX(f.MaxPrice) AS MaxPrice,
+        MIN(f.MinPrice) AS MinPrice,
+        (SELECT TOP 1 ItemImg FROM Img WHERE Img.FormatId = MIN(f.FormatId) ORDER BY Img.Id) AS Img
     FROM
         Item p
-    LEFT JOIN (
+    JOIN (
         SELECT
-            FormatId,
-            ItemImg,
-            ROW_NUMBER() OVER (PARTITION BY FormatId ORDER BY Id) AS RowNum
+            i.ItemId,
+            MAX(f.ItemPrice) AS MaxPrice,
+            MIN(f.ItemPrice) AS MinPrice,
+            MIN(f.FormatId) AS FormatId
         FROM
-            Img
-    ) pi ON p.FormatId = pi.FormatId
-    WHERE
-        pi.RowNum = 1
+            Item i
+        JOIN Format f ON i.ItemId = f.ItemId
+        GROUP BY
+            i.ItemId
+    ) f ON p.ItemId = f.ItemId
     GROUP BY
-        p.ItemName, pi.ItemImg
-) AS SubQuery
-WHERE
-    RowNum = 1;
+        p.ItemName,p.ItemId
+) AS SubQuery;
 */

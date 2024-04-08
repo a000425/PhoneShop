@@ -105,7 +105,6 @@ namespace MP.Controllers
             }
         }
         #endregion
-
         #region 密碼修改
         [HttpPost("ChangePassword")]
         [Authorize]
@@ -158,6 +157,5 @@ namespace MP.Controllers
             return Content(jsonresponse, "application/json");
         }
         #endregion
-        
     }
 }

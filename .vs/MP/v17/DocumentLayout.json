@@ -1,22 +1,34 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\user\\OneDrive\\\u6587\u4EF6\\MP\\MP\\MP\\",
+  "WorkspaceRootPath": "C:\\Users\\User\\source\\repos\\0323\\PhoneShop\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{8F7F3747-5D3F-40EE-8B4D-1D41CBAE076D}|MP\\MP.csproj|c:\\users\\user\\onedrive\\\u6587\u4EF6\\mp\\mp\\mp\\mp\\controllers\\cartcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8F7F3747-5D3F-40EE-8B4D-1D41CBAE076D}|MP\\MP.csproj|solutionrelative:mp\\controllers\\cartcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8F7F3747-5D3F-40EE-8B4D-1D41CBAE076D}|MP\\MP.csproj|c:\\users\\user\\source\\repos\\0323\\phoneshop\\mp\\mp.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{8F7F3747-5D3F-40EE-8B4D-1D41CBAE076D}|MP\\MP.csproj|solutionrelative:mp\\mp.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8F7F3747-5D3F-40EE-8B4D-1D41CBAE076D}|MP\\MP.csproj|c:\\users\\user\\onedrive\\\u6587\u4EF6\\mp\\mp\\mp\\mp\\services\\cartservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8F7F3747-5D3F-40EE-8B4D-1D41CBAE076D}|MP\\MP.csproj|solutionrelative:mp\\services\\cartservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8F7F3747-5D3F-40EE-8B4D-1D41CBAE076D}|MP\\MP.csproj|c:\\users\\user\\source\\repos\\0323\\phoneshop\\mp\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{8F7F3747-5D3F-40EE-8B4D-1D41CBAE076D}|MP\\MP.csproj|solutionrelative:mp\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8F7F3747-5D3F-40EE-8B4D-1D41CBAE076D}|MP\\MP.csproj|c:\\users\\user\\onedrive\\\u6587\u4EF6\\mp\\mp\\mp\\mp\\dtos\\cartdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8F7F3747-5D3F-40EE-8B4D-1D41CBAE076D}|MP\\MP.csproj|solutionrelative:mp\\dtos\\cartdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\User\\source\\repos\\0323\\PhoneShop\\MP\\Services\\ProductService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:MP\\Services\\ProductService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8F7F3747-5D3F-40EE-8B4D-1D41CBAE076D}|MP\\MP.csproj|c:\\users\\user\\onedrive\\\u6587\u4EF6\\mp\\mp\\mp\\mp\\services\\productservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8F7F3747-5D3F-40EE-8B4D-1D41CBAE076D}|MP\\MP.csproj|solutionrelative:mp\\services\\productservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\User\\source\\repos\\0323\\PhoneShop\\MP\\Controllers\\ParadiseController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:MP\\Controllers\\ParadiseController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\User\\source\\repos\\0323\\PhoneShop\\MP\\Services\\CartService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:MP\\Services\\CartService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\User\\source\\repos\\0323\\PhoneShop\\MP\\Controllers\\CartController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:MP\\Controllers\\CartController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\User\\source\\repos\\0323\\PhoneShop\\MP\\Dtos\\CartDto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:MP\\Dtos\\CartDto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,59 +38,94 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MP",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\0323\\PhoneShop\\MP\\MP.csproj",
+              "RelativeDocumentMoniker": "MP\\MP.csproj",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\0323\\PhoneShop\\MP\\MP.csproj",
+              "RelativeToolTip": "MP\\MP.csproj",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAArAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2024-04-08T08:22:53.354Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 3,
+              "Title": "ParadiseController.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\0323\\PhoneShop\\MP\\Controllers\\ParadiseController.cs",
+              "RelativeDocumentMoniker": "MP\\Controllers\\ParadiseController.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\0323\\PhoneShop\\MP\\Controllers\\ParadiseController.cs",
+              "RelativeToolTip": "MP\\Controllers\\ParadiseController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-08T06:41:02.069Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\0323\\PhoneShop\\MP\\appsettings.json",
+              "RelativeDocumentMoniker": "MP\\appsettings.json",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\0323\\PhoneShop\\MP\\appsettings.json",
+              "RelativeToolTip": "MP\\appsettings.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAABQAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-04-08T06:32:27.727Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "ProductService.cs",
-              "DocumentMoniker": "C:\\Users\\user\\OneDrive\\\u6587\u4EF6\\MP\\MP\\MP\\MP\\Services\\ProductService.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\0323\\PhoneShop\\MP\\Services\\ProductService.cs",
               "RelativeDocumentMoniker": "MP\\Services\\ProductService.cs",
-              "ToolTip": "C:\\Users\\user\\OneDrive\\\u6587\u4EF6\\MP\\MP\\MP\\MP\\Services\\ProductService.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\0323\\PhoneShop\\MP\\Services\\ProductService.cs",
               "RelativeToolTip": "MP\\Services\\ProductService.cs",
-              "ViewState": "AQIAACoAAAAAAAAAAAAIwBkAAABAAAAA",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAAAAkAAAAfAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-04-07T12:45:57.515Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "CartService.cs",
-              "DocumentMoniker": "C:\\Users\\user\\OneDrive\\\u6587\u4EF6\\MP\\MP\\MP\\MP\\Services\\CartService.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\0323\\PhoneShop\\MP\\Services\\CartService.cs",
               "RelativeDocumentMoniker": "MP\\Services\\CartService.cs",
-              "ToolTip": "C:\\Users\\user\\OneDrive\\\u6587\u4EF6\\MP\\MP\\MP\\MP\\Services\\CartService.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\0323\\PhoneShop\\MP\\Services\\CartService.cs",
               "RelativeToolTip": "MP\\Services\\CartService.cs",
               "ViewState": "AQIAABgAAAAAAAAAAAAcwBkAAAAZAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-07T12:45:33.793Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-07T12:45:33.793Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 5,
               "Title": "CartController.cs",
-              "DocumentMoniker": "C:\\Users\\user\\OneDrive\\\u6587\u4EF6\\MP\\MP\\MP\\MP\\Controllers\\CartController.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\0323\\PhoneShop\\MP\\Controllers\\CartController.cs",
               "RelativeDocumentMoniker": "MP\\Controllers\\CartController.cs",
-              "ToolTip": "C:\\Users\\user\\OneDrive\\\u6587\u4EF6\\MP\\MP\\MP\\MP\\Controllers\\CartController.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\0323\\PhoneShop\\MP\\Controllers\\CartController.cs",
               "RelativeToolTip": "MP\\Controllers\\CartController.cs",
-              "ViewState": "AQIAAA8AAAAAAAAAAAAYwBYAAAATAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAIAAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-07T12:44:11.702Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-07T12:44:11.702Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 6,
               "Title": "CartDto.cs",
-              "DocumentMoniker": "C:\\Users\\user\\OneDrive\\\u6587\u4EF6\\MP\\MP\\MP\\MP\\Dtos\\CartDto.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\0323\\PhoneShop\\MP\\Dtos\\CartDto.cs",
               "RelativeDocumentMoniker": "MP\\Dtos\\CartDto.cs",
-              "ToolTip": "C:\\Users\\user\\OneDrive\\\u6587\u4EF6\\MP\\MP\\MP\\MP\\Dtos\\CartDto.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\0323\\PhoneShop\\MP\\Dtos\\CartDto.cs",
               "RelativeToolTip": "MP\\Dtos\\CartDto.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAqAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-07T12:38:53.576Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-07T12:38:53.576Z"
             }
           ]
         }

@@ -46,6 +46,7 @@ public partial class PhoneContext : DbContext
             entity.Property(e => e.Email)
                 .HasMaxLength(50)
                 .IsUnicode(false);
+            entity.Property(e => e.IsAdmin).HasDefaultValue(false);
             entity.Property(e => e.Name)
                 .HasMaxLength(10)
                 .IsUnicode(false);
@@ -68,7 +69,6 @@ public partial class PhoneContext : DbContext
 
             entity.HasOne(d => d.Item).WithMany(p => p.Cart)
                 .HasForeignKey(d => d.ItemId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__Cart__ItemId__412EB0B6");
         });
 
@@ -82,17 +82,19 @@ public partial class PhoneContext : DbContext
             entity.Property(e => e.Color)
                 .HasMaxLength(50)
                 .IsUnicode(false);
-            entity.Property(e => e.Instruction)
-                .HasMaxLength(200)
-                .IsUnicode(false);
             entity.Property(e => e.Space)
                 .HasMaxLength(5)
                 .IsUnicode(false);
+
+            entity.HasOne(d => d.Item).WithMany(p => p.Format)
+                .HasForeignKey(d => d.ItemId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__Format__ItemId__607251E5");
         });
 
         modelBuilder.Entity<Img>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Img__3214EC072730533C");
+            entity.HasKey(e => e.Id).HasName("PK__Img__3214EC074219CC8F");
 
             entity.Property(e => e.ItemImg)
                 .HasMaxLength(50)
@@ -108,14 +110,13 @@ public partial class PhoneContext : DbContext
         {
             entity.HasKey(e => e.ItemId).HasName("PK__Item__727E838BED3998F9");
 
+            entity.Property(e => e.Instruction)
+                .HasMaxLength(200)
+                .IsUnicode(false);
+            entity.Property(e => e.IsAvailable).HasDefaultValue(false);
             entity.Property(e => e.ItemName)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-
-            entity.HasOne(d => d.Format).WithMany(p => p.Item)
-                .HasForeignKey(d => d.FormatId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Item__FormatId__3D5E1FD2");
         });
 
         modelBuilder.Entity<Order>(entity =>
@@ -139,7 +140,7 @@ public partial class PhoneContext : DbContext
 
         modelBuilder.Entity<OrderItem>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__OrderIte__3214EC07D793BA71");
+            entity.HasKey(e => e.Id).HasName("PK__OrderIte__3214EC071D559B71");
 
             entity.HasOne(d => d.Order).WithMany(p => p.OrderItem)
                 .HasForeignKey(d => d.OrderId)

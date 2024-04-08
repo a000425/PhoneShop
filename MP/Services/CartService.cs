@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using MP.Models;
 using MP.Dtos;
+using Microsoft.SqlServer.Server;
+using System.ComponentModel;
 
 
 namespace MP.Services
@@ -14,12 +16,12 @@ namespace MP.Services
             _phoneContext = phoneContext;
         }
 
-        public string AddCart(string user,int id,int num)
+        public string AddCart(string user,int ItemId,int num,int FormatId)
         {
-            var item = _phoneContext.Item.SingleOrDefault(i => i.ItemId == id);
+            var item = _phoneContext.Item.SingleOrDefault(i => i.ItemId == ItemId);
             if (item != null) 
             {
-                var format = _phoneContext.Format.SingleOrDefault(f => f.FormatId == item.FormatId);
+                var format = _phoneContext.Format.SingleOrDefault(f => f.ItemId == item.ItemId && f.FormatId == FormatId);
                 if (format != null)
                 {
                     if (num <= format.Store)
@@ -27,7 +29,7 @@ namespace MP.Services
                         Cart cart = new Cart 
                         {
                             Account = user,
-                            ItemId = id,
+                            ItemId = ItemId,
                             ItemNum = num,
                             AddTime = DateTime.Now
                         };
@@ -56,7 +58,7 @@ namespace MP.Services
         {
             var shoppingCartItems = (from cart in _phoneContext.Cart
                              join item in _phoneContext.Item on cart.ItemId equals item.ItemId
-                             join format in _phoneContext.Format on item.FormatId equals format.FormatId
+                             join format in _phoneContext.Format on cart.ItemId equals format.ItemId
                              where cart.Account == userAccount
                              select new CartDto
                              {
@@ -64,7 +66,7 @@ namespace MP.Services
                                  Color = format.Color,
                                  Space = format.Space,
                                  ItemNum = cart.ItemNum,
-                                 ItemPrice = item.ItemPrice
+                                 ItemPrice = format.ItemPrice
                              }).ToList();
 
             return shoppingCartItems;

@@ -89,13 +89,13 @@ namespace MP.Services
             if(_repository.GetRole(Account)){
                 return "Admin";
             }
-            return "";
+            return "User";
         }
         #endregion
         #region 產生權限
         public string GenerateToken(LoginDto loginDto)
         {
-            var claims = new List<Claim>
+            var claims = new []
             {
                 new Claim(JwtRegisteredClaimNames.NameId, loginDto.Account1),
                 new Claim("IsAdmin",IsAdmin(loginDto.Account1))

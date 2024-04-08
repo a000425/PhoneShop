@@ -9,15 +9,17 @@ public partial class Format
 
     public string Brand { get; set; } = null!;
 
-    public string Instruction { get; set; } = null!;
+    public string Color { get; set; }
 
-    public string Color { get; set; } = null!;
+    public int ItemPrice { get; set; }
 
     public int Store { get; set; }
 
     public string Space { get; set; } = null!;
 
+    public int ItemId { get; set; }
+
     public virtual ICollection<Img> Img { get; set; } = new List<Img>();
 
-    public virtual ICollection<Item> Item { get; set; } = new List<Item>();
+    public virtual Item Item { get; set; } = null!;
 }

@@ -31,13 +31,30 @@ namespace MP.Controllers
         }
         #region 取得商品一覽
         [HttpGet]
-        public IEnumerable<ProductDto> Get()
+        public IActionResult GetAllProduct()
         {
             var result = _service.GetProduct();
-            return result;
+            var response = new{ Status = 200, Message = result };
+            var jsonresponse = JsonConvert.SerializeObject(response);
+            return Content(jsonresponse,"application/json");
         }
         #endregion
-        
+        #region 商品資訊
+        /*[HttpGet("{ItemId}")]
+        public IActionResult GetProduct(int ItemId){
+            var result = _service.GetProductFormatById(ItemId);
+            if(result != null){
+                var response = new{ Status = 200, Message = result};
+                var jsonresponse = JsonConvert.SerializeObject(response);
+                return Content(jsonresponse,"application/json");
+            }
+            else{
+                var response = new{ Status = 400, Messae = "查無商品"};
+                var jsonresponse = JsonConvert.SerializeObject(response);
+                return Content(jsonresponse,"application/json");
+            }
+        }*/
+        #endregion
         
 
     }
