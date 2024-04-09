@@ -31,14 +31,45 @@ namespace MP.Services
                              where img.FormatId == g.Min(x => x.f.FormatId)
                              orderby img.Id
                              select img.ItemImg).FirstOrDefault()
-                  }).ToList();
+                  });
 
             return result;
         }
 
         #endregion
-        #region 取得單筆商品規格
-
+        #region 取得ItemId的所有商品規格
+        public IEnumerable<ItemDto> GetProductById(int ItemId)
+        {
+            var colorandspace = (from format in _phoneContext.Format
+                                 where format.ItemId==ItemId
+                                 select new {Color = format.Color,Space = format.Space}).Distinct().ToList();
+            // Console.WriteLine("請選擇您想要的Color和Space：");
+            foreach (var item in colorandspace)
+            {
+                Console.WriteLine($"Color: {item.Color}, Space: {item.Space}");
+            }
+            // Console.WriteLine("請輸入您選擇的Color：");
+            // string userColor = Console.ReadLine();
+            // Console.WriteLine("請輸入您選擇的Space：");
+            // string userSpace = Console.ReadLine();
+            // Console.WriteLine("請輸入您選擇的數量：");
+            // int userNum = int.Parse(Console.ReadLine());
+            var result = (from item in _phoneContext.Item  
+            join format in _phoneContext.Format on item.ItemId equals format.ItemId
+            join img in _phoneContext.Img on format.FormatId equals img.FormatId
+            where item.ItemId == ItemId /*&& format.Store!=0 && format.Color==userColor && format.Space==userSpace && userNum<format.Store*/
+            select new ItemDto
+            {
+                FormatId = format.FormatId,
+                ItemImg = img.ItemImg,
+                Brand = format.Brand,
+                ItemName = item.ItemName,
+                Color = format.Color,
+                Space = format.Space,
+                ItemPrice = format.ItemPrice
+            }).ToList();
+            return result;
+        }
         #endregion
         #region 取得商品介紹
         

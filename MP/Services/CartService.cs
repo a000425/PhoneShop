@@ -44,12 +44,12 @@ namespace MP.Services
                 }
                 else 
                 {
-                    return "無法加入購物車2";
+                    return "查無此規格";
                 }
             }
             else 
             {
-                return "無法加入購物車1";
+                return "查無此商品";
             }
            
         }

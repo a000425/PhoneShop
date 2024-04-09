@@ -56,10 +56,6 @@ namespace MP.Controllers
                 var jsonresponse = JsonConvert.SerializeObject(response);
                 return Content(jsonresponse,"application/json");
             }
-
-            
         } 
-
-
     }
 }

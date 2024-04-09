@@ -40,10 +40,10 @@ namespace MP.Controllers
         }
         #endregion
         #region 商品資訊
-        /*[HttpGet("{ItemId}")]
+        [HttpGet("{ItemId}")]
         public IActionResult GetProduct(int ItemId){
-            var result = _service.GetProductFormatById(ItemId);
-            if(result != null){
+            var result = _service.GetProductById(ItemId);
+            if(result != null && result.Any()){
                 var response = new{ Status = 200, Message = result};
                 var jsonresponse = JsonConvert.SerializeObject(response);
                 return Content(jsonresponse,"application/json");
@@ -53,9 +53,8 @@ namespace MP.Controllers
                 var jsonresponse = JsonConvert.SerializeObject(response);
                 return Content(jsonresponse,"application/json");
             }
-        }*/
+        }
         #endregion
-        
 
     }
 }
