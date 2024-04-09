@@ -13,6 +13,7 @@ namespace MP.Dtos
         public string ItemName { get; set; } = null!;
         public int ItemPrice { get; set; }
         public int FormatId { get; set; }
+        public int ItemId { get; set; }
         // public List<Img>? ImgList{get;set;}
     }
 }
