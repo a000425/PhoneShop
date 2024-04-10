@@ -16,20 +16,17 @@ namespace MP.Controllers
     {
         private readonly CartService _service;
         private readonly MemberService _memberService;
-        private string UserAccount;
         public CartController(CartService service, MemberService memberService,IHttpContextAccessor httpContextAccessor)
         {
             _service = service;
             _memberService = memberService;
-            var context = httpContextAccessor.HttpContext;
-            UserAccount = _memberService.GetUserAccountFromToken(context);
         }
 
         [HttpPost]
         [Authorize]
         public IActionResult AddCart(Cart cart)
         {
-            var result = _service.AddCart(UserAccount,cart.ItemId,cart.ItemNum,cart.FormatId);
+            var result = _service.AddCart(HttpContext.User.Identity.Name,cart.ItemId,cart.ItemNum,cart.FormatId);
             var response = new { Status = 200, Message = result };
             var jsongoodResponse = JsonConvert.SerializeObject(response); // 序列化為 JSON 格式的字符串
             return Content(jsongoodResponse, "application/json");
@@ -38,15 +35,15 @@ namespace MP.Controllers
         [Authorize]
         public IEnumerable<CartDto> Get()
         {
-            var result = _service.GetAllCartList(UserAccount);
+            var result = _service.GetAllCartList(HttpContext.User.Identity.Name);
             return result;
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete]
         [Authorize]
         public IActionResult DeleteItemFromCart(int id)
         {
-            if(_service.DeleteCart(id,UserAccount)){
+            if(_service.DeleteCart(id,HttpContext.User.Identity.Name)){
                 var response = new{Status=200,Message="已刪除"};
                 var jsonresponse = JsonConvert.SerializeObject(response);
                 return Content(jsonresponse,"application/json");

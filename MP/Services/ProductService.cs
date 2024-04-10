@@ -71,8 +71,21 @@ namespace MP.Services
             return result;
         }
         #endregion
-        #region 取得商品介紹
-        
+        #region 取得商品ID & 價格
+        public Format GetId(string color, string space,int ItemId){
+            var result = (from a in _phoneContext.Format
+                        where a.Color == color && a.Space == space && a.ItemId == ItemId
+                        select new Format{ 
+                            FormatId = a.FormatId,
+                            Brand = a.Brand,
+                            Color = a.Color,
+                            Space = a.Space,
+                            ItemPrice = a.ItemPrice,
+                            ItemId = a.ItemId,
+                            Store = a.Store
+                            } ).SingleOrDefault();
+            return result;
+        }
         #endregion
     }
 }

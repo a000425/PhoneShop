@@ -16,12 +16,12 @@ namespace MP.Services
             _phoneContext = phoneContext;
         }
 
-        public string AddCart(string user,int ItemId,int num,int FormatId)
+        public string AddCart(string user,int ItemId,int num,int formatId)
         {
             var item = _phoneContext.Item.SingleOrDefault(i => i.ItemId == ItemId);
             if (item != null) 
             {
-                var format = _phoneContext.Format.SingleOrDefault(f => f.ItemId == item.ItemId && f.FormatId == FormatId);
+                var format = _phoneContext.Format.SingleOrDefault(f => f.ItemId == item.ItemId && f.FormatId == formatId);
                 if (format != null)
                 {
                     if (num <= format.Store)
@@ -30,6 +30,7 @@ namespace MP.Services
                         {
                             Account = user,
                             ItemId = ItemId,
+                            FormatId = formatId,
                             ItemNum = num,
                             AddTime = DateTime.Now
                         };
@@ -84,5 +85,8 @@ namespace MP.Services
                 return false;
             }
         }
+        #region 下訂單
+        
+        #endregion
     }
 }

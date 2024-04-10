@@ -59,6 +59,13 @@ builder.Services.AddAuthentication(options =>
             }
         };
     });
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("Admin", policy =>
+    {
+        policy.RequireRole("Admin");
+    });
+});
 
 var app = builder.Build();
 

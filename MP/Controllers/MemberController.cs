@@ -16,6 +16,7 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Routing.Tree;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Identity;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -31,6 +32,7 @@ namespace MP.Controllers
         private readonly MemberService _services;
         private readonly MailService _mail;
         private readonly IConfiguration _configuration;
+        private string UserAccount;
         public MemberController(PhoneContext phoneContext,IMapper mapper, MemberService services,MailService mail, IConfiguration configuration)
         {
             _phoneContext = phoneContext;
@@ -38,6 +40,7 @@ namespace MP.Controllers
             _services = services;
             _mail = mail;
             _configuration = configuration;
+            
         }
         
         #region 註冊
@@ -109,8 +112,6 @@ namespace MP.Controllers
         [HttpPost("ChangePassword")]
         [Authorize]
         public async Task<IActionResult> ChangePassword(ChangePasswordDto changeDto){
-            var context = HttpContext;
-            var UserAccount = _services.GetUserAccountFromToken(context);
             if (UserAccount == null)
             {
                 var response = new { Status = 400, Message = "密碼修改失敗" };
@@ -146,13 +147,11 @@ namespace MP.Controllers
         }
         #endregion
         #region 取得帳號測試
-        [Authorize]
+        [Authorize("Admin")]
         [HttpGet("trytrysee")]
         public IActionResult trytrysee() 
         {
-            var context = HttpContext;
-            var UserAccount = _services.GetUserAccountFromToken(context);
-            var response = new { Status = 200, Messsage = UserAccount };
+            var response = new { Status = 200, Messsage =  HttpContext.User.Identity.Name + HttpContext.User.Claims.FirstOrDefault(c=>c.Type == ClaimTypes.Role).Value };
             var jsonresponse = JsonConvert.SerializeObject(response);
             return Content(jsonresponse, "application/json");
         }

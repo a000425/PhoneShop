@@ -47,12 +47,21 @@ namespace MP.Controllers
                 var response = new{ Status = 200, Message = result};
                 var jsonresponse = JsonConvert.SerializeObject(response);
                 return Content(jsonresponse,"application/json");
-            }
+            }   
             else{
                 var response = new{ Status = 400, Messae = "查無商品"};
                 var jsonresponse = JsonConvert.SerializeObject(response);
                 return Content(jsonresponse,"application/json");
             }
+        }
+        #endregion
+        [HttpGet("GetItemId")]
+        #region 商品詳細頁 > 規格
+        public IActionResult GetId([FromBody]Format format){
+            var result = _service.GetId(format.Color,format.Space,format.ItemId);
+            var response = new{Status = 200, Message =  result.FormatId};
+            var jsonresponse = JsonConvert.SerializeObject(response);
+            return Content(jsonresponse,"application/json");
         }
         #endregion
 
