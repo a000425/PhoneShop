@@ -12,6 +12,7 @@ namespace MP.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class CartController : ControllerBase
     {
         private readonly CartService _service;
@@ -23,7 +24,6 @@ namespace MP.Controllers
         }
 
         [HttpPost]
-        [Authorize]
         public IActionResult AddCart(Cart cart)
         {
             var result = _service.AddCart(HttpContext.User.Identity.Name,cart.ItemId,cart.ItemNum,cart.FormatId);
@@ -32,7 +32,6 @@ namespace MP.Controllers
             return Content(jsongoodResponse, "application/json");
         }
         [HttpGet]
-        [Authorize]
         public IEnumerable<CartDto> Get()
         {
             var result = _service.GetAllCartList(HttpContext.User.Identity.Name);
@@ -40,7 +39,6 @@ namespace MP.Controllers
         }
 
         [HttpDelete]
-        [Authorize]
         public IActionResult DeleteItemFromCart(int id)
         {
             if(_service.DeleteCart(id,HttpContext.User.Identity.Name)){
@@ -49,10 +47,19 @@ namespace MP.Controllers
                 return Content(jsonresponse,"application/json");
             }else
             {
-                var response = new{Status=200,Message="刪除失敗"};
+                var response = new{Status=400,Message= "查無項目"};
                 var jsonresponse = JsonConvert.SerializeObject(response);
                 return Content(jsonresponse,"application/json");
             }
         } 
+        #region 下訂單
+        [HttpPost("Order")]
+        public IActionResult getOrder([FromForm]CartDto cartDto, [FromForm] string address){
+            var OrderResult = _service.getOrder(cartDto,HttpContext.User.Identity.Name,address);
+            var response = new{Status=200,Message= OrderResult};
+            var jsonresponse = JsonConvert.SerializeObject(response);
+            return Content(jsonresponse,"application/json");
+        }
+        #endregion
     }
 }

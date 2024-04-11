@@ -4,6 +4,7 @@ using MP.Models;
 using MP.Dtos;
 using Microsoft.SqlServer.Server;
 using System.ComponentModel;
+using MP.Repository;
 
 
 namespace MP.Services
@@ -11,9 +12,11 @@ namespace MP.Services
     public class CartService
     {
         private readonly PhoneContext _phoneContext;
-        public CartService(PhoneContext phoneContext)
+        private readonly CartRepository _repository;
+        public CartService(PhoneContext phoneContext,CartRepository repository)
         {
             _phoneContext = phoneContext;
+            _repository = repository;
         }
 
         public string AddCart(string user,int ItemId,int num,int formatId)
@@ -59,10 +62,11 @@ namespace MP.Services
         {
             var shoppingCartItems = (from cart in _phoneContext.Cart
                              join item in _phoneContext.Item on cart.ItemId equals item.ItemId
-                             join format in _phoneContext.Format on cart.ItemId equals format.ItemId
+                             join format in _phoneContext.Format on cart.FormatId equals format.FormatId
                              where cart.Account == userAccount
                              select new CartDto
                              {
+                                 cartId = cart.Id,
                                  ItemName = item.ItemName,
                                  Color = format.Color,
                                  Space = format.Space,
@@ -74,7 +78,7 @@ namespace MP.Services
         }
         public bool DeleteCart(int id, string userAccount)
         {
-            var cart = (from a in _phoneContext.Cart where a.Id == id && a.Account ==userAccount select a).FirstOrDefault();
+            var cart = (from a in _phoneContext.Cart where a.ItemId == id && a.Account ==userAccount select a).FirstOrDefault();
             if(cart!=null)
             {
                 _phoneContext.Cart.Remove(cart);
@@ -86,7 +90,17 @@ namespace MP.Services
             }
         }
         #region 下訂單
-        
+        public string getOrder(CartDto cartDto,string account,string address){
+            try{
+                if(_repository.AddOrder(account,address))
+                    _repository.AddOrderItem(cartDto);
+                    _repository.DeleteCart(cartDto,account);
+            }catch(Exception e){
+                throw new Exception(e.ToString());
+            }
+            
+            return "下單成功";
+        }
         #endregion
     }
 }
