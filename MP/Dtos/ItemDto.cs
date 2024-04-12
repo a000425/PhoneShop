@@ -14,6 +14,8 @@ namespace MP.Dtos
         public int ItemPrice { get; set; }
         public int FormatId { get; set; }
         public int ItemId { get; set; }
+        public string Instruction {get; set; } = null!;
+        public int Store { get; set; } 
         // public List<Img>? ImgList{get;set;}
     }
 }
