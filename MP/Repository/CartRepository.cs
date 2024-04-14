@@ -11,15 +11,34 @@ namespace MP.Repository
         {
             _phoneContext = phoneContext;
         }
-        public bool AddOrder(string account,string address){
-            try{
-                var order = new Order{
+        public bool AddOrder(string account,string address,CartDto cartDto){
+           
+            decimal totalPrice = 0; // 用于存储总价格
+            try
+            {
+                
+
+                foreach (var num in cartDto.Items)
+                {
+                    var price = (from cart in _phoneContext.Cart
+                                join i in _phoneContext.Item on cart.ItemId equals i.ItemId
+                                join format in _phoneContext.Format on cart.FormatId equals format.FormatId
+                                where cart.Id == num.cartId
+                                select format.ItemPrice).FirstOrDefault(); // 获取价格并确保只返回一个值
+
+                    var itemnum = (from c in _phoneContext.Cart where c.Id == num.cartId select c.ItemNum).FirstOrDefault();
+                    totalPrice += price * itemnum; // 将价格添加到总价格中
+                }
+
+                var order = new Order
+                {
                     Account = account,
-                    TotalPrice = 0,
+                    TotalPrice = (int)totalPrice, // 将总价格赋值给订单的 TotalPrice 属性
                     OrderTime = DateTime.Now,
                     OrderStatus = "未出貨",
                     Address = address
-                    };
+                };
+
                 _phoneContext.Order.Add(order);
                 _phoneContext.SaveChanges();
             }
@@ -36,16 +55,22 @@ namespace MP.Repository
                                     .OrderByDescending(o=>o.OrderTime)
                                     .Select(o=>o.OrderId)
                                     .FirstOrDefault(),
-                        ItemId = (from a in _phoneContext.Item
-                                where a.ItemName == cartDto.ItemName
-                                select a.ItemId).FirstOrDefault(),
-                        FormatId =  (from a in _phoneContext.Item
-                                    join f in _phoneContext.Format on a.ItemId equals f.ItemId
-                                    where a.ItemName == cartDto.ItemName && f.Color == cartDto.Color && f.Space == cartDto.Space
-                                    select f.FormatId).FirstOrDefault(),
-                        ItemNum = cartDto.ItemNum
+                        ItemId = (from c in _phoneContext.Cart 
+                                    where c.Id == item.cartId 
+                                    select c.ItemId).FirstOrDefault(),
+                        FormatId =  (from c in _phoneContext.Cart 
+                                    where c.Id == item.cartId 
+                                    select c.FormatId).FirstOrDefault(),
+                        ItemNum = (from c in _phoneContext.Cart where c.Id == item.cartId select c.ItemNum).FirstOrDefault()
                     };
                     _phoneContext.OrderItem.Add(orderItem);
+                    var format = _phoneContext.Format.SingleOrDefault(f => f.FormatId == orderItem.FormatId);
+                    if(format != null)
+                    {
+                        format.Store = format.Store - orderItem.ItemNum;
+                        
+                    }
+
                 }
                 _phoneContext.SaveChanges();
             }

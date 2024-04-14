@@ -92,7 +92,7 @@ namespace MP.Services
         #region 下訂單
         public string getOrder(CartDto cartDto,string account,string address){
             try{
-                if(_repository.AddOrder(account,address))
+                if(_repository.AddOrder(account,address,cartDto))
                     _repository.AddOrderItem(cartDto);
                     _repository.DeleteCart(cartDto,account);
             }catch(Exception e){
