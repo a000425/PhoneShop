@@ -86,7 +86,7 @@ namespace MP.Controllers
         #endregion
         #region 登入
         [HttpPost("Login")]
-        public IActionResult Login(LoginDto loginDto){
+        public IActionResult Login([FromBody]LoginDto loginDto){
             var result = _services.Login(loginDto.Account1,loginDto.Password);
             if (result == "登入成功")
             {
@@ -94,7 +94,8 @@ namespace MP.Controllers
                 var cookieOption = new CookieOptions
                 {
                     Expires = DateTime.Now.AddMinutes(30),
-                    HttpOnly = true
+                    SameSite = SameSiteMode.None,
+                    Secure = true
                 };
                 Response.Cookies.Append("Token", token, cookieOption);
                 var response = new { Status = 200, Message = "已登入" };
