@@ -28,5 +28,63 @@ namespace MP.Controllers
             return Content(jsongoodResponse, "application/json");
         }
         #endregion
+
+        #region 顯示所有未回覆QA
+        [HttpGet("QA/Unreply")]
+        public IActionResult GetQAUnreply()
+        {
+            var result = _backService.GetQAUnreply();
+            if (result != null && result.Any())
+            {
+                var response = new { Status = 200, Message = result };
+                var jsonresponse = JsonConvert.SerializeObject(response);
+                return Content(jsonresponse, "application/json");
+            }
+            else
+            {
+                var response = new { Status = 400, Messae = "�d�LQA" };
+                var jsonresponse = JsonConvert.SerializeObject(response);
+                return Content(jsonresponse, "application/json");
+            }
+        }
+        #endregion
+        #region 顯示所有已回覆QA
+        [HttpGet("QA/Reply")]
+        public IActionResult GetQAReply()
+        {
+            var result = _backService.GetQAReply();
+            if (result != null && result.Any())
+            {
+                var response = new { Status = 200, Message = result };
+                var jsonresponse = JsonConvert.SerializeObject(response);
+                return Content(jsonresponse, "application/json");
+            }
+            else
+            {
+                var response = new { Status = 400, Messae = "�d�LQA" };
+                var jsonresponse = JsonConvert.SerializeObject(response);
+                return Content(jsonresponse, "application/json");
+            }
+        }
+        #endregion
+        #region 回覆問題
+        [HttpPost("QA/Reply/{QAId}")]
+        public IActionResult ReplyQA(int QAId, [FromForm] string reply)
+        {
+            var result = _backService.ReplyQA(QAId, reply);
+            if (result != null && result.Any())
+            {
+                var response = new { Status = 200, Message = result };
+                var jsonresponse = JsonConvert.SerializeObject(response);
+                return Content(jsonresponse, "application/json");
+            }
+            else
+            {
+                var response = new { Status = 400, Messaeg = result };
+                var jsonresponse = JsonConvert.SerializeObject(response);
+                return Content(jsonresponse, "application/json");
+            }
+        }
+        #endregion
     }
 }

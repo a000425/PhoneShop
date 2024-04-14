@@ -87,6 +87,51 @@ namespace MP.Services
             return result;
         }
         #endregion
+        #region 取得商品的所有QA
+        public IEnumerable<FrontQADto> GetQAById(int itemId)
+        {
+            var result = (from p in _phoneContext.QA
+                          join i in _phoneContext.Item on p.ItemId equals i.ItemId
+                          where p.ItemId == itemId
+                          select new FrontQADto
+                          {
+                              Account=p.Account,
+                              Content=p.Content,
+                              CreateTime=p.CreateTime,
+                              Reply=p.Reply,
+                              ReplyTime=p.ReplyTime
+                          });
+
+            return result;
+            
+        }
+        #endregion
+        #region 提問ProductQA
+        public string ProductQA(int ItemId, string User,string content)
+        {
+            var item = _phoneContext.Item.SingleOrDefault(i => i.ItemId == ItemId);
+            if (item != null)
+            {
+                QA qa = new QA
+                {
+
+                    ItemId = ItemId,
+                    Account=User,
+                    Content=content,
+                    CreateTime=DateTime.Now
+
+                };
+                _phoneContext.QA.Add(qa);
+                _phoneContext.SaveChanges();
+                return "提問成功";
+            }
+            else
+            {
+                return "查無此商品QA";
+            }
+
+        }
+        #endregion
     }
 }
 //查詢所有商品LINQ傳SQL寫法

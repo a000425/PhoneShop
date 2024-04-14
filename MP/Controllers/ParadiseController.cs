@@ -64,6 +64,45 @@ namespace MP.Controllers
             return Content(jsonresponse,"application/json");
         }
         #endregion
+        #region QA顯示
+        [HttpGet("QA/{ItemId}")]
+        public IActionResult GetProductQA(int ItemId)
+        {
+            var result = _service.GetQAById(ItemId);
+            if (result != null && result.Any())
+            {
+                var response = new { Status = 200, Message = result };
+                var jsonresponse = JsonConvert.SerializeObject(response);
+                return Content(jsonresponse, "application/json");
+            }
+            else
+            {
+                var response = new { Status = 400, Messae = "查無商品" };
+                var jsonresponse = JsonConvert.SerializeObject(response);
+                return Content(jsonresponse, "application/json");
+            }
+        }
+        #endregion
+        #region QA問
+        [Authorize]
+        [HttpPost("{ItemId}")]
+        public IActionResult ProductQA(int ItemId, [FromForm] string content)
+        {
+            var result = _service.ProductQA(ItemId, HttpContext.User.Identity.Name, content);
+            if (result != null && result.Any())
+            {
+                var response = new { Status = 200, Message = result };
+                var jsonresponse = JsonConvert.SerializeObject(response);
+                return Content(jsonresponse, "application/json");
+            }
+            else
+            {
+                var response = new { Status = 400, Messae = "查無商品" };
+                var jsonresponse = JsonConvert.SerializeObject(response);
+                return Content(jsonresponse, "application/json");
+            }
+        }
+        #endregion
 
     }
 }
