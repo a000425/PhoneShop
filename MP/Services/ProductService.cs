@@ -20,10 +20,11 @@ namespace MP.Services
         {
         var result = (from p in _phoneContext.Item
                   join f in _phoneContext.Format on p.ItemId equals f.ItemId
-                  group new { p, f } by new { p.ItemId, p.ItemName } into g
+                  group new { p, f } by new { p.ItemId, p.ItemName,f.Brand } into g
                   select new ProductDto
                   {
                       ItemId = g.Key.ItemId,
+                      Brand = g.Key.Brand,
                       ItemName = g.Key.ItemName,
                       ItemPriceMax = g.Max(x => x.f.ItemPrice),
                       ItemPriceMin = g.Min(x => x.f.ItemPrice),
