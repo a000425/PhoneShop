@@ -1,10 +1,6 @@
 {
   "version": 2,
-<<<<<<< HEAD
   "dgSpecHash": "JC+gWd6obP+V5R2AortRAwMGd9QdZ1MzQbyLMxRgGtnyKrecaN/VW0gE9bLVBYp5JAMPREXkQ2s61HI8rQBwNQ==",
-=======
-  "dgSpecHash": "4cEYZrFRDonoJzE4GUJl3MLocfdDWrHPiRSuM8Zw9Uvzn5Aag3WSvCh0N9mY6ToQB4dr8jswea7lFEjfAX9SRA==",
->>>>>>> eb1c4472805a1ad7a0544cbca21175a7025d7315
   "success": true,
   "projectFilePath": "C:\\Users\\User\\source\\repos\\0323\\PhoneShop\\MP\\MP.csproj",
   "expectedPackageFiles": [

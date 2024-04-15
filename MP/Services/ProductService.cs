@@ -36,7 +36,27 @@ namespace MP.Services
 
             return result;
         }
-
+        #endregion
+        #region 取得品牌所有商品
+        public IEnumerable<ProductDto> GetProductByBrand(string Brand){
+           var result = (from p in _phoneContext.Item
+                  join f in _phoneContext.Format on p.ItemId equals f.ItemId
+                  where f.Brand == Brand
+                  group new { p, f } by new { p.ItemId, p.ItemName,f.Brand } into g
+                  select new ProductDto
+                  {
+                      ItemId = g.Key.ItemId,
+                      Brand = g.Key.Brand,
+                      ItemName = g.Key.ItemName,
+                      ItemPriceMax = g.Max(x => x.f.ItemPrice),
+                      ItemPriceMin = g.Min(x => x.f.ItemPrice),
+                      ItemImg = (from img in _phoneContext.Img
+                             where img.FormatId == g.Min(x => x.f.FormatId)
+                             orderby img.Id
+                             select img.ItemImg).FirstOrDefault()
+                  });
+            return result;
+        }
         #endregion
         #region 取得ItemId的所有商品規格
         public IEnumerable<ItemDto> GetProductById(int ItemId)
