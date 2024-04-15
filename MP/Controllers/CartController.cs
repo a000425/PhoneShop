@@ -22,7 +22,7 @@ namespace MP.Controllers
             _service = service;
             _memberService = memberService;
         }
-
+        #region 加入購物車
         [HttpPost]
         public IActionResult AddCart(Cart cart)
         {
@@ -31,13 +31,16 @@ namespace MP.Controllers
             var jsongoodResponse = JsonConvert.SerializeObject(response); // 序列化為 JSON 格式的字符串
             return Content(jsongoodResponse, "application/json");
         }
+        #endregion
+        #region 顯示購物車內的商品資訊
         [HttpGet]
         public IEnumerable<CartDto> Get()
         {
             var result = _service.GetAllCartList(HttpContext.User.Identity.Name);
             return result;
         }
-
+        #endregion
+        #region 刪除單筆商品
         [HttpDelete]
         public IActionResult DeleteItemFromCart(int id)
         {
@@ -52,6 +55,7 @@ namespace MP.Controllers
                 return Content(jsonresponse,"application/json");
             }
         } 
+        #endregion
         #region 下訂單
         [HttpPost("Order")]
         public IActionResult getOrder([FromForm]CartDto cartDto, [FromForm] string address){
@@ -59,6 +63,30 @@ namespace MP.Controllers
             var response = new{Status=200,Message= OrderResult};
             var jsonresponse = JsonConvert.SerializeObject(response);
             return Content(jsonresponse,"application/json");
+        }
+        #endregion
+        #region 顯示訂單資訊
+        [HttpGet("GetOrderItem")]
+        public IEnumerable<OrderItemDto> getOrderItem()
+        {
+            var getOrderItem = _service.GetOrderItem(HttpContext.User.Identity.Name);
+            return getOrderItem;
+        }
+        #endregion
+        #region 訂單查詢
+        [HttpGet("GetOrderItemId")]
+        public IEnumerable<OrderInfoDto> OrderDetail([FromBody]Order order)
+        {
+            var detail = _service.OrderDetail(HttpContext.User.Identity.Name,order.OrderId);
+            return detail;
+        }
+        #endregion
+        #region 個人資料
+        [HttpGet("Profile")]
+        public ProfileDto Profile()
+        {
+            var profile = _service.Profile(HttpContext.User.Identity.Name);
+            return profile;
         }
         #endregion
     }

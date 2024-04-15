@@ -43,24 +43,19 @@ namespace MP.Services
             var colorandspace = (from format in _phoneContext.Format
                                  where format.ItemId==ItemId
                                  select new {Color = format.Color,Space = format.Space}).Distinct().ToList();
-            // Console.WriteLine("請選擇您想要的Color和Space：");
             foreach (var item in colorandspace)
             {
                 Console.WriteLine($"Color: {item.Color}, Space: {item.Space}");
             }
-            // Console.WriteLine("請輸入您選擇的Color：");
-            // string userColor = Console.ReadLine();
-            // Console.WriteLine("請輸入您選擇的Space：");
-            // string userSpace = Console.ReadLine();
-            // Console.WriteLine("請輸入您選擇的數量：");
-            // int userNum = int.Parse(Console.ReadLine());
             var result = (from item in _phoneContext.Item  
             join format in _phoneContext.Format on item.ItemId equals format.ItemId
             join img in _phoneContext.Img on format.FormatId equals img.FormatId
-            where item.ItemId == ItemId /*&& format.Store!=0 && format.Color==userColor && format.Space==userSpace && userNum<format.Store*/
+            where item.ItemId == ItemId 
             select new ItemDto
             {
                 FormatId = format.FormatId,
+                ItemId = item.ItemId,
+                Store = format.Store,
                 ItemImg = img.ItemImg,
                 Brand = format.Brand,
                 ItemName = item.ItemName,

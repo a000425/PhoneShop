@@ -18,7 +18,7 @@ namespace MP.Services
             _phoneContext = phoneContext;
             _repository = repository;
         }
-
+        #region 加入購物車
         public string AddCart(string user,int ItemId,int num,int formatId)
         {
             var item = _phoneContext.Item.SingleOrDefault(i => i.ItemId == ItemId);
@@ -57,7 +57,8 @@ namespace MP.Services
             }
            
         }
-
+        #endregion
+        #region 顯示購物車內的商品資訊
         public IEnumerable<CartDto> GetAllCartList(string userAccount)
         {
             var shoppingCartItems = (from cart in _phoneContext.Cart
@@ -66,7 +67,6 @@ namespace MP.Services
                              where cart.Account == userAccount
                              select new CartDto
                              {
-                                 cartId = cart.Id,
                                  ItemName = item.ItemName,
                                  Color = format.Color,
                                  Space = format.Space,
@@ -76,6 +76,8 @@ namespace MP.Services
 
             return shoppingCartItems;
         }
+        #endregion
+        #region 刪除單筆商品
         public bool DeleteCart(int id, string userAccount)
         {
             var cart = (from a in _phoneContext.Cart where a.ItemId == id && a.Account ==userAccount select a).FirstOrDefault();
@@ -89,6 +91,7 @@ namespace MP.Services
                 return false;
             }
         }
+        #endregion
         #region 下訂單
         public string getOrder(CartDto cartDto,string account,string address){
             try{
@@ -100,6 +103,26 @@ namespace MP.Services
             }
             
             return "下單成功";
+        }
+        #endregion
+        #region 顯示訂單資訊
+        public IEnumerable<OrderItemDto> GetOrderItem(string account){
+            var getOrderItem = _repository.GetOrderItem(account);
+            return getOrderItem;
+        }
+        #endregion
+        #region 訂單查詢
+        public IEnumerable<OrderInfoDto> OrderDetail(string account,int id)
+        {
+            var detail = _repository.OrderDetail(account,id);
+            return detail;
+        }
+        #endregion
+        #region 個人資料
+        public ProfileDto Profile(string account)
+        {
+            var profile = _repository.Profile(account);
+            return profile;
         }
         #endregion
     }
