@@ -12,7 +12,7 @@ public partial class Item
     public string Instruction { get; set; } = null!;
 
     public bool? IsAvailable { get; set; }
-
+    public DateTime CreateTime {get;set; }
     public virtual ICollection<Cart> Cart { get; set; } = new List<Cart>();
 
     public virtual ICollection<Format> Format { get; set; } = new List<Format>();

@@ -29,7 +29,18 @@ namespace MP.Services
             }
             return "新增失敗";
         }
-
+        #region 上架
+        public string UPItem(int ItemId){
+            var result = _repository.UPItem(ItemId);
+            return result;
+        }
+        #endregion
+        #region 下架
+        public string DownItem(int ItemId){
+            var result = _repository.DownItem(ItemId);
+            return result;
+        }
+        #endregion
         #region 取得所有QA未回覆
         public IEnumerable<BackQAUnreplyDto> GetQAUnreply()
         {

@@ -28,7 +28,38 @@ namespace MP.Controllers
             return Content(jsongoodResponse, "application/json");
         }
         #endregion
-
+        #region 上架
+        [HttpPost("UP")]
+        public IActionResult UPItem([FromBody]int ItemId){
+            var result = _backService.UPItem(ItemId);
+            if(result == "上架成功"){
+                var response = new { Status = 200, message = result};
+                var jsongoodResponse = JsonConvert.SerializeObject(response);
+                return Content(jsongoodResponse, "application/json");
+            }
+            else{
+                var response = new { Status = 400, message = result};
+                var jsongoodResponse = JsonConvert.SerializeObject(response);
+                return Content(jsongoodResponse, "application/json");                
+            }
+        }
+        #endregion
+        #region 下架
+        [HttpPost("Down")]
+        public IActionResult DownItem([FromBody]int ItemId){
+            var result = _backService.DownItem(ItemId);
+            if(result == "下架成功"){
+                var response = new { Status = 200, message = result};
+                var jsongoodResponse = JsonConvert.SerializeObject(response);
+                return Content(jsongoodResponse, "application/json");
+            }
+            else{
+                var response = new { Status = 400, message = result};
+                var jsongoodResponse = JsonConvert.SerializeObject(response);
+                return Content(jsongoodResponse, "application/json");                
+            }
+        }
+        #endregion
         #region 顯示所有未回覆QA
         [HttpGet("QA/Unreply")]
         public IActionResult GetQAUnreply()
