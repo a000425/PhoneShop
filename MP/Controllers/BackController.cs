@@ -42,7 +42,7 @@ namespace MP.Controllers
             }
             else
             {
-                var response = new { Status = 400, Messae = "�d�LQA" };
+                var response = new { Status = 400, Messae = "沒有未回覆QA" };
                 var jsonresponse = JsonConvert.SerializeObject(response);
                 return Content(jsonresponse, "application/json");
             }
@@ -61,7 +61,7 @@ namespace MP.Controllers
             }
             else
             {
-                var response = new { Status = 400, Messae = "�d�LQA" };
+                var response = new { Status = 400, Messae = "沒有已回覆QA" };
                 var jsonresponse = JsonConvert.SerializeObject(response);
                 return Content(jsonresponse, "application/json");
             }

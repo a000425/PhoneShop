@@ -1,6 +1,10 @@
 {
   "version": 2,
+<<<<<<< HEAD
   "dgSpecHash": "4cEYZrFRDonoJzE4GUJl3MLocfdDWrHPiRSuM8Zw9Uvzn5Aag3WSvCh0N9mY6ToQB4dr8jswea7lFEjfAX9SRA==",
+=======
+  "dgSpecHash": "JC+gWd6obP+V5R2AortRAwMGd9QdZ1MzQbyLMxRgGtnyKrecaN/VW0gE9bLVBYp5JAMPREXkQ2s61HI8rQBwNQ==",
+>>>>>>> aa87fdde5d2124b20cdafae265f85315f8fd6b8e
   "success": true,
   "projectFilePath": "C:\\Users\\user\\OneDrive\\文件\\MP\\MP\\MP\\MP\\MP.csproj",
   "expectedPackageFiles": [
