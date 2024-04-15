@@ -90,11 +90,13 @@ namespace MP.Services
             }
         }
         #region 下訂單
-        public string getOrder(CartDto cartDto,string account,string address){
+        public string getOrder(string account,string address){
             try{
-                if(_repository.AddOrder(account,address,cartDto))
-                    _repository.AddOrderItem(cartDto);
-                    _repository.DeleteCart(cartDto,account);
+                var Cart = _repository.GetCarts(account);
+                if(_repository.AddOrder(Cart,account,address)){
+                    _repository.AddOrderItem(Cart);
+                    _repository.DeleteCart(account);
+                }
             }catch(Exception e){
                 throw new Exception(e.ToString());
             }

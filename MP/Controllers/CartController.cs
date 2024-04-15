@@ -54,8 +54,8 @@ namespace MP.Controllers
         } 
         #region 下訂單
         [HttpPost("Order")]
-        public IActionResult getOrder([FromForm]CartDto cartDto, [FromForm] string address){
-            var OrderResult = _service.getOrder(cartDto,HttpContext.User.Identity.Name,address);
+        public IActionResult getOrder([FromBody]string address){
+            var OrderResult = _service.getOrder(HttpContext.User.Identity.Name,address);
             var response = new{Status=200,Message= OrderResult};
             var jsonresponse = JsonConvert.SerializeObject(response);
             return Content(jsonresponse,"application/json");
