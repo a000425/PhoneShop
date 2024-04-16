@@ -123,19 +123,17 @@ namespace MP.Services
         }
         #endregion
         #region 提問ProductQA
-        public string ProductQA(int ItemId, string User,string content)
+        public string ProductQA(int ItemId, string User, string content)
         {
             var item = _phoneContext.Item.SingleOrDefault(i => i.ItemId == ItemId);
             if (item != null)
             {
-                QA qa = new QA
+                var qa = new QA
                 {
-
                     ItemId = ItemId,
-                    Account=User,
-                    Content=content,
-                    CreateTime=DateTime.Now
-
+                    Account = User,
+                    Content = content,
+                    CreateTime = DateTime.Now 
                 };
                 _phoneContext.QA.Add(qa);
                 _phoneContext.SaveChanges();
@@ -145,7 +143,6 @@ namespace MP.Services
             {
                 return "查無此商品QA";
             }
-
         }
         #endregion
     }

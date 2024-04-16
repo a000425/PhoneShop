@@ -106,5 +106,81 @@ namespace MP.Repository
             return false;
             
         }
+        #region 取得未回覆留言
+        public IEnumerable<BackQAUnreplyDto> GetQaUnreply()
+        {
+            IEnumerable<BackQAUnreplyDto> result;
+            try
+            {
+                result = (from q in _phoneContext.QA
+                          join i in _phoneContext.Item on q.ItemId equals i.ItemId
+                          where q.ReplyTime == null
+                          select new BackQAUnreplyDto
+                          {
+                              Id = q.Id,
+                              ItemName = i.ItemName,
+                              Account = q.Account,
+                              Content = q.Content,
+                              CreateTime = q.CreateTime
+                          });
+                          
+            }
+            catch (Exception e){
+                throw new Exception(e.ToString());
+            }
+            return result;
+        }
+        #endregion
+        #region 取得已回覆留言
+        public IEnumerable<BackQAReplyDto> GetQaReply()
+        {
+            IEnumerable<BackQAReplyDto> result;
+            try
+            {
+                 result = (from q in _phoneContext.QA
+                          join i in _phoneContext.Item on q.ItemId equals i.ItemId
+                          where q.ReplyTime != null 
+                          select new BackQAReplyDto
+                          {
+                              ItemName = i.ItemName,
+                              Account = q.Account,
+                              Content = q.Content,
+                              CreateTime = q.CreateTime,
+                              Reply = q.Reply,
+                              ReplyTime = q.ReplyTime
+                          });
+                          
+            }
+            catch (Exception e){
+                throw new Exception(e.ToString());
+            }
+            return result;
+        }
+        #endregion
+        #region 回覆QA
+        public string ReplyQa(int QAId, string Reply)
+        {
+            var Q = _phoneContext.QA.SingleOrDefault(q => q.Id == QAId);
+            if (Q != null)
+            {
+                if (Q.ReplyTime == null)
+                {
+                    Q.Reply = Reply;
+                    Q.ReplyTime = DateTime.Now;
+                    _phoneContext.SaveChanges();
+                    return "回覆成功";
+                }
+                else 
+                {
+                    return "此問題已回覆";
+                }
+            }
+            else
+            {
+                return "查無此問題";
+            }
+            
+        }
+        #endregion
     }
 }
