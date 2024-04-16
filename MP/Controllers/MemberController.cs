@@ -32,7 +32,6 @@ namespace MP.Controllers
         private readonly MemberService _services;
         private readonly MailService _mail;
         private readonly IConfiguration _configuration;
-        private string UserAccount;
         public MemberController(PhoneContext phoneContext,IMapper mapper, MemberService services,MailService mail, IConfiguration configuration)
         {
             _phoneContext = phoneContext;

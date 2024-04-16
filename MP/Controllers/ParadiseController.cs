@@ -39,10 +39,28 @@ namespace MP.Controllers
             return Content(jsonresponse,"application/json");
         }
         #endregion
+        #region 熱銷商品
+        [HttpGet("Hot")]
+        public IActionResult GetHotProduct(){
+            var result = _service.GetHotProduct();
+            var response = new{ Status = 200, Message = result };
+            var jsonresponse = JsonConvert.SerializeObject(response);
+            return Content(jsonresponse,"application/json");
+        }
+        #endregion
         #region 取得品牌商品一覽與排序
         [HttpGet("{Brand}")]
         public IActionResult GetProductByBrand(string Brand,[FromBody]int sortway){
             var result = _service.GetProductByBrand(Brand,sortway);
+            var response = new{ Status = 200, Message = result };
+            var jsonresponse = JsonConvert.SerializeObject(response);
+            return Content(jsonresponse,"application/json");
+        }
+        #endregion
+        #region 取得商品一覽(價格)
+        [HttpGet("GetProduct")]
+        public IActionResult GetProductByPrice([FromQuery]int MaxPrice,[FromQuery]int MinPrice,[FromBody]int sortway){
+            var result = _service.GetProductByPrice(MaxPrice,MinPrice,sortway);
             var response = new{ Status = 200, Message = result };
             var jsonresponse = JsonConvert.SerializeObject(response);
             return Content(jsonresponse,"application/json");
