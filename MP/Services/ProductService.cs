@@ -37,8 +37,8 @@ namespace MP.Services
             return result;
         }
         #endregion
-        #region 取得品牌所有商品
-        public IEnumerable<ProductDto> GetProductByBrand(string Brand){
+        #region 取得品牌所有商品與排序方式
+        public IEnumerable<ProductDto> GetProductByBrand(string Brand ,int sortway){
            var result = (from p in _phoneContext.Item
                   join f in _phoneContext.Format on p.ItemId equals f.ItemId
                   where f.Brand == Brand
@@ -55,6 +55,27 @@ namespace MP.Services
                              orderby img.Id
                              select img.ItemImg).FirstOrDefault()
                   });
+            if(sortway==0)
+            {
+                result=result.OrderByDescending(item => item.ItemId);
+            }
+            else if(sortway==1)
+            {
+                result=result.OrderBy(item => item.ItemId);
+            }
+            else if(sortway==2)
+            {
+                result=result.OrderByDescending(item => item.ItemPriceMin);
+            }
+            else if(sortway==3)
+            {
+                result=result.OrderBy(item => item.ItemPriceMin);
+            }
+            else
+            {
+                throw new ArgumentException("無此排序方式");
+            }
+
             return result;
         }
         #endregion

@@ -39,10 +39,10 @@ namespace MP.Controllers
             return Content(jsonresponse,"application/json");
         }
         #endregion
-        #region 取得品牌商品一覽
+        #region 取得品牌商品一覽與排序
         [HttpGet("{Brand}")]
-        public IActionResult GetProductByBrand(string Brand){
-            var result = _service.GetProductByBrand(Brand);
+        public IActionResult GetProductByBrand(string Brand,[FromBody]int sortway){
+            var result = _service.GetProductByBrand(Brand,sortway);
             var response = new{ Status = 200, Message = result };
             var jsonresponse = JsonConvert.SerializeObject(response);
             return Content(jsonresponse,"application/json");
