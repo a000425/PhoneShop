@@ -113,13 +113,13 @@ namespace MP.Controllers
         [HttpPost("ChangePassword")]
         [Authorize]
         public async Task<IActionResult> ChangePassword(ChangePasswordDto changeDto){
-            if (UserAccount == null)
+            if (HttpContext.User.Identity.Name == null)
             {
                 var response = new { Status = 400, Message = "密碼修改失敗" };
                 var jsongoodResponse = JsonConvert.SerializeObject(response); // 序列化為 JSON 格式的字符串
                 return Content(jsongoodResponse, "application/json");
             }
-            var result =await _services.ChangePassword(UserAccount,changeDto.OldPassword,changeDto.NewPassword);
+            var result =await _services.ChangePassword(HttpContext.User.Identity.Name,changeDto.OldPassword,changeDto.NewPassword);
             if(result=="密碼更改成功"){
                 var response = new{Status=200,Messsage=result};
                 var jsonresponse = JsonConvert.SerializeObject(response);

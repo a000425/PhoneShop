@@ -120,6 +120,13 @@ namespace MP.Services
             return detail;
         }
         #endregion
+        #region 更改訂單狀態至已完成
+        public string OrderFinish(int orderId, string account)
+        {
+            var result = _repository.OrderStatusFinish(orderId,account);
+            return result;
+        }
+        #endregion
         #region 個人資料
         public ProfileDto Profile(string account)
         {

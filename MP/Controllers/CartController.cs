@@ -81,6 +81,18 @@ namespace MP.Controllers
             return detail;
         }
         #endregion
+        #region 更改訂單狀態至已完成
+        [HttpPost("OrderFinish")]
+        public IActionResult OrderFinish([FromBody] int OrderId)
+        {
+            var result = _service.OrderFinish(OrderId,HttpContext.User.Identity.Name);
+            var response = new{Status=200,Message= result};
+            var jsonresponse = JsonConvert.SerializeObject(response);
+            return Content(jsonresponse,"application/json");
+        }
+        #endregion
+
+
         #region 個人資料
         [HttpGet("Profile")]
         public ProfileDto Profile()

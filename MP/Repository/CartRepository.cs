@@ -158,5 +158,28 @@ namespace MP.Repository
             return profile;
         }
         #endregion
+        #region 訂單狀態更改為已完成
+        public string OrderStatusFinish(int orderId, string account)
+        {
+            var order =  _phoneContext.Order.SingleOrDefault(o => o.OrderId == orderId && o.Account == account);
+            if(order!=null)
+            {
+                if(order.OrderStatus == "已出貨")
+                {
+                    order.OrderStatus = "已完成";
+                    _phoneContext.SaveChanges();
+                    return("訂單已完成");
+                }else
+                {
+                    return("訂單狀態異常");
+                }
+                
+            }else
+            {
+                return("未找到此訂單");
+            }
+            
+        }
+        #endregion
     }
 }
