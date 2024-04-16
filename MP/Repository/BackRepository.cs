@@ -182,5 +182,86 @@ namespace MP.Repository
             
         }
         #endregion
+        #region 取得所有未出貨訂單
+        public IEnumerable<BackOrderShowDto> getOrderUnsend()
+        {   string orderstatus = "未出貨";
+            IEnumerable<BackOrderShowDto> order = getOrder(orderstatus);
+            return order;
+        }
+        #endregion
+        #region 取得所有已出貨訂單
+        public IEnumerable<BackOrderShowDto> getOrderSent()
+        {   string orderstatus = "已出貨";
+            IEnumerable<BackOrderShowDto> order = getOrder(orderstatus);
+            return order;
+        }
+        #endregion
+        #region 取得所有已完成訂單
+        public IEnumerable<BackOrderShowDto> getOrderFinish()
+        {   string orderstatus = "已完成";
+            IEnumerable<BackOrderShowDto> order = getOrder(orderstatus);
+            return order;
+        }
+        #endregion
+        #region 抓所有訂單
+        public IEnumerable<BackOrderShowDto> getOrder(string orderstatus)
+        {   
+            IEnumerable<BackOrderShowDto> order;
+            try
+            {
+                order = (from o in _phoneContext.Order
+                join oi in _phoneContext.OrderItem on o.OrderId equals oi.OrderId
+                where o.OrderStatus == orderstatus
+                select new BackOrderShowDto
+                {
+                     OrderId = o.OrderId,
+                     OrderTime = o.OrderTime,
+                     Account = o.Account,
+                     TotalPrice = o.TotalPrice,
+                     Address = o.Address,
+                     OrderStatus = o.OrderStatus,
+                     Items = (from i in _phoneContext.OrderItem
+                              join it in _phoneContext.Item on i.ItemId equals it.ItemId
+                              join f in _phoneContext.Format on i.FormatId equals f.FormatId
+                              where i.OrderId == o.OrderId
+                              select new BackOrderItemShowDto
+                              {
+                                  ItemName = it.ItemName,
+                                  ItemFormat = f.Space + "-" + f.Color,
+                                  ItemPrice = f.ItemPrice,
+                                  ItemNum = i.ItemNum
+                              }).ToList()
+                 }).GroupBy(o => o.OrderId).Select(g => g.First());
+                          
+            }
+            catch (Exception e){
+                throw new Exception(e.ToString());
+            }
+            return order;
+        }
+        #endregion
+        #region 訂單狀態更改為已出貨
+        public string OrderStatusSent(int orderId)
+        {
+            var order =  _phoneContext.Order.SingleOrDefault(o => o.OrderId == orderId);
+            if(order!=null)
+            {
+                if(order.OrderStatus == "未出貨")
+                {
+                    order.OrderStatus = "已出貨";
+                    _phoneContext.SaveChanges();
+                    return("訂單已出貨");
+                }else
+                {
+                    return("訂單狀態異常");
+                }
+                
+            }else
+            {
+                return("未找到此訂單");
+            }
+            
+        }
+        #endregion
     }
 }

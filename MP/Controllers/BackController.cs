@@ -117,5 +117,72 @@ namespace MP.Controllers
             }
         }
         #endregion
+        #region 未出貨訂單顯示
+        [HttpGet("OrderShowUnsend")]
+        public IActionResult OrderShowUnsend()
+        {
+            var Order = _backService.GetOrderUnsend();
+            if(Order != null && Order.Any())
+            {
+                var response = new { Status = 200, Message = Order };
+                var jsonresponse = JsonConvert.SerializeObject(response);
+                return Content(jsonresponse, "application/json");
+            }
+            else
+            {
+                var response = new { Status = 400, Messaeg = Order };
+                var jsonresponse = JsonConvert.SerializeObject(response);
+                return Content(jsonresponse, "application/json");
+            }
+        }
+        #endregion
+        #region 已出貨訂單顯示
+        [HttpGet("OrderShowSent")]
+        public IActionResult OrderShowSent()
+        {
+            var Order = _backService.GetOrderSent();
+            if(Order != null && Order.Any())
+            {
+                var response = new { Status = 200, Message = Order };
+                var jsonresponse = JsonConvert.SerializeObject(response);
+                return Content(jsonresponse, "application/json");
+            }
+            else
+            {
+                var response = new { Status = 400, Messaeg = Order };
+                var jsonresponse = JsonConvert.SerializeObject(response);
+                return Content(jsonresponse, "application/json");
+            }
+        }
+        #endregion
+        #region 已完成訂單顯示
+        [HttpGet("OrderShowFinish")]
+        public IActionResult OrderShowFinish()
+        {
+            var Order = _backService.GetOrderFinish();
+            if(Order != null && Order.Any())
+            {
+                var response = new { Status = 200, Message = Order };
+                var jsonresponse = JsonConvert.SerializeObject(response);
+                return Content(jsonresponse, "application/json");
+            }
+            else
+            {
+                var response = new { Status = 400, Messaeg = Order };
+                var jsonresponse = JsonConvert.SerializeObject(response);
+                return Content(jsonresponse, "application/json");
+            }
+        }
+        #endregion
+        #region 更改訂單狀態至已出貨
+        [HttpPost("OrderSent")]
+        public IActionResult OrderSent([FromBody] int OrderId)
+        {
+            var result = _backService.OrderSent(OrderId);
+            var response = new{Status=200,Message= result};
+            var jsonresponse = JsonConvert.SerializeObject(response);
+            return Content(jsonresponse,"application/json");
+        }
+        #endregion
     }
 }

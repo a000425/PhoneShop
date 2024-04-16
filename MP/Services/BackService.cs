@@ -63,5 +63,33 @@ namespace MP.Services
             return result;
         }
         #endregion
+        #region 取得未出貨訂單
+        public IEnumerable<BackOrderShowDto> GetOrderUnsend()
+        {
+            var Order = _repository.getOrderUnsend();
+            return Order;
+        }
+        #endregion
+        #region 取得已出貨訂單
+        public IEnumerable<BackOrderShowDto> GetOrderSent()
+        {
+            var Order = _repository.getOrderSent();
+            return Order;
+        }
+        #endregion
+        #region 取得已完成訂單
+        public IEnumerable<BackOrderShowDto> GetOrderFinish()
+        {
+            var Order = _repository.getOrderFinish();
+            return Order;
+        }
+        #endregion
+        #region 更改訂單狀態至已出貨
+        public string OrderSent(int orderId)
+        {
+            var result = _repository.OrderStatusSent(orderId);
+            return result;
+        }
+        #endregion
     }
 }
