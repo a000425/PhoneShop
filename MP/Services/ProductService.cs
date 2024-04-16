@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Net.Mime;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Cryptography;
 
 namespace MP.Services
 {
@@ -26,13 +28,58 @@ namespace MP.Services
                       ItemId = g.Key.ItemId,
                       Brand = g.Key.Brand,
                       ItemName = g.Key.ItemName,
-                      ItemPriceMax = g.Max(x => x.f.ItemPrice),
                       ItemPriceMin = g.Min(x => x.f.ItemPrice),
                       ItemImg = (from img in _phoneContext.Img
                              where img.FormatId == g.Min(x => x.f.FormatId)
                              orderby img.Id
                              select img.ItemImg).FirstOrDefault()
                   });
+
+            return result;
+        }
+        #endregion
+        #region 熱銷商品
+        public IEnumerable<ProductDto> GetHotProduct(){
+            var result = (from p in _phoneContext.Item
+              join f in _phoneContext.Format on p.ItemId equals f.ItemId
+              join oi in _phoneContext.OrderItem on p.ItemId equals oi.ItemId into orderItemsGroup
+              orderby orderItemsGroup.Sum(x => x.ItemNum) descending
+              group new { p, f, orderItemsGroup } by new { p.ItemId, p.ItemName, f.Brand } into g
+              select new ProductDto
+              {
+                  ItemId = g.Key.ItemId,
+                  Brand = g.Key.Brand,
+                  ItemName = g.Key.ItemName,
+                  ItemPriceMin = g.Min(x => x.f.ItemPrice),
+                  ItemImg = (from img in _phoneContext.Img
+                             where img.FormatId == g.Min(x => x.f.FormatId)
+                             orderby img.Id
+                             select img.ItemImg).FirstOrDefault()
+              }).Take(8);
+
+
+
+
+            /*if(sortway==0)
+            {
+                result=result.OrderByDescending(item => item.ItemId);
+            }
+            else if(sortway==1)
+            {
+                result=result.OrderBy(item => item.ItemId);
+            }
+            else if(sortway==2)
+            {
+                result=result.OrderByDescending(item => item.ItemPriceMin);
+            }
+            else if(sortway==3)
+            {
+                result=result.OrderBy(item => item.ItemPriceMin);
+            }
+            else
+            {
+                throw new ArgumentException("無此排序方式");
+            }*/
 
             return result;
         }
@@ -48,7 +95,47 @@ namespace MP.Services
                       ItemId = g.Key.ItemId,
                       Brand = g.Key.Brand,
                       ItemName = g.Key.ItemName,
-                      ItemPriceMax = g.Max(x => x.f.ItemPrice),
+                      ItemPriceMin = g.Min(x => x.f.ItemPrice),
+                      ItemImg = (from img in _phoneContext.Img
+                             where img.FormatId == g.Min(x => x.f.FormatId)
+                             orderby img.Id
+                             select img.ItemImg).FirstOrDefault()
+                  });
+            if(sortway==0)
+            {
+                result=result.OrderByDescending(item => item.ItemId);
+            }
+            else if(sortway==1)
+            {
+                result=result.OrderBy(item => item.ItemId);
+            }
+            else if(sortway==2)
+            {
+                result=result.OrderByDescending(item => item.ItemPriceMin);
+            }
+            else if(sortway==3)
+            {
+                result=result.OrderBy(item => item.ItemPriceMin);
+            }
+            else
+            {
+                throw new ArgumentException("無此排序方式");
+            }
+
+            return result;
+        }
+        #endregion
+        #region 取得商品一覽(價格)
+        public IEnumerable<ProductDto> GetProductByPrice(int MaxPrice,int MinPrice,int sortway){
+            var result = (from p in _phoneContext.Item
+                  join f in _phoneContext.Format on p.ItemId equals f.ItemId
+                  group new { p, f } by new { p.ItemId, p.ItemName,f.Brand } into g
+                  where g.Min(x => x.f.ItemPrice) <= MaxPrice && g.Min(x => x.f.ItemPrice) >= MinPrice
+                  select new ProductDto
+                  {
+                      ItemId = g.Key.ItemId,
+                      Brand = g.Key.Brand,
+                      ItemName = g.Key.ItemName,
                       ItemPriceMin = g.Min(x => x.f.ItemPrice),
                       ItemImg = (from img in _phoneContext.Img
                              where img.FormatId == g.Min(x => x.f.FormatId)
