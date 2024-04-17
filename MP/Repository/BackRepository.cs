@@ -277,14 +277,12 @@ namespace MP.Repository
                 {
                      ItemName = i.ItemName,
                      Format = (from f in _phoneContext.Format
-                              join it in _phoneContext.Item on f.ItemId equals it.ItemId
-                              where f.ItemId == i.ItemId
+                               where f.ItemId == i.ItemId
+                               group f by f.Space into groupedFormats
                               select new BackItemFormatStoreDto
                               {
-                                  Space = f.Space,
-                                  info = (from fi in _phoneContext.Format
-                                          where fi.Space == f.Space
-                                          select new BackItemFormatStoreDto
+                                  Space = groupedFormats.Key,
+                                  info = groupedFormats.Select(fi => new BackItemFormatStoreDto
                                           {
                                             Color = fi.Color,
                                             Store = fi.Store,
