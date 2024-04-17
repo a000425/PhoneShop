@@ -18,7 +18,7 @@ namespace MP.Repository
                 var Item = new Item {
                 ItemName = itemDto.ItemName,
                 Instruction = itemDto.Instruction,
-                IsAvailable = true,
+                IsAvailable = false,
                 CreateTime = DateTime.Now
             };
             _phoneContext.Item.Add(Item);
@@ -33,7 +33,7 @@ namespace MP.Repository
             try{
                 itemDto.ItemId = (from a in _phoneContext.Item
                           where a.ItemName == itemDto.ItemName
-                          select a.ItemId).SingleOrDefault();
+                          select a.ItemId).FirstOrDefault();
                 var format = new Models.Format {
                 Brand = itemDto.Brand,
                 Color = itemDto.Color,
@@ -54,7 +54,7 @@ namespace MP.Repository
                 var img = new Models.Img {
                     FormatId = (from a in _phoneContext.Format
                                 where a.ItemId == itemDto.ItemId && a.Space == itemDto.Space && a.Color == itemDto.Color
-                                select a.FormatId).SingleOrDefault(),
+                                select a.FormatId).FirstOrDefault(),
                     ItemImg = itemDto.ItemImg
                 };
                 _phoneContext.Img.Add(img);
