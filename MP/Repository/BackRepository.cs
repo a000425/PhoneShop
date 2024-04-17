@@ -263,5 +263,112 @@ namespace MP.Repository
             
         }
         #endregion
+        #region 取得所有Item與Format
+        public IEnumerable<BackItemStoreDto> getAllItem()
+        {   
+            IEnumerable<BackItemStoreDto> Items;
+            try
+            {
+                
+                Items = (from i in _phoneContext.Item
+                select new BackItemStoreDto
+                {
+                     ItemName = i.ItemName,
+                     Format = (from f in _phoneContext.Format
+                              join it in _phoneContext.Item on f.ItemId equals it.ItemId
+                              where f.ItemId == i.ItemId
+                              select new BackItemFormatStoreDto
+                              {
+                                  Space = f.Space,
+                                  info = (from fi in _phoneContext.Format
+                                          where fi.Space == f.Space
+                                          select new BackItemFormatStoreDto
+                                          {
+                                            Color = fi.Color,
+                                            Store = fi.Store,
+                                            ItemPrice = fi.ItemPrice,
+                                            FormatId = fi.FormatId
+                                          }).ToList()
+                              }).ToList()
+                 }).GroupBy(i => i.ItemName).Select(g => g.First());
+                
+                          
+            }
+            catch (Exception e){
+                throw new Exception(e.ToString());
+            }
+            return Items;
+        }
+        #endregion
+        #region 取得一筆Item與Format
+        public ItemDto getOneItem(int FormatId)
+        {   
+            ItemDto Item;
+            try
+            {
+                
+                Item = (from i in _phoneContext.Item
+                        join f in _phoneContext.Format on i.ItemId equals f.ItemId
+                        where f.FormatId == FormatId
+                        select new ItemDto
+                        {
+                            Brand = f.Brand,
+                            ItemName = i.ItemName,
+                            Space = f.Space,
+                            Color = f.Color
+                                 
+
+                        }).FirstOrDefault();
+                
+                          
+            }
+            catch (Exception e){
+                throw new Exception(e.ToString());
+            }
+            return Item;
+        }
+        #endregion
+        #region 更新一商品庫存與單價
+        public string updateItem(int FormatId,int Store,int Price)
+        {
+            var format = _phoneContext.Format.SingleOrDefault(f => f.FormatId == FormatId);
+            int storecheck = format.Store+Store;
+            if(format!=null)
+            {
+                if(storecheck>=0)
+                {
+                    if(Price>0 && Store!=0)
+                    {
+                        format.Store+=Store;
+                        format.ItemPrice = Price;
+                        _phoneContext.SaveChanges();
+                        return("商品庫存與單價更新成功");
+                        
+                    }
+                    else if(Store==0)
+                    {
+                        format.ItemPrice = Price;
+                        _phoneContext.SaveChanges();
+                        return("商品單價更新成功");
+                    }
+                    else
+                    {
+                        format.Store+=Store;
+                        _phoneContext.SaveChanges();
+                        return("商品庫存更新成功");
+                    }
+                }else
+                {
+                    return("商品庫存不得小於0");
+                }
+                
+                
+            }
+            else
+            {
+                return("商品FormatId異常，找不到此規格");
+            }
+        }
+        #endregion
     }
 }

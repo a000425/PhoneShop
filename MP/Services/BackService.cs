@@ -91,5 +91,26 @@ namespace MP.Services
             return result;
         }
         #endregion
+        #region 取得所有Item與Format
+        public IEnumerable<BackItemStoreDto> GetAllItem()
+        {
+            var Items = _repository.getAllItem();
+            return Items;
+        }
+        #endregion
+        #region 取得一筆Item與Format
+        public ItemDto GetOneItem(int FormatId)
+        {
+            var Item = _repository.getOneItem(FormatId);
+            return Item;
+        }
+        #endregion
+        #region 更新商品庫存與價格
+        public string UpdateItem(int FormatId, int Store, int Price)
+        {
+            string result = _repository.updateItem(FormatId,Store,Price);
+            return result;
+        }
+        #endregion
     }
 }
