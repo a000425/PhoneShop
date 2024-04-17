@@ -15,6 +15,8 @@ namespace MP.Repository
         }
         public bool AddItem(ItemDto itemDto){
             try{
+                var exist = _phoneContext.Item.Any(x => x.ItemName==itemDto.ItemName);
+                if (!exist){
                 var Item = new Item {
                 ItemName = itemDto.ItemName,
                 Instruction = itemDto.Instruction,
@@ -23,7 +25,7 @@ namespace MP.Repository
             };
             _phoneContext.Item.Add(Item);
             _phoneContext.SaveChanges();
-            }
+            }}
             catch{
                 return false;
             }

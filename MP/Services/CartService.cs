@@ -80,7 +80,7 @@ namespace MP.Services
         #region 刪除單筆商品
         public bool DeleteCart(int id, string userAccount)
         {
-            var cart = (from a in _phoneContext.Cart where a.ItemId == id && a.Account ==userAccount select a).FirstOrDefault();
+            var cart = (from a in _phoneContext.Cart where a.Id == id && a.Account ==userAccount select a).FirstOrDefault();
             if(cart!=null)
             {
                 _phoneContext.Cart.Remove(cart);
