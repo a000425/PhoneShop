@@ -184,5 +184,53 @@ namespace MP.Controllers
             return Content(jsonresponse,"application/json");
         }
         #endregion
+        #region 所有商品庫存更改顯示
+        [HttpGet("ItemUpdate")]
+        public IActionResult ItemUpdate()
+        {
+            var items = _backService.GetAllItem();
+            if(items != null && items.Any())
+            {
+                var response = new { Status = 200, Message = items };
+                var jsonresponse = JsonConvert.SerializeObject(response);
+                return Content(jsonresponse, "application/json");
+            }
+            else
+            {
+                var response = new { Status = 400, Messaeg = items };
+                var jsonresponse = JsonConvert.SerializeObject(response);
+                return Content(jsonresponse, "application/json");
+            }
+        }
+        #endregion
+        #region 單筆商品庫存更改顯示
+        [HttpGet("ItemUpdate/{FormatId}")]
+        public IActionResult ItemUpdate(int FormatId)
+        {
+            var item = _backService.GetOneItem(FormatId);
+            if(item != null)
+            {
+                var response = new { Status = 200, Message = item };
+                var jsonresponse = JsonConvert.SerializeObject(response);
+                return Content(jsonresponse, "application/json");
+            }
+            else
+            {
+                var response = new { Status = 400, Messaeg = item };
+                var jsonresponse = JsonConvert.SerializeObject(response);
+                return Content(jsonresponse, "application/json");
+            }
+        }
+        #endregion
+        #region 加入商品庫存與更改價格
+        [HttpPost("ItemUpdate/{FormatId}")]
+        public IActionResult UpdateItemSaP(int FormatId,[FromBody] ItemDto Item)
+        {
+            var result = _backService.UpdateItem(FormatId, Item.Store, Item.ItemPrice);
+            var response = new{Status=200,Message= result};
+            var jsonresponse = JsonConvert.SerializeObject(response);
+            return Content(jsonresponse,"application/json");
+        }
+        #endregion
     }
 }
