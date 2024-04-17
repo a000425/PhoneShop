@@ -191,7 +191,8 @@ namespace MP.Services
                 ItemName = item.ItemName,
                 Color = format.Color,
                 Space = format.Space,
-                ItemPrice = format.ItemPrice
+                ItemPrice = format.ItemPrice,
+                Instruction = item.Instruction
             }).ToList();
             return result;
         }
