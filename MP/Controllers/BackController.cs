@@ -184,13 +184,15 @@ namespace MP.Controllers
             return Content(jsonresponse,"application/json");
         }
         #endregion
-<<<<<<< HEAD
         #region 搜尋(商品&問答)
         [HttpGet("SearchProduct")]
         public IActionResult SearchProduct(string Search){
             var result = _backService.SearchProduct(Search);
             var response = new{Status=200,Message = result};
-=======
+            var jsonresponse = JsonConvert.SerializeObject(response);
+            return Content(jsonresponse,"application/json");
+        }
+        #endregion
         #region 所有商品庫存更改顯示
         [HttpGet("ItemUpdate")]
         public IActionResult ItemUpdate()
@@ -235,25 +237,25 @@ namespace MP.Controllers
         {
             var result = _backService.UpdateItem(FormatId, Item.Store, Item.ItemPrice);
             var response = new{Status=200,Message= result};
->>>>>>> 741480d8302d087a1186c873ba3eeea79d24889c
             var jsonresponse = JsonConvert.SerializeObject(response);
             return Content(jsonresponse,"application/json");
         }
         #endregion
-<<<<<<< HEAD
         #region 搜尋(問答)
         [HttpGet("SearchQA")]
         public IActionResult SearchQA(string Search){
             var result = _backService.SearchQA(Search);
             var response = new{Status=200,Message = result};
-=======
+            var jsonresponse = JsonConvert.SerializeObject(response);
+            return Content(jsonresponse,"application/json");
+        }
+        #endregion
         #region 商品庫存搜尋
         [HttpGet("ItemSearch")]
         public IActionResult ItemSearch([FromForm]string search)
         {
             var result = _backService.ItemSearch(search);
             var response = new{Status=200,Message= result};
->>>>>>> 741480d8302d087a1186c873ba3eeea79d24889c
             var jsonresponse = JsonConvert.SerializeObject(response);
             return Content(jsonresponse,"application/json");
         }

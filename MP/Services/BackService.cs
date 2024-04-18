@@ -42,11 +42,7 @@ namespace MP.Services
         }
         #endregion
         #region 取得所有QA未回覆
-<<<<<<< HEAD
-        public IEnumerable<BackQADto> GetQAUnreply()
-=======
-        public IEnumerable<BackQAUnreplyDto> GetQAUnreply(string search)
->>>>>>> 741480d8302d087a1186c873ba3eeea79d24889c
+        public IEnumerable<BackQADto> GetQAUnreply(string search)
         {
             var result = _repository.GetQaUnreply(search);
             return result;
@@ -54,11 +50,7 @@ namespace MP.Services
         }
         #endregion
         #region 取得所有QA已回覆
-<<<<<<< HEAD
-        public IEnumerable<BackQADto> GetQAReply()
-=======
-        public IEnumerable<BackQAReplyDto> GetQAReply(string search)
->>>>>>> 741480d8302d087a1186c873ba3eeea79d24889c
+        public IEnumerable<BackQADto> GetQAReply(string search)
         {
             var result = _repository.GetQaReply(search);
             return result;
@@ -99,7 +91,6 @@ namespace MP.Services
             return result;
         }
         #endregion
-<<<<<<< HEAD
         #region 搜尋(商品)
         public IEnumerable<Item> SearchProduct(string Search){
             var result = _repository.SearchProduct(Search);
@@ -109,7 +100,9 @@ namespace MP.Services
         #region 搜尋(QA)
         public IEnumerable<BackQADto> SearchQA(string Search){
             var result = _repository.SearchQA(Search);
-=======
+            return result;
+        }
+        #endregion
         #region 取得所有Item與Format
         public IEnumerable<BackItemStoreDto> GetAllItem()
         {
@@ -135,7 +128,6 @@ namespace MP.Services
         public IEnumerable<BackItemStoreDto> ItemSearch(string search)
         {
             var result = _repository.ItemSearch(search);
->>>>>>> 741480d8302d087a1186c873ba3eeea79d24889c
             return result;
         }
         #endregion

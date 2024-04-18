@@ -110,11 +110,7 @@ namespace MP.Repository
             
         }
         #region 取得未回覆留言
-<<<<<<< HEAD
-        public IEnumerable<BackQADto> GetQaUnreply()
-=======
-        public IEnumerable<BackQAUnreplyDto> GetQaUnreply(string search)
->>>>>>> 741480d8302d087a1186c873ba3eeea79d24889c
+        public IEnumerable<BackQADto> GetQaUnreply(string search)
         {
             IEnumerable<BackQADto> result;
             try
@@ -137,9 +133,9 @@ namespace MP.Repository
                           join i in _phoneContext.Item on q.ItemId equals i.ItemId
                           where q.ReplyTime == null 
                           &&(i.ItemName.Contains(search) || q.Account.Contains(search) || q.Content.Contains(search))
-                          select new BackQAUnreplyDto
+                          select new BackQADto
                           {
-                              Id = q.Id,
+                              ItemId = q.Id,
                               ItemName = i.ItemName,
                               Account = q.Account,
                               Content = q.Content,
@@ -156,11 +152,7 @@ namespace MP.Repository
         }
         #endregion
         #region 取得已回覆留言
-<<<<<<< HEAD
-        public IEnumerable<BackQADto> GetQaReply()
-=======
-        public IEnumerable<BackQAReplyDto> GetQaReply(string search)
->>>>>>> 741480d8302d087a1186c873ba3eeea79d24889c
+        public IEnumerable<BackQADto> GetQaReply(string search)
         {
             IEnumerable<BackQADto> result;
             try
@@ -188,7 +180,7 @@ namespace MP.Repository
                           where q.ReplyTime != null 
                           &&(i.ItemName.Contains(search) || q.Account.Contains(search)
                           || q.Content.Contains(search) || q.Reply.Contains(search))
-                          select new BackQAReplyDto
+                          select new BackQADto
                           {
                               ItemName = i.ItemName,
                               Account = q.Account,
@@ -378,7 +370,6 @@ namespace MP.Repository
             
         }
         #endregion
-<<<<<<< HEAD
         #region 搜尋(商品)
         public IEnumerable<Item> SearchProduct(string search){
             var result = (from i in _phoneContext.Item
@@ -407,7 +398,8 @@ namespace MP.Repository
                             ReplyTime = QA.ReplyTime
                           });
             return result;
-=======
+        }
+        #endregion
         #region 取得所有Item與Format
         public IEnumerable<BackItemStoreDto> getAllItem()
         {   
@@ -547,7 +539,6 @@ namespace MP.Repository
                 throw new Exception(e.ToString());
             }
             return Items;
->>>>>>> 741480d8302d087a1186c873ba3eeea79d24889c
         }
         #endregion
     }
