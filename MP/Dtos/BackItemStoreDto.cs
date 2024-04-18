@@ -9,5 +9,6 @@ namespace MP.Dtos
     {
         public string ItemName {get;set;}
         public List<BackItemFormatStoreDto> Format {get;set;}
+        public DateTime CreateTime {get;set; }
     }
 }

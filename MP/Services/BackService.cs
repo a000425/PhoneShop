@@ -112,5 +112,12 @@ namespace MP.Services
             return result;
         }
         #endregion
+        #region 商品庫存搜尋
+        public IEnumerable<BackItemStoreDto> ItemSearch(string search)
+        {
+            var result = _repository.ItemSearch(search);
+            return result;
+        }
+        #endregion
     }
 }

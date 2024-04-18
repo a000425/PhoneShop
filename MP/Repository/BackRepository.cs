@@ -276,6 +276,7 @@ namespace MP.Repository
                 select new BackItemStoreDto
                 {
                      ItemName = i.ItemName,
+                     CreateTime = i.CreateTime,
                      Format = (from f in _phoneContext.Format
                                where f.ItemId == i.ItemId
                                group f by f.Space into groupedFormats
@@ -368,6 +369,41 @@ namespace MP.Repository
             {
                 return("商品FormatId異常，找不到此規格");
             }
+        }
+        #endregion
+        #region 商品庫存搜尋
+        public IEnumerable<BackItemStoreDto> ItemSearch(string search)
+        {
+            IEnumerable<BackItemStoreDto> Items;
+            try
+            {
+            Items = (from i in _phoneContext.Item
+             where i.ItemName.Contains(search)
+             select new BackItemStoreDto
+             {
+                 ItemName = i.ItemName,
+                 CreateTime = i.CreateTime,
+                 Format = (from f in _phoneContext.Format
+                               where f.ItemId == i.ItemId
+                               group f by f.Space into groupedFormats
+                              select new BackItemFormatStoreDto
+                              {
+                                  Space = groupedFormats.Key,
+                                  info = groupedFormats.Select(fi => new BackItemFormatStoreDto
+                                          {
+                                            Color = fi.Color,
+                                            Store = fi.Store,
+                                            ItemPrice = fi.ItemPrice,
+                                            FormatId = fi.FormatId
+                                          }).ToList()
+                              }).ToList()
+                 }).ToList();
+            }
+            catch(Exception e)
+            {
+                throw new Exception(e.ToString());
+            }
+            return Items;
         }
         #endregion
     }

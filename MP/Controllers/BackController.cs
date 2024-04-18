@@ -232,5 +232,15 @@ namespace MP.Controllers
             return Content(jsonresponse,"application/json");
         }
         #endregion
+        #region 商品庫存搜尋
+        [HttpGet("ItemSearch")]
+        public IActionResult ItemSearch([FromForm]string search)
+        {
+            var result = _backService.ItemSearch(search);
+            var response = new{Status=200,Message= result};
+            var jsonresponse = JsonConvert.SerializeObject(response);
+            return Content(jsonresponse,"application/json");
+        }
+        #endregion
     }
 }
