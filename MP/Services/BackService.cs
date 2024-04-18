@@ -42,7 +42,7 @@ namespace MP.Services
         }
         #endregion
         #region 取得所有QA未回覆
-        public IEnumerable<BackQAUnreplyDto> GetQAUnreply()
+        public IEnumerable<BackQADto> GetQAUnreply()
         {
             var result = _repository.GetQaUnreply();
             return result;
@@ -50,7 +50,7 @@ namespace MP.Services
         }
         #endregion
         #region 取得所有QA已回覆
-        public IEnumerable<BackQAReplyDto> GetQAReply()
+        public IEnumerable<BackQADto> GetQAReply()
         {
             var result = _repository.GetQaReply();
             return result;
@@ -88,6 +88,18 @@ namespace MP.Services
         public string OrderSent(int orderId)
         {
             var result = _repository.OrderStatusSent(orderId);
+            return result;
+        }
+        #endregion
+        #region 搜尋(商品)
+        public IEnumerable<Item> SearchProduct(string Search){
+            var result = _repository.SearchProduct(Search);
+            return result;
+        }
+        #endregion
+        #region 搜尋(QA)
+        public IEnumerable<BackQADto> SearchQA(string Search){
+            var result = _repository.SearchQA(Search);
             return result;
         }
         #endregion

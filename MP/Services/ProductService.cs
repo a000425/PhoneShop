@@ -18,7 +18,7 @@ namespace MP.Services
         }
         
         #region 取得所有商品
-        public IEnumerable<ProductDto> GetProduct()
+        public IEnumerable<ProductDto> GetProduct(int sortway)
         {
         var result = (from p in _phoneContext.Item
                   join f in _phoneContext.Format on p.ItemId equals f.ItemId
@@ -34,12 +34,31 @@ namespace MP.Services
                              orderby img.Id
                              select img.ItemImg).FirstOrDefault()
                   });
-
+            if(sortway==0)
+            {
+                result = result.OrderByDescending(x => x.ItemId);
+            }
+            else if(sortway==1)
+            {
+                result = result.OrderBy(x=>x.ItemId);
+            }
+            else if(sortway==2)
+            {
+                result=result.OrderByDescending(x=>x.ItemPriceMin);
+            }
+            else if(sortway==3)
+            {
+                result=result.OrderBy(x=>x.ItemPriceMin);
+            }
+            else
+            {
+                throw new ArgumentException("無此排序方式");
+            }
             return result;
         }
         #endregion
         #region 熱銷商品
-        public IEnumerable<ProductDto> GetHotProduct(){
+        public IEnumerable<ProductDto> GetHotProduct(int sortway){
             var result = (from p in _phoneContext.Item
               join f in _phoneContext.Format on p.ItemId equals f.ItemId
               join oi in _phoneContext.OrderItem on p.ItemId equals oi.ItemId into orderItemsGroup
@@ -57,30 +76,26 @@ namespace MP.Services
                              select img.ItemImg).FirstOrDefault()
               }).Take(8);
 
-
-
-
-            /*if(sortway==0)
+            if(sortway==0)
             {
-                result=result.OrderByDescending(item => item.ItemId);
+                result = result.OrderByDescending(x => x.ItemId);
             }
             else if(sortway==1)
             {
-                result=result.OrderBy(item => item.ItemId);
+                result = result.OrderBy(x=>x.ItemId);
             }
             else if(sortway==2)
             {
-                result=result.OrderByDescending(item => item.ItemPriceMin);
+                result=result.OrderByDescending(x=>x.ItemPriceMin);
             }
             else if(sortway==3)
             {
-                result=result.OrderBy(item => item.ItemPriceMin);
+                result=result.OrderBy(x=>x.ItemPriceMin);
             }
             else
             {
                 throw new ArgumentException("無此排序方式");
-            }*/
-
+            }
             return result;
         }
         #endregion
@@ -100,22 +115,23 @@ namespace MP.Services
                              where img.FormatId == g.Min(x => x.f.FormatId)
                              orderby img.Id
                              select img.ItemImg).FirstOrDefault()
+                     
                   });
             if(sortway==0)
             {
-                result=result.OrderByDescending(item => item.ItemId);
+                result = result.OrderByDescending(x => x.ItemId);
             }
             else if(sortway==1)
             {
-                result=result.OrderBy(item => item.ItemId);
+                result = result.OrderBy(x=>x.ItemId);
             }
             else if(sortway==2)
             {
-                result=result.OrderByDescending(item => item.ItemPriceMin);
+                result=result.OrderByDescending(x=>x.ItemPriceMin);
             }
             else if(sortway==3)
             {
-                result=result.OrderBy(item => item.ItemPriceMin);
+                result=result.OrderBy(x=>x.ItemPriceMin);
             }
             else
             {
@@ -144,19 +160,19 @@ namespace MP.Services
                   });
             if(sortway==0)
             {
-                result=result.OrderByDescending(item => item.ItemId);
+                result = result.OrderByDescending(x => x.ItemId);
             }
             else if(sortway==1)
             {
-                result=result.OrderBy(item => item.ItemId);
+                result = result.OrderBy(x=>x.ItemId);
             }
             else if(sortway==2)
             {
-                result=result.OrderByDescending(item => item.ItemPriceMin);
+                result=result.OrderByDescending(x=>x.ItemPriceMin);
             }
             else if(sortway==3)
             {
-                result=result.OrderBy(item => item.ItemPriceMin);
+                result=result.OrderBy(x=>x.ItemPriceMin);
             }
             else
             {

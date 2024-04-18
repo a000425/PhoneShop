@@ -1,3 +1,4 @@
+using System.Security.AccessControl;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MP.Dtos;
@@ -107,17 +108,17 @@ namespace MP.Repository
             
         }
         #region 取得未回覆留言
-        public IEnumerable<BackQAUnreplyDto> GetQaUnreply()
+        public IEnumerable<BackQADto> GetQaUnreply()
         {
-            IEnumerable<BackQAUnreplyDto> result;
+            IEnumerable<BackQADto> result;
             try
             {
                 result = (from q in _phoneContext.QA
                           join i in _phoneContext.Item on q.ItemId equals i.ItemId
                           where q.ReplyTime == null
-                          select new BackQAUnreplyDto
+                          select new BackQADto
                           {
-                              Id = q.Id,
+                              ItemId = q.Id,
                               ItemName = i.ItemName,
                               Account = q.Account,
                               Content = q.Content,
@@ -132,16 +133,17 @@ namespace MP.Repository
         }
         #endregion
         #region 取得已回覆留言
-        public IEnumerable<BackQAReplyDto> GetQaReply()
+        public IEnumerable<BackQADto> GetQaReply()
         {
-            IEnumerable<BackQAReplyDto> result;
+            IEnumerable<BackQADto> result;
             try
             {
                  result = (from q in _phoneContext.QA
                           join i in _phoneContext.Item on q.ItemId equals i.ItemId
                           where q.ReplyTime != null 
-                          select new BackQAReplyDto
+                          select new BackQADto
                           {
+                              ItemId = i.ItemId,
                               ItemName = i.ItemName,
                               Account = q.Account,
                               Content = q.Content,
@@ -261,6 +263,36 @@ namespace MP.Repository
                 return("未找到此訂單");
             }
             
+        }
+        #endregion
+        #region 搜尋(商品)
+        public IEnumerable<Item> SearchProduct(string search){
+            var result = (from i in _phoneContext.Item
+                          join f in _phoneContext.Format on i.ItemId equals f.ItemId
+                          where i.ItemName.Contains(search)
+                          select new Item{
+                            ItemId = i.ItemId,
+                            ItemName = i.ItemName,
+                            CreateTime = i.CreateTime
+                          }).ToList();
+            return result;
+        }
+        #endregion
+        #region 搜尋(QA)
+        public IEnumerable<BackQADto> SearchQA(string search){
+            var result  = (from i in _phoneContext.Item
+                          join QA in _phoneContext.QA on i.ItemId equals QA.ItemId
+                          where i.ItemName.Contains(search) || QA.Account.Contains(search)||QA.Content.Contains(search)||QA.Reply.Contains(search)
+                          select new BackQADto{
+                            ItemId = i.ItemId,
+                            ItemName = i.ItemName,
+                            Account = QA.Account,
+                            Content = QA.Content,
+                            CreateTime = QA.CreateTime,
+                            Reply = QA.Reply,
+                            ReplyTime = QA.ReplyTime
+                          });
+            return result;
         }
         #endregion
     }

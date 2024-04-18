@@ -184,5 +184,23 @@ namespace MP.Controllers
             return Content(jsonresponse,"application/json");
         }
         #endregion
+        #region 搜尋(商品&問答)
+        [HttpGet("SearchProduct")]
+        public IActionResult SearchProduct(string Search){
+            var result = _backService.SearchProduct(Search);
+            var response = new{Status=200,Message = result};
+            var jsonresponse = JsonConvert.SerializeObject(response);
+            return Content(jsonresponse,"application/json");
+        }
+        #endregion
+        #region 搜尋(問答)
+        [HttpGet("SearchQA")]
+        public IActionResult SearchQA(string Search){
+            var result = _backService.SearchQA(Search);
+            var response = new{Status=200,Message = result};
+            var jsonresponse = JsonConvert.SerializeObject(response);
+            return Content(jsonresponse,"application/json");
+        }
+        #endregion
     }
 }

@@ -11,5 +11,6 @@ namespace MP.Dtos
         public int ItemPriceMax{get;set;}
         public int ItemPriceMin{get;set;}
         public string ItemImg{get;set;} = null!;
+        public DateTime CreateTime{get;set; }
     }
 }

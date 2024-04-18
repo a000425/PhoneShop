@@ -31,9 +31,9 @@ namespace MP.Controllers
         }
         #region 取得商品一覽
         [HttpGet]
-        public IActionResult GetAllProduct()
+        public IActionResult GetAllProduct(int sortway)
         {
-            var result = _service.GetProduct();
+            var result = _service.GetProduct(sortway);
             var response = new{ Status = 200, Message = result };
             var jsonresponse = JsonConvert.SerializeObject(response);
             return Content(jsonresponse,"application/json");
@@ -41,8 +41,8 @@ namespace MP.Controllers
         #endregion
         #region 熱銷商品
         [HttpGet("Hot")]
-        public IActionResult GetHotProduct(){
-            var result = _service.GetHotProduct();
+        public IActionResult GetHotProduct(int sortway){
+            var result = _service.GetHotProduct(sortway);
             var response = new{ Status = 200, Message = result };
             var jsonresponse = JsonConvert.SerializeObject(response);
             return Content(jsonresponse,"application/json");
