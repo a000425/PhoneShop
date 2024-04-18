@@ -22,6 +22,7 @@ namespace MP.Services
         {
         var result = (from p in _phoneContext.Item
                   join f in _phoneContext.Format on p.ItemId equals f.ItemId
+                  where p.IsAvailable==true
                   group new { p, f } by new { p.ItemId, p.ItemName,f.Brand } into g
                   select new ProductDto
                   {
@@ -206,7 +207,8 @@ namespace MP.Services
                 ItemName = item.ItemName,
                 Color = format.Color,
                 Space = format.Space,
-                ItemPrice = format.ItemPrice
+                ItemPrice = format.ItemPrice,
+                Instruction = item.Instruction
             }).ToList();
             return result;
         }

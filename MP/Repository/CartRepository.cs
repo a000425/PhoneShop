@@ -25,7 +25,7 @@ namespace MP.Repository
         }
         public bool AddOrder(List<Cart>carts,string account,string address){
            
-            decimal totalPrice = 0; // 用于存储总价格
+            decimal totalPrice = 0;
             try
             {
                 foreach (var num in carts)
@@ -37,13 +37,13 @@ namespace MP.Repository
                                 select format.ItemPrice).FirstOrDefault();
 
                     var itemnum = (from c in _phoneContext.Cart where c.Id == num.Id select c.ItemNum).FirstOrDefault();
-                    totalPrice += price * itemnum; // 将价格添加到总价格中
+                    totalPrice += price * itemnum; 
                 }
 
                 var order = new Order
                 {
                     Account = account,
-                    TotalPrice = (int)totalPrice, // 将总价格赋值给订单的 TotalPrice 属性
+                    TotalPrice = (int)totalPrice, 
                     OrderTime = DateTime.Now,
                     OrderStatus = "未出貨",
                     Address = address

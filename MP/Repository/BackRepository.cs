@@ -16,15 +16,17 @@ namespace MP.Repository
         }
         public bool AddItem(ItemDto itemDto){
             try{
+                var exist = _phoneContext.Item.Any(x => x.ItemName==itemDto.ItemName);
+                if (!exist){
                 var Item = new Item {
                 ItemName = itemDto.ItemName,
                 Instruction = itemDto.Instruction,
-                IsAvailable = true,
+                IsAvailable = false,
                 CreateTime = DateTime.Now
             };
             _phoneContext.Item.Add(Item);
             _phoneContext.SaveChanges();
-            }
+            }}
             catch{
                 return false;
             }
@@ -34,7 +36,7 @@ namespace MP.Repository
             try{
                 itemDto.ItemId = (from a in _phoneContext.Item
                           where a.ItemName == itemDto.ItemName
-                          select a.ItemId).SingleOrDefault();
+                          select a.ItemId).FirstOrDefault();
                 var format = new Models.Format {
                 Brand = itemDto.Brand,
                 Color = itemDto.Color,
@@ -55,7 +57,7 @@ namespace MP.Repository
                 var img = new Models.Img {
                     FormatId = (from a in _phoneContext.Format
                                 where a.ItemId == itemDto.ItemId && a.Space == itemDto.Space && a.Color == itemDto.Color
-                                select a.FormatId).SingleOrDefault(),
+                                select a.FormatId).FirstOrDefault(),
                     ItemImg = itemDto.ItemImg
                 };
                 _phoneContext.Img.Add(img);
@@ -108,12 +110,17 @@ namespace MP.Repository
             
         }
         #region 取得未回覆留言
+<<<<<<< HEAD
         public IEnumerable<BackQADto> GetQaUnreply()
+=======
+        public IEnumerable<BackQAUnreplyDto> GetQaUnreply(string search)
+>>>>>>> 741480d8302d087a1186c873ba3eeea79d24889c
         {
             IEnumerable<BackQADto> result;
             try
             {
-                result = (from q in _phoneContext.QA
+                if(search==null){
+                    result = (from q in _phoneContext.QA
                           join i in _phoneContext.Item on q.ItemId equals i.ItemId
                           where q.ReplyTime == null
                           select new BackQADto
@@ -124,6 +131,22 @@ namespace MP.Repository
                               Content = q.Content,
                               CreateTime = q.CreateTime
                           });
+                }
+                else{
+                    result = (from q in _phoneContext.QA
+                          join i in _phoneContext.Item on q.ItemId equals i.ItemId
+                          where q.ReplyTime == null 
+                          &&(i.ItemName.Contains(search) || q.Account.Contains(search) || q.Content.Contains(search))
+                          select new BackQAUnreplyDto
+                          {
+                              Id = q.Id,
+                              ItemName = i.ItemName,
+                              Account = q.Account,
+                              Content = q.Content,
+                              CreateTime = q.CreateTime
+                          });
+                }
+                
                           
             }
             catch (Exception e){
@@ -133,12 +156,18 @@ namespace MP.Repository
         }
         #endregion
         #region 取得已回覆留言
+<<<<<<< HEAD
         public IEnumerable<BackQADto> GetQaReply()
+=======
+        public IEnumerable<BackQAReplyDto> GetQaReply(string search)
+>>>>>>> 741480d8302d087a1186c873ba3eeea79d24889c
         {
             IEnumerable<BackQADto> result;
             try
             {
-                 result = (from q in _phoneContext.QA
+                if(search==null)
+                {
+                    result = (from q in _phoneContext.QA
                           join i in _phoneContext.Item on q.ItemId equals i.ItemId
                           where q.ReplyTime != null 
                           select new BackQADto
@@ -151,7 +180,24 @@ namespace MP.Repository
                               Reply = q.Reply,
                               ReplyTime = q.ReplyTime
                           });
-                          
+                }
+                else
+                {
+                    result = (from q in _phoneContext.QA
+                          join i in _phoneContext.Item on q.ItemId equals i.ItemId
+                          where q.ReplyTime != null 
+                          &&(i.ItemName.Contains(search) || q.Account.Contains(search)
+                          || q.Content.Contains(search) || q.Reply.Contains(search))
+                          select new BackQAReplyDto
+                          {
+                              ItemName = i.ItemName,
+                              Account = q.Account,
+                              Content = q.Content,
+                              CreateTime = q.CreateTime,
+                              Reply = q.Reply,
+                              ReplyTime = q.ReplyTime
+                          });
+                }
             }
             catch (Exception e){
                 throw new Exception(e.ToString());
@@ -185,27 +231,55 @@ namespace MP.Repository
         }
         #endregion
         #region 取得所有未出貨訂單
-        public IEnumerable<BackOrderShowDto> getOrderUnsend()
-        {   string orderstatus = "未出貨";
-            IEnumerable<BackOrderShowDto> order = getOrder(orderstatus);
+        public IEnumerable<BackOrderShowDto> getOrderUnsend(string search)
+        {   
+            IEnumerable<BackOrderShowDto> order;
+            string orderstatus = "未出貨";
+            if(search==null){
+                order = getOrder(orderstatus);
+            }
+            else
+            {
+                order = getOrder(orderstatus,search);
+            }
             return order;
         }
         #endregion
         #region 取得所有已出貨訂單
-        public IEnumerable<BackOrderShowDto> getOrderSent()
-        {   string orderstatus = "已出貨";
-            IEnumerable<BackOrderShowDto> order = getOrder(orderstatus);
+        public IEnumerable<BackOrderShowDto> getOrderSent(string search)
+        {   
+            IEnumerable<BackOrderShowDto> order;
+            string orderstatus = "已出貨";
+            if(search==null)
+            {
+                order = getOrder(orderstatus);
+            }
+            else
+            {
+                order = getOrder(orderstatus,search);
+            }
+            
             return order;
         }
         #endregion
         #region 取得所有已完成訂單
-        public IEnumerable<BackOrderShowDto> getOrderFinish()
-        {   string orderstatus = "已完成";
-            IEnumerable<BackOrderShowDto> order = getOrder(orderstatus);
+        public IEnumerable<BackOrderShowDto> getOrderFinish(string search)
+        {   
+            IEnumerable<BackOrderShowDto> order;
+            string orderstatus = "已完成";
+            if(search==null)
+            {
+                order = getOrder(orderstatus);
+            }
+            else
+            {
+                order = getOrder(orderstatus,search);
+            }
+            
             return order;
         }
         #endregion
-        #region 抓所有訂單
+        #region 抓所有訂單-無搜尋值
         public IEnumerable<BackOrderShowDto> getOrder(string orderstatus)
         {   
             IEnumerable<BackOrderShowDto> order;
@@ -214,6 +288,45 @@ namespace MP.Repository
                 order = (from o in _phoneContext.Order
                 join oi in _phoneContext.OrderItem on o.OrderId equals oi.OrderId
                 where o.OrderStatus == orderstatus
+                select new BackOrderShowDto
+                {
+                     OrderId = o.OrderId,
+                     OrderTime = o.OrderTime,
+                     Account = o.Account,
+                     TotalPrice = o.TotalPrice,
+                     Address = o.Address,
+                     OrderStatus = o.OrderStatus,
+                     Items = (from i in _phoneContext.OrderItem
+                              join it in _phoneContext.Item on i.ItemId equals it.ItemId
+                              join f in _phoneContext.Format on i.FormatId equals f.FormatId
+                              where i.OrderId == o.OrderId
+                              select new BackOrderItemShowDto
+                              {
+                                  ItemName = it.ItemName,
+                                  ItemFormat = f.Space + "-" + f.Color,
+                                  ItemPrice = f.ItemPrice,
+                                  ItemNum = i.ItemNum
+                              }).ToList()
+                 }).GroupBy(o => o.OrderId).Select(g => g.First());
+                          
+            }
+            catch (Exception e){
+                throw new Exception(e.ToString());
+            }
+            return order;
+        }
+        #endregion
+        #region 抓所有訂單-有搜尋值
+        public IEnumerable<BackOrderShowDto> getOrder(string orderstatus,string search)
+        {   
+            IEnumerable<BackOrderShowDto> order;
+            try
+            {
+                order = (from o in _phoneContext.Order
+                join oi in _phoneContext.OrderItem on o.OrderId equals oi.OrderId
+                where o.OrderStatus == orderstatus && (o.Account.Contains(search) 
+                || _phoneContext.OrderItem.Any(oi => oi.OrderId==o.OrderId 
+                && _phoneContext.Item.Any(item => item.ItemId==oi.ItemId && item.ItemName.Contains(search))))
                 select new BackOrderShowDto
                 {
                      OrderId = o.OrderId,
@@ -265,6 +378,7 @@ namespace MP.Repository
             
         }
         #endregion
+<<<<<<< HEAD
         #region 搜尋(商品)
         public IEnumerable<Item> SearchProduct(string search){
             var result = (from i in _phoneContext.Item
@@ -293,6 +407,147 @@ namespace MP.Repository
                             ReplyTime = QA.ReplyTime
                           });
             return result;
+=======
+        #region 取得所有Item與Format
+        public IEnumerable<BackItemStoreDto> getAllItem()
+        {   
+            IEnumerable<BackItemStoreDto> Items;
+            try
+            {
+                
+                Items = (from i in _phoneContext.Item
+                select new BackItemStoreDto
+                {
+                     ItemName = i.ItemName,
+                     CreateTime = i.CreateTime,
+                     Format = (from f in _phoneContext.Format
+                               where f.ItemId == i.ItemId
+                               group f by f.Space into groupedFormats
+                              select new BackItemFormatStoreDto
+                              {
+                                  Space = groupedFormats.Key,
+                                  info = groupedFormats.Select(fi => new BackItemFormatStoreDto
+                                          {
+                                            Color = fi.Color,
+                                            Store = fi.Store,
+                                            ItemPrice = fi.ItemPrice,
+                                            FormatId = fi.FormatId
+                                          }).ToList()
+                              }).ToList()
+                 }).GroupBy(i => i.ItemName).Select(g => g.First());
+                
+                          
+            }
+            catch (Exception e){
+                throw new Exception(e.ToString());
+            }
+            return Items;
+        }
+        #endregion
+        #region 取得一筆Item與Format
+        public ItemDto getOneItem(int FormatId)
+        {   
+            ItemDto Item;
+            try
+            {
+                
+                Item = (from i in _phoneContext.Item
+                        join f in _phoneContext.Format on i.ItemId equals f.ItemId
+                        where f.FormatId == FormatId
+                        select new ItemDto
+                        {
+                            Brand = f.Brand,
+                            ItemName = i.ItemName,
+                            Space = f.Space,
+                            Color = f.Color
+                                 
+
+                        }).FirstOrDefault();
+                
+                          
+            }
+            catch (Exception e){
+                throw new Exception(e.ToString());
+            }
+            return Item;
+        }
+        #endregion
+        #region 更新一商品庫存與單價
+        public string updateItem(int FormatId,int Store,int Price)
+        {
+            var format = _phoneContext.Format.SingleOrDefault(f => f.FormatId == FormatId);
+            int storecheck = format.Store+Store;
+            if(format!=null)
+            {
+                if(storecheck>=0)
+                {
+                    if(Price>0 && Store!=0)
+                    {
+                        format.Store+=Store;
+                        format.ItemPrice = Price;
+                        _phoneContext.SaveChanges();
+                        return("商品庫存與單價更新成功");
+                        
+                    }
+                    else if(Store==0)
+                    {
+                        format.ItemPrice = Price;
+                        _phoneContext.SaveChanges();
+                        return("商品單價更新成功");
+                    }
+                    else
+                    {
+                        format.Store+=Store;
+                        _phoneContext.SaveChanges();
+                        return("商品庫存更新成功");
+                    }
+                }else
+                {
+                    return("商品庫存不得小於0");
+                }
+                
+                
+            }
+            else
+            {
+                return("商品FormatId異常，找不到此規格");
+            }
+        }
+        #endregion
+        #region 商品庫存搜尋
+        public IEnumerable<BackItemStoreDto> ItemSearch(string search)
+        {
+            IEnumerable<BackItemStoreDto> Items;
+            try
+            {
+            Items = (from i in _phoneContext.Item
+             where i.ItemName.Contains(search)
+             select new BackItemStoreDto
+             {
+                 ItemName = i.ItemName,
+                 CreateTime = i.CreateTime,
+                 Format = (from f in _phoneContext.Format
+                               where f.ItemId == i.ItemId
+                               group f by f.Space into groupedFormats
+                              select new BackItemFormatStoreDto
+                              {
+                                  Space = groupedFormats.Key,
+                                  info = groupedFormats.Select(fi => new BackItemFormatStoreDto
+                                          {
+                                            Color = fi.Color,
+                                            Store = fi.Store,
+                                            ItemPrice = fi.ItemPrice,
+                                            FormatId = fi.FormatId
+                                          }).ToList()
+                              }).ToList()
+                 }).ToList();
+            }
+            catch(Exception e)
+            {
+                throw new Exception(e.ToString());
+            }
+            return Items;
+>>>>>>> 741480d8302d087a1186c873ba3eeea79d24889c
         }
         #endregion
     }

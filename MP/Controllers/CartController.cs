@@ -42,9 +42,9 @@ namespace MP.Controllers
         #endregion
         #region 刪除單筆商品
         [HttpDelete]
-        public IActionResult DeleteItemFromCart(int id)
+        public IActionResult DeleteItemFromCart([FromBody]Cart cart)
         {
-            if(_service.DeleteCart(id,HttpContext.User.Identity.Name)){
+            if(_service.DeleteCart(cart.Id,HttpContext.User.Identity.Name)){
                 var response = new{Status=200,Message="已刪除"};
                 var jsonresponse = JsonConvert.SerializeObject(response);
                 return Content(jsonresponse,"application/json");
