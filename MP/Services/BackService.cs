@@ -42,17 +42,17 @@ namespace MP.Services
         }
         #endregion
         #region 取得所有QA未回覆
-        public IEnumerable<BackQAUnreplyDto> GetQAUnreply()
+        public IEnumerable<BackQAUnreplyDto> GetQAUnreply(string search)
         {
-            var result = _repository.GetQaUnreply();
+            var result = _repository.GetQaUnreply(search);
             return result;
 
         }
         #endregion
         #region 取得所有QA已回覆
-        public IEnumerable<BackQAReplyDto> GetQAReply()
+        public IEnumerable<BackQAReplyDto> GetQAReply(string search)
         {
-            var result = _repository.GetQaReply();
+            var result = _repository.GetQaReply(search);
             return result;
         }
         #endregion

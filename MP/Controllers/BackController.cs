@@ -62,9 +62,9 @@ namespace MP.Controllers
         #endregion
         #region 顯示所有未回覆QA
         [HttpGet("QA/Unreply")]
-        public IActionResult GetQAUnreply()
+        public IActionResult GetQAUnreply([FromForm]string search)
         {
-            var result = _backService.GetQAUnreply();
+            var result = _backService.GetQAUnreply(search);
             if (result != null && result.Any())
             {
                 var response = new { Status = 200, Message = result };
@@ -81,9 +81,9 @@ namespace MP.Controllers
         #endregion
         #region 顯示所有已回覆QA
         [HttpGet("QA/Reply")]
-        public IActionResult GetQAReply()
+        public IActionResult GetQAReply([FromForm]string search)
         {
-            var result = _backService.GetQAReply();
+            var result = _backService.GetQAReply(search);
             if (result != null && result.Any())
             {
                 var response = new { Status = 200, Message = result };

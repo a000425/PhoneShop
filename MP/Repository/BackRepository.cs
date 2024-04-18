@@ -109,12 +109,13 @@ namespace MP.Repository
             
         }
         #region 取得未回覆留言
-        public IEnumerable<BackQAUnreplyDto> GetQaUnreply()
+        public IEnumerable<BackQAUnreplyDto> GetQaUnreply(string search)
         {
             IEnumerable<BackQAUnreplyDto> result;
             try
             {
-                result = (from q in _phoneContext.QA
+                if(search==null){
+                    result = (from q in _phoneContext.QA
                           join i in _phoneContext.Item on q.ItemId equals i.ItemId
                           where q.ReplyTime == null
                           select new BackQAUnreplyDto
@@ -125,6 +126,22 @@ namespace MP.Repository
                               Content = q.Content,
                               CreateTime = q.CreateTime
                           });
+                }
+                else{
+                    result = (from q in _phoneContext.QA
+                          join i in _phoneContext.Item on q.ItemId equals i.ItemId
+                          where q.ReplyTime == null 
+                          &&(i.ItemName.Contains(search) || q.Account.Contains(search) || q.Content.Contains(search))
+                          select new BackQAUnreplyDto
+                          {
+                              Id = q.Id,
+                              ItemName = i.ItemName,
+                              Account = q.Account,
+                              Content = q.Content,
+                              CreateTime = q.CreateTime
+                          });
+                }
+                
                           
             }
             catch (Exception e){
@@ -134,12 +151,14 @@ namespace MP.Repository
         }
         #endregion
         #region 取得已回覆留言
-        public IEnumerable<BackQAReplyDto> GetQaReply()
+        public IEnumerable<BackQAReplyDto> GetQaReply(string search)
         {
             IEnumerable<BackQAReplyDto> result;
             try
             {
-                 result = (from q in _phoneContext.QA
+                if(search==null)
+                {
+                    result = (from q in _phoneContext.QA
                           join i in _phoneContext.Item on q.ItemId equals i.ItemId
                           where q.ReplyTime != null 
                           select new BackQAReplyDto
@@ -151,7 +170,24 @@ namespace MP.Repository
                               Reply = q.Reply,
                               ReplyTime = q.ReplyTime
                           });
-                          
+                }
+                else
+                {
+                    result = (from q in _phoneContext.QA
+                          join i in _phoneContext.Item on q.ItemId equals i.ItemId
+                          where q.ReplyTime != null 
+                          &&(i.ItemName.Contains(search) || q.Account.Contains(search)
+                          || q.Content.Contains(search) || q.Reply.Contains(search))
+                          select new BackQAReplyDto
+                          {
+                              ItemName = i.ItemName,
+                              Account = q.Account,
+                              Content = q.Content,
+                              CreateTime = q.CreateTime,
+                              Reply = q.Reply,
+                              ReplyTime = q.ReplyTime
+                          });
+                }
             }
             catch (Exception e){
                 throw new Exception(e.ToString());
