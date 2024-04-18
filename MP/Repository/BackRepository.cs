@@ -185,27 +185,55 @@ namespace MP.Repository
         }
         #endregion
         #region 取得所有未出貨訂單
-        public IEnumerable<BackOrderShowDto> getOrderUnsend()
-        {   string orderstatus = "未出貨";
-            IEnumerable<BackOrderShowDto> order = getOrder(orderstatus);
+        public IEnumerable<BackOrderShowDto> getOrderUnsend(string search)
+        {   
+            IEnumerable<BackOrderShowDto> order;
+            string orderstatus = "未出貨";
+            if(search==null){
+                order = getOrder(orderstatus);
+            }
+            else
+            {
+                order = getOrder(orderstatus,search);
+            }
             return order;
         }
         #endregion
         #region 取得所有已出貨訂單
-        public IEnumerable<BackOrderShowDto> getOrderSent()
-        {   string orderstatus = "已出貨";
-            IEnumerable<BackOrderShowDto> order = getOrder(orderstatus);
+        public IEnumerable<BackOrderShowDto> getOrderSent(string search)
+        {   
+            IEnumerable<BackOrderShowDto> order;
+            string orderstatus = "已出貨";
+            if(search==null)
+            {
+                order = getOrder(orderstatus);
+            }
+            else
+            {
+                order = getOrder(orderstatus,search);
+            }
+            
             return order;
         }
         #endregion
         #region 取得所有已完成訂單
-        public IEnumerable<BackOrderShowDto> getOrderFinish()
-        {   string orderstatus = "已完成";
-            IEnumerable<BackOrderShowDto> order = getOrder(orderstatus);
+        public IEnumerable<BackOrderShowDto> getOrderFinish(string search)
+        {   
+            IEnumerable<BackOrderShowDto> order;
+            string orderstatus = "已完成";
+            if(search==null)
+            {
+                order = getOrder(orderstatus);
+            }
+            else
+            {
+                order = getOrder(orderstatus,search);
+            }
+            
             return order;
         }
         #endregion
-        #region 抓所有訂單
+        #region 抓所有訂單-無搜尋值
         public IEnumerable<BackOrderShowDto> getOrder(string orderstatus)
         {   
             IEnumerable<BackOrderShowDto> order;
@@ -214,6 +242,45 @@ namespace MP.Repository
                 order = (from o in _phoneContext.Order
                 join oi in _phoneContext.OrderItem on o.OrderId equals oi.OrderId
                 where o.OrderStatus == orderstatus
+                select new BackOrderShowDto
+                {
+                     OrderId = o.OrderId,
+                     OrderTime = o.OrderTime,
+                     Account = o.Account,
+                     TotalPrice = o.TotalPrice,
+                     Address = o.Address,
+                     OrderStatus = o.OrderStatus,
+                     Items = (from i in _phoneContext.OrderItem
+                              join it in _phoneContext.Item on i.ItemId equals it.ItemId
+                              join f in _phoneContext.Format on i.FormatId equals f.FormatId
+                              where i.OrderId == o.OrderId
+                              select new BackOrderItemShowDto
+                              {
+                                  ItemName = it.ItemName,
+                                  ItemFormat = f.Space + "-" + f.Color,
+                                  ItemPrice = f.ItemPrice,
+                                  ItemNum = i.ItemNum
+                              }).ToList()
+                 }).GroupBy(o => o.OrderId).Select(g => g.First());
+                          
+            }
+            catch (Exception e){
+                throw new Exception(e.ToString());
+            }
+            return order;
+        }
+        #endregion
+        #region 抓所有訂單-有搜尋值
+        public IEnumerable<BackOrderShowDto> getOrder(string orderstatus,string search)
+        {   
+            IEnumerable<BackOrderShowDto> order;
+            try
+            {
+                order = (from o in _phoneContext.Order
+                join oi in _phoneContext.OrderItem on o.OrderId equals oi.OrderId
+                where o.OrderStatus == orderstatus && (o.Account.Contains(search) 
+                || _phoneContext.OrderItem.Any(oi => oi.OrderId==o.OrderId 
+                && _phoneContext.Item.Any(item => item.ItemId==oi.ItemId && item.ItemName.Contains(search))))
                 select new BackOrderShowDto
                 {
                      OrderId = o.OrderId,
