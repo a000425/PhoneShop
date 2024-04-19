@@ -29,16 +29,25 @@ namespace MP.Services
                 {
                     if (num <= format.Store)
                     {
-                        Cart cart = new Cart 
+                        var SameFormat = _phoneContext.Cart.SingleOrDefault(c => c.FormatId == formatId && c.Account == user);
+                        if(SameFormat == null)
                         {
-                            Account = user,
-                            ItemId = ItemId,
-                            FormatId = formatId,
-                            ItemNum = num,
-                            AddTime = DateTime.Now
-                        };
-                        _phoneContext.Cart.Add(cart);
-                        _phoneContext.SaveChanges();
+                            Cart cart = new Cart 
+                            {
+                                Account = user,
+                                ItemId = ItemId,
+                                FormatId = formatId,
+                                ItemNum = num,
+                                AddTime = DateTime.Now
+                            };
+                            _phoneContext.Cart.Add(cart);
+                            _phoneContext.SaveChanges();
+                        }else
+                        {
+                            SameFormat.ItemNum += num;
+                            _phoneContext.SaveChanges();
+                        }
+                        
                         return "加入成功";
                     }
                     else 
@@ -67,6 +76,7 @@ namespace MP.Services
                              where cart.Account == userAccount
                              select new CartDto
                              {
+                                 Brand = format.Brand,
                                  ItemName = item.ItemName,
                                  Color = format.Color,
                                  Space = format.Space,

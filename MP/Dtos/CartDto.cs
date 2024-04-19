@@ -3,6 +3,7 @@
     public class CartDto
     {
         // public int cartId { get; set; }
+        public string Brand { get; set; } = null!;
         public string ItemName { get; set; } = null!;
         public string Color { get; set; } = null!;
         public string Space { get; set; } = null!;
