@@ -60,6 +60,16 @@ namespace MP.Controllers
             }
         }
         #endregion
+        #region 商品管理
+        [HttpGet("Items")]
+        public IActionResult Items()
+        {
+            var result = _backService.Items();
+            var response = new { Status = 400, message = result};
+            var jsongoodResponse = JsonConvert.SerializeObject(response);
+            return Content(jsongoodResponse, "application/json");
+        }
+        #endregion
         #region 顯示所有未回覆QA
         [HttpGet("QA/Unreply")]
         public IActionResult GetQAUnreply([FromForm]string search)
@@ -77,6 +87,16 @@ namespace MP.Controllers
                 var jsonresponse = JsonConvert.SerializeObject(response);
                 return Content(jsonresponse, "application/json");
             }
+        }
+        #endregion
+        #region 顯示單筆未回覆QA
+        [HttpGet("QA/Unreply/{QAId}")]
+        public IActionResult GetQAUnreplybyId(int QAId)
+        {
+            var result = _backService.GetQAUnreplybyId(QAId) ;
+            var response = new { Status = 200, Message = result };
+            var jsonresponse = JsonConvert.SerializeObject(response);
+            return Content(jsonresponse, "application/json");
         }
         #endregion
         #region 顯示所有已回覆QA

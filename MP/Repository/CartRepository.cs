@@ -138,7 +138,7 @@ namespace MP.Repository
                             Name = Account.Name,
                             Cellphone = Account.Cellphone,
                             Email = Account.Email,
-                            Address = order.Address
+                            Address = order.Address,
                           }).ToList();
             return Detail;
         }

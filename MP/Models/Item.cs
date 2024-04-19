@@ -13,7 +13,7 @@ public partial class Item
 
     public bool? IsAvailable { get; set; }
     public DateTime CreateTime {get;set; }
-    public DateTime? UpTime{get;set;}
+    public DateTime? UPTime{get;set;}
     public DateTime? DownTime {get;set;}
     public virtual ICollection<Cart> Cart { get; set; } = new List<Cart>();
 

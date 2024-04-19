@@ -41,12 +41,26 @@ namespace MP.Services
             return result;
         }
         #endregion
+        #region 商品管理
+        public IEnumerable<Item> Items()
+        {
+            var result = _repository.Items();
+            return result;
+        }
+        #endregion
         #region 取得所有QA未回覆
         public IEnumerable<BackQADto> GetQAUnreply(string search)
         {
             var result = _repository.GetQaUnreply(search);
             return result;
 
+        }
+        #endregion
+        #region 顯示單筆未回覆QA
+        public BackQADto GetQAUnreplybyId(int QAId)
+        {
+            var result = _repository.GetQAUnreplybyId(QAId);
+            return result;
         }
         #endregion
         #region 取得所有QA已回覆
