@@ -75,7 +75,7 @@ namespace MP.Controllers
         #endregion
         #region 訂單查詢
         [HttpGet("GetOrderItemId")]
-        public IEnumerable<OrderInfoDto> OrderDetail([FromBody]Order order)
+        public IEnumerable<OrderInfoDto> OrderDetail([FromQuery]Order order)
         {
             var detail = _service.OrderDetail(HttpContext.User.Identity.Name,order.OrderId);
             return detail;

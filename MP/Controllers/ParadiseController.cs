@@ -31,7 +31,7 @@ namespace MP.Controllers
         }
         #region 取得商品一覽
         [HttpGet]
-        public IActionResult GetAllProduct(int sortway)
+        public IActionResult GetAllProduct([FromQuery]int sortway)
         {
             var result = _service.GetProduct(sortway);
             var response = new{ Status = 200, Message = result };
@@ -41,7 +41,7 @@ namespace MP.Controllers
         #endregion
         #region 熱銷商品
         [HttpGet("Hot")]
-        public IActionResult GetHotProduct(int sortway){
+        public IActionResult GetHotProduct([FromQuery]int sortway){
             var result = _service.GetHotProduct(sortway);
             var response = new{ Status = 200, Message = result };
             var jsonresponse = JsonConvert.SerializeObject(response);
@@ -50,7 +50,7 @@ namespace MP.Controllers
         #endregion
         #region 取得品牌商品一覽與排序
         [HttpGet("{Brand}")]
-        public IActionResult GetProductByBrand(string Brand,[FromBody]int sortway){
+        public IActionResult GetProductByBrand(string Brand,[FromQuery]int sortway){
             var result = _service.GetProductByBrand(Brand,sortway);
             var response = new{ Status = 200, Message = result };
             var jsonresponse = JsonConvert.SerializeObject(response);
@@ -59,7 +59,7 @@ namespace MP.Controllers
         #endregion
         #region 取得商品一覽(價格)
         [HttpGet("GetProduct")]
-        public IActionResult GetProductByPrice([FromQuery]int MaxPrice,[FromQuery]int MinPrice,[FromBody]int sortway){
+        public IActionResult GetProductByPrice([FromQuery]int MaxPrice,[FromQuery]int MinPrice,[FromQuery]int sortway){
             var result = _service.GetProductByPrice(MaxPrice,MinPrice,sortway);
             var response = new{ Status = 200, Message = result };
             var jsonresponse = JsonConvert.SerializeObject(response);
@@ -113,7 +113,7 @@ namespace MP.Controllers
         #region QA問
         [Authorize]
         [HttpPost("{ItemId}")]
-        public IActionResult ProductQA(int ItemId, string content)
+        public IActionResult ProductQA(int ItemId, [FromForm] string content)
         {
             var result = _service.ProductQA(ItemId, HttpContext.User.Identity.Name, content);
             if (result != null && result.Any())
