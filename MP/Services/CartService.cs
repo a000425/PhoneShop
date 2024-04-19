@@ -96,10 +96,17 @@ namespace MP.Services
         public string getOrder(string account,string address){
             try{
                 var Cart = _repository.GetCarts(account);
-                if(_repository.AddOrder(Cart,account,address)){
+                if(Cart.Any())
+                {
+                    if(_repository.AddOrder(Cart,account,address)){
                     _repository.AddOrderItem(Cart);
                     _repository.DeleteCart(account);
+                    }
+                }else
+                {
+                    return "購物車內無商品";
                 }
+                
             }catch(Exception e){
                 throw new Exception(e.ToString());
             }
