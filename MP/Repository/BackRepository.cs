@@ -14,6 +14,7 @@ namespace MP.Repository
         {
             _phoneContext = phoneContext;
         }
+        #region 新增商品
         public bool AddItem(ItemDto itemDto){
             try{
                 var exist = _phoneContext.Item.Any(x => x.ItemName==itemDto.ItemName);
@@ -67,13 +68,15 @@ namespace MP.Repository
                 throw new Exception(e.ToString());
             }
         }
-
+        #endregion
+        #region 上架
         public string UPItem(int ItemId){
             try{
                 var item = (from a in _phoneContext.Item
                             where a.ItemId == ItemId
                             select a).SingleOrDefault();
                 item.IsAvailable = true;
+                item.UPTime = DateTime.Now;
                 _phoneContext.Update(item);
                 _phoneContext.SaveChanges();
             }
@@ -84,12 +87,15 @@ namespace MP.Repository
                 return "上架失敗";
             return "上架成功";
         }
-            public string DownItem(int ItemId){
+        #endregion
+        #region 下架
+        public string DownItem(int ItemId){
             try{
                 var item = (from a in _phoneContext.Item
                             where a.ItemId == ItemId
                             select a).SingleOrDefault();
                 item.IsAvailable = false;
+                item.DownTime = DateTime.Now;
                 _phoneContext.Update(item);
                 _phoneContext.SaveChanges();
             }
@@ -99,6 +105,20 @@ namespace MP.Repository
             return "下架成功";
             
         }
+        #endregion
+        #region 商品管理
+        public IEnumerable<Item> Items()
+        {
+            var result = (from i in _phoneContext.Item
+                          select new Item{
+                            ItemName = i.ItemName,
+                            UPTime = i.UPTime,
+                            DownTime = i.DownTime,
+                            IsAvailable = i.IsAvailable
+                          }).ToList();
+            return result;
+        }
+        #endregion
         public bool CheckStore(int ItemId){
             var item = (from a in _phoneContext.Format
                         where a.ItemId == ItemId
@@ -148,6 +168,22 @@ namespace MP.Repository
             catch (Exception e){
                 throw new Exception(e.ToString());
             }
+            return result;
+        }
+        #endregion
+        #region 取得單筆未回覆
+        public BackQADto GetQAUnreplybyId(int QAId)
+        {
+            var result = (from Q in _phoneContext.QA
+                         join item in _phoneContext.Item on Q.ItemId equals item.ItemId
+                          where Q.Id==QAId
+                          select new BackQADto{
+                            ItemId = Q.Id,
+                            Account = Q.Account,
+                            ItemName = item.ItemName,
+                            Content = Q.Content,
+                            CreateTime = Q.CreateTime
+                          }).SingleOrDefault();
             return result;
         }
         #endregion
