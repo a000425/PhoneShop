@@ -76,10 +76,7 @@ namespace MP.Services
                              where cart.Account == userAccount
                              select new CartDto
                              {
-<<<<<<< HEAD
                                  Id = cart.Id,
-=======
->>>>>>> eb60b6660a6771860b5eb140b627fa53ccb6edcf
                                  Brand = format.Brand,
                                  ItemName = item.ItemName,
                                  Color = format.Color,
