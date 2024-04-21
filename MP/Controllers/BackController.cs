@@ -21,7 +21,7 @@ namespace MP.Controllers
         }
         #region 新增商品
         [HttpPost("AddProduct")]
-        public IActionResult AddProduct(ItemDto itemDto){
+        public IActionResult AddProduct([FromBody]ItemDto itemDto){
             var result = _backService.AddProduct(itemDto);
             var response = new { Status = 200, Message = result };
             var jsongoodResponse = JsonConvert.SerializeObject(response);
@@ -30,7 +30,7 @@ namespace MP.Controllers
         #endregion
         #region 上架
         [HttpPost("UP")]
-        public IActionResult UPItem([FromBody]int ItemId){
+        public IActionResult UPItem([FromQuery]int ItemId){
             var result = _backService.UPItem(ItemId);
             if(result == "上架成功"){
                 var response = new { Status = 200, message = result};
@@ -46,7 +46,7 @@ namespace MP.Controllers
         #endregion
         #region 下架
         [HttpPost("Down")]
-        public IActionResult DownItem([FromBody]int ItemId){
+        public IActionResult DownItem([FromQuery]int ItemId){
             var result = _backService.DownItem(ItemId);
             if(result == "下架成功"){
                 var response = new { Status = 200, message = result};
@@ -65,7 +65,7 @@ namespace MP.Controllers
         public IActionResult Items()
         {
             var result = _backService.Items();
-            var response = new { Status = 400, message = result};
+            var response = new { Status = 200, message = result};
             var jsongoodResponse = JsonConvert.SerializeObject(response);
             return Content(jsongoodResponse, "application/json");
         }

@@ -111,6 +111,7 @@ namespace MP.Repository
         {
             var result = (from i in _phoneContext.Item
                           select new Item{
+                            ItemId = i.ItemId,
                             ItemName = i.ItemName,
                             UPTime = i.UPTime,
                             DownTime = i.DownTime,
