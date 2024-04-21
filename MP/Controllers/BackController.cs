@@ -252,10 +252,10 @@ namespace MP.Controllers
         }
         #endregion
         #region 加入商品庫存與更改價格
-        [HttpPost("ItemUpdate/{FormatId}")]
-        public IActionResult UpdateItemSaP(int FormatId,[FromBody] ItemDto Item)
+        [HttpPost("ItemUpdate")]
+        public IActionResult UpdateItemSaP([FromBody] ItemDto Item)
         {
-            var result = _backService.UpdateItem(FormatId, Item.Store, Item.ItemPrice);
+            var result = _backService.UpdateItem(Item.FormatId, Item.Store, Item.ItemPrice);
             var response = new{Status=200,Message= result};
             var jsonresponse = JsonConvert.SerializeObject(response);
             return Content(jsonresponse,"application/json");

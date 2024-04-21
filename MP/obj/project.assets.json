@@ -4537,8 +4537,12 @@
   },
   "packageFolders": {
     "C:\\Users\\User\\.nuget\\packages\\": {},
+<<<<<<< HEAD
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {},
     "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\": {}
+=======
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+>>>>>>> 83ba5406939d4a88d8d7076d741dd1f94cde5e24
   },
   "project": {
     "version": "1.0.0",
