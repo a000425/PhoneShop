@@ -7,7 +7,7 @@ namespace MP.Dtos
 {
     public class ItemDto
     {
-        public string? ItemImg { get; set; }
+        //public string? ItemImg { get; set; }
         public string Brand { get; set; } = null!;
         public string Color { get; set; } = null!;
         public string Space { get; set; } = null!;
@@ -17,6 +17,6 @@ namespace MP.Dtos
         public int ItemId { get; set; }
         public string Instruction {get; set; } = null!;
         public int Store { get; set; } 
-        public List<string>? ImgList{get;set;}
+        public List<string>? ItemImg{get;set;}
     }
 }

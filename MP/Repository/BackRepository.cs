@@ -59,15 +59,18 @@ namespace MP.Repository
                                 where a.ItemId == itemDto.ItemId && a.Space == itemDto.Space && a.Color == itemDto.Color
                                 select a.FormatId).FirstOrDefault();
 
-                foreach(var itemImg in itemDto.ImgList)
+                if (itemDto.ItemImg != null)
                 {
-                    var img = new Models.Img {
-                        FormatId = formatId, 
-                        ItemImg = itemImg
-                    };
-                    _phoneContext.Img.Add(img);
+                    foreach (var itemImg in itemDto.ItemImg)
+                    {
+                        var img = new Models.Img {
+                            FormatId = formatId, 
+                            ItemImg = itemImg
+                        };
+                        _phoneContext.Img.Add(img);
+                    }
+                    _phoneContext.SaveChanges();
                 }
-                _phoneContext.SaveChanges();
             }
             catch (Exception e){
                 throw new Exception(e.ToString());

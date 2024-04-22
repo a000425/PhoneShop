@@ -202,18 +202,18 @@ namespace MP.Services
                 FormatId = format.FormatId,
                 ItemId = item.ItemId,
                 Store = format.Store,
-                ItemImg = img.ItemImg,
+                //ItemImg = img.ItemImg,
                 Brand = format.Brand,
                 ItemName = item.ItemName,
                 Color = format.Color,
                 Space = format.Space,
                 ItemPrice = format.ItemPrice,
                 Instruction = item.Instruction,
-                ImgList = (from f in _phoneContext.Format
+                ItemImg = (from f in _phoneContext.Format
                            join im in _phoneContext.Img on f.FormatId equals im.FormatId
                            where f.ItemId == ItemId
-                           select im.ItemImg).Skip(1).ToList()
-            }).ToList();
+                           select im.ItemImg).ToList()
+            }).GroupBy(F => F.FormatId).Select(g => g.First());
             return result;
         }
         #endregion
