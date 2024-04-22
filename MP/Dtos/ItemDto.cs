@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.Identity.Client;
 using MP.Models;
@@ -16,6 +17,6 @@ namespace MP.Dtos
         public int ItemId { get; set; }
         public string Instruction {get; set; } = null!;
         public int Store { get; set; } 
-        // public List<Img>? ImgList{get;set;}
+        public List<string>? ImgList{get;set;}
     }
 }

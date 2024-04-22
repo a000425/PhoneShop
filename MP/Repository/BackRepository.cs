@@ -55,13 +55,18 @@ namespace MP.Repository
         }
         public void AddImg(ItemDto itemDto){
             try{
-                var img = new Models.Img {
-                    FormatId = (from a in _phoneContext.Format
+                var formatId = (from a in _phoneContext.Format
                                 where a.ItemId == itemDto.ItemId && a.Space == itemDto.Space && a.Color == itemDto.Color
-                                select a.FormatId).FirstOrDefault(),
-                    ItemImg = itemDto.ItemImg
-                };
-                _phoneContext.Img.Add(img);
+                                select a.FormatId).FirstOrDefault();
+
+                foreach(var itemImg in itemDto.ImgList)
+                {
+                    var img = new Models.Img {
+                        FormatId = formatId, 
+                        ItemImg = itemImg
+                    };
+                    _phoneContext.Img.Add(img);
+                }
                 _phoneContext.SaveChanges();
             }
             catch (Exception e){

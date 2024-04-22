@@ -208,7 +208,11 @@ namespace MP.Services
                 Color = format.Color,
                 Space = format.Space,
                 ItemPrice = format.ItemPrice,
-                Instruction = item.Instruction
+                Instruction = item.Instruction,
+                ImgList = (from f in _phoneContext.Format
+                           join im in _phoneContext.Img on f.FormatId equals im.FormatId
+                           where f.ItemId == ItemId
+                           select im.ItemImg).Skip(1).ToList()
             }).ToList();
             return result;
         }
