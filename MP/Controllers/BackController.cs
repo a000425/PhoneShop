@@ -72,7 +72,7 @@ namespace MP.Controllers
         #endregion
         #region 顯示所有未回覆QA
         [HttpGet("QA/Unreply")]
-        public IActionResult GetQAUnreply([FromForm]string search)
+        public IActionResult GetQAUnreply([FromBody]string search)
         {
             var result = _backService.GetQAUnreply(search);
             if (result != null && result.Any())
@@ -101,7 +101,7 @@ namespace MP.Controllers
         #endregion
         #region 顯示所有已回覆QA
         [HttpGet("QA/Reply")]
-        public IActionResult GetQAReply([FromForm]string search)
+        public IActionResult GetQAReply([FromBody]string search)
         {
             var result = _backService.GetQAReply(search);
             if (result != null && result.Any())
@@ -120,7 +120,7 @@ namespace MP.Controllers
         #endregion
         #region 回覆問題
         [HttpPost("QA/Reply/{QAId}")]
-        public IActionResult ReplyQA(int QAId, [FromForm] string reply)
+        public IActionResult ReplyQA(int QAId, [FromBody] string reply)
         {
             var result = _backService.ReplyQA(QAId, reply);
             if (result != null && result.Any())

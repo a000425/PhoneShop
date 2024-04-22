@@ -251,6 +251,7 @@ namespace MP.Repository
             {
                 if (Q.ReplyTime == null)
                 {
+                    Q.Id = QAId;
                     Q.Reply = Reply;
                     Q.ReplyTime = DateTime.Now;
                     _phoneContext.SaveChanges();
