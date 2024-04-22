@@ -64,6 +64,7 @@ namespace MP.Services
               join f in _phoneContext.Format on p.ItemId equals f.ItemId
               join oi in _phoneContext.OrderItem on p.ItemId equals oi.ItemId into orderItemsGroup
               orderby orderItemsGroup.Sum(x => x.ItemNum) descending
+              where p.IsAvailable == true
               group new { p, f, orderItemsGroup } by new { p.ItemId, p.ItemName, f.Brand } into g
               select new ProductDto
               {
@@ -104,7 +105,7 @@ namespace MP.Services
         public IEnumerable<ProductDto> GetProductByBrand(string Brand ,int sortway){
            var result = (from p in _phoneContext.Item
                   join f in _phoneContext.Format on p.ItemId equals f.ItemId
-                  where f.Brand == Brand
+                  where f.Brand == Brand && p.IsAvailable==true
                   group new { p, f } by new { p.ItemId, p.ItemName,f.Brand } into g
                   select new ProductDto
                   {
@@ -146,6 +147,7 @@ namespace MP.Services
         public IEnumerable<ProductDto> GetProductByPrice(int MaxPrice,int MinPrice,int sortway){
             var result = (from p in _phoneContext.Item
                   join f in _phoneContext.Format on p.ItemId equals f.ItemId
+                  where p.IsAvailable==true
                   group new { p, f } by new { p.ItemId, p.ItemName,f.Brand } into g
                   where g.Min(x => x.f.ItemPrice) <= MaxPrice && g.Min(x => x.f.ItemPrice) >= MinPrice
                   select new ProductDto
@@ -196,7 +198,7 @@ namespace MP.Services
             var result = (from item in _phoneContext.Item  
             join format in _phoneContext.Format on item.ItemId equals format.ItemId
             join img in _phoneContext.Img on format.FormatId equals img.FormatId
-            where item.ItemId == ItemId 
+            where item.ItemId == ItemId && item.IsAvailable==true
             select new ItemDto
             {
                 FormatId = format.FormatId,

@@ -22,8 +22,9 @@ namespace MP.Repository
                 var Item = new Item {
                 ItemName = itemDto.ItemName,
                 Instruction = itemDto.Instruction,
-                IsAvailable = false,
-                CreateTime = DateTime.Now
+                IsAvailable = true,
+                CreateTime = DateTime.Now,
+                UPTime = DateTime.Now
             };
             _phoneContext.Item.Add(Item);
             _phoneContext.SaveChanges();
