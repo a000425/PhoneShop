@@ -85,16 +85,16 @@ namespace MP.Services
         }
         #endregion
         #region 取得已出貨訂單
-        public IEnumerable<BackOrderShowDto> GetOrderSent(string search)
+        public IEnumerable<BackOrderShowDto> GetOrderSent()
         {
-            var Order = _repository.getOrderSent(search);
+            var Order = _repository.getOrderSent();
             return Order;
         }
         #endregion
         #region 取得已完成訂單
-        public IEnumerable<BackOrderShowDto> GetOrderFinish(string search)
+        public IEnumerable<BackOrderShowDto> GetOrderFinish()
         {
-            var Order = _repository.getOrderFinish(search);
+            var Order = _repository.getOrderFinish();
             return Order;
         }
         #endregion
