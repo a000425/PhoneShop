@@ -31,9 +31,9 @@ namespace MP.Controllers
         }
         #region 取得商品一覽
         [HttpGet]
-        public IActionResult GetAllProduct([FromQuery]int sortway)
+        public IActionResult GetAllProduct([FromQuery]int sortway,[FromQuery]int nowPage)
         {
-            var result = _service.GetProduct(sortway);
+            var result = _service.GetProduct(sortway,nowPage);
             var response = new{ Status = 200, Message = result };
             var jsonresponse = JsonConvert.SerializeObject(response);
             return Content(jsonresponse,"application/json");
@@ -50,8 +50,8 @@ namespace MP.Controllers
         #endregion
         #region 取得品牌商品一覽與排序
         [HttpGet("{Brand}")]
-        public IActionResult GetProductByBrand(string Brand,[FromQuery]int sortway){
-            var result = _service.GetProductByBrand(Brand,sortway);
+        public IActionResult GetProductByBrand(string Brand,[FromQuery]int sortway,[FromQuery]int nowPage){
+            var result = _service.GetProductByBrand(Brand,sortway,nowPage);
             var response = new{ Status = 200, Message = result };
             var jsonresponse = JsonConvert.SerializeObject(response);
             return Content(jsonresponse,"application/json");
@@ -59,8 +59,8 @@ namespace MP.Controllers
         #endregion
         #region 取得商品一覽(價格)
         [HttpGet("GetProduct")]
-        public IActionResult GetProductByPrice([FromQuery]int MaxPrice,[FromQuery]int MinPrice,[FromQuery]int sortway){
-            var result = _service.GetProductByPrice(MaxPrice,MinPrice,sortway);
+        public IActionResult GetProductByPrice([FromQuery]int MaxPrice,[FromQuery]int MinPrice,[FromQuery]int sortway,[FromQuery]int nowPage){
+            var result = _service.GetProductByPrice(MaxPrice,MinPrice,sortway,nowPage);
             var response = new{ Status = 200, Message = result };
             var jsonresponse = JsonConvert.SerializeObject(response);
             return Content(jsonresponse,"application/json");

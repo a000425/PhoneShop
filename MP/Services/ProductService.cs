@@ -16,9 +16,22 @@ namespace MP.Services
         {
             _phoneContext = phoneContext;
         }
-        
+        #region 分頁方法
+        public IEnumerable<ForPagingDto<ProductDto>> Page(IEnumerable<ProductDto> product, int pageNum)
+        {
+            ForPagingDto<ProductDto> pagingDto = new ForPagingDto<ProductDto>();
+            int totalitem = product.Count();
+            pagingDto.NowPage = pageNum;
+            pagingDto.MaxPage = (int)Math.Ceiling((double)totalitem / pagingDto.Pageitem);
+            pagingDto.Itemcount = totalitem;
+            pagingDto.SetRightPage();
+            var pageProduct = product.Skip((pagingDto.NowPage - 1) * pagingDto.Pageitem).Take(pagingDto.Pageitem);
+            pagingDto.Items = pageProduct.ToList(); 
+            return new List<ForPagingDto<ProductDto>> { pagingDto };
+        }
+        #endregion
         #region 取得所有商品
-        public IEnumerable<ProductDto> GetProduct(int sortway)
+        public IEnumerable<ForPagingDto<ProductDto>> GetProduct(int sortway,int nowPage)
         {
         var result = (from p in _phoneContext.Item
                   join f in _phoneContext.Format on p.ItemId equals f.ItemId
@@ -55,7 +68,7 @@ namespace MP.Services
             {
                 throw new ArgumentException("無此排序方式");
             }
-            return result;
+            return Page(result,nowPage);
         }
         #endregion
         #region 熱銷商品
@@ -102,7 +115,7 @@ namespace MP.Services
         }
         #endregion
         #region 取得品牌所有商品與排序方式
-        public IEnumerable<ProductDto> GetProductByBrand(string Brand ,int sortway){
+        public IEnumerable<ForPagingDto<ProductDto>> GetProductByBrand(string Brand ,int sortway, int nowPage){
            var result = (from p in _phoneContext.Item
                   join f in _phoneContext.Format on p.ItemId equals f.ItemId
                   where f.Brand == Brand && p.IsAvailable==true
@@ -140,11 +153,11 @@ namespace MP.Services
                 throw new ArgumentException("無此排序方式");
             }
 
-            return result;
+            return Page(result,nowPage);
         }
         #endregion
         #region 取得商品一覽(價格)
-        public IEnumerable<ProductDto> GetProductByPrice(int MaxPrice,int MinPrice,int sortway){
+        public IEnumerable<ForPagingDto<ProductDto>> GetProductByPrice(int MaxPrice,int MinPrice,int sortway, int nowPage){
             var result = (from p in _phoneContext.Item
                   join f in _phoneContext.Format on p.ItemId equals f.ItemId
                   where p.IsAvailable==true
@@ -182,7 +195,7 @@ namespace MP.Services
                 throw new ArgumentException("無此排序方式");
             }
 
-            return result;
+            return Page(result,nowPage);
         }
         #endregion
         #region 取得ItemId的所有商品規格

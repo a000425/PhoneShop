@@ -24,7 +24,7 @@ namespace MP.Repository
                 return Cart;          
         }
 
-        public bool AddOrder(List<Cart>carts,string account,string address){
+        public bool AddOrder(List<Cart> carts,string account,string address){
            
             decimal totalPrice = 0;
             try
