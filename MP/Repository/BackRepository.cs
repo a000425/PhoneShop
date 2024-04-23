@@ -150,7 +150,8 @@ namespace MP.Repository
                         where q.ReplyTime == null
                         select new BackQADto
                         {
-                            ItemId = q.Id,
+                            Id = q.Id,
+                            ItemId = q.ItemId,
                             ItemName = i.ItemName,
                             Account = q.Account,
                             Content = q.Content,
@@ -242,36 +243,20 @@ namespace MP.Repository
         }
         #endregion
         #region 取得所有已出貨訂單
-        public IEnumerable<BackOrderShowDto> getOrderSent(string search)
+        public IEnumerable<BackOrderShowDto> getOrderSent()
         {   
             IEnumerable<BackOrderShowDto> order;
             string orderstatus = "已出貨";
-            if(search==null)
-            {
-                order = getOrder(orderstatus);
-            }
-            else
-            {
-                order = getOrder(orderstatus,search);
-            }
-            
+            order = getOrder(orderstatus);
             return order;
         }
         #endregion
         #region 取得所有已完成訂單
-        public IEnumerable<BackOrderShowDto> getOrderFinish(string search)
+        public IEnumerable<BackOrderShowDto> getOrderFinish()
         {   
             IEnumerable<BackOrderShowDto> order;
             string orderstatus = "已完成";
-            if(search==null)
-            {
-                order = getOrder(orderstatus);
-            }
-            else
-            {
-                order = getOrder(orderstatus,search);
-            }
-            
+            order = getOrder(orderstatus);
             return order;
         }
         #endregion
@@ -300,7 +285,7 @@ namespace MP.Repository
                               {
                                   ItemName = it.ItemName,
                                   ItemFormat = f.Space + "-" + f.Color,
-                                  ItemPrice = f.ItemPrice,
+                                  ItemPrice = i.ItemPrice,
                                   ItemNum = i.ItemNum
                               }).ToList()
                  }).GroupBy(o => o.OrderId).Select(g => g.First());
