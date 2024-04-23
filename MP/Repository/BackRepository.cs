@@ -150,7 +150,8 @@ namespace MP.Repository
                         where q.ReplyTime == null
                         select new BackQADto
                         {
-                            ItemId = q.Id,
+                            Id = q.Id,
+                            ItemId = q.ItemId,
                             ItemName = i.ItemName,
                             Account = q.Account,
                             Content = q.Content,
