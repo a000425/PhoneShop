@@ -113,7 +113,7 @@ namespace MP.Controllers
         #region QA問
         [Authorize]
         [HttpPost("{ItemId}")]
-        public IActionResult ProductQA(int ItemId, [FromBody] string content)
+        public IActionResult ProductQA(int ItemId, [FromForm] string content)
         {
             var result = _service.ProductQA(ItemId, HttpContext.User.Identity.Name, content);
             if (result != null && result.Any())
