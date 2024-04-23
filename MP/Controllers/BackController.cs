@@ -158,9 +158,9 @@ namespace MP.Controllers
         #endregion
         #region 已出貨訂單顯示
         [HttpGet("OrderShowSent")]
-        public IActionResult OrderShowSent([FromForm]string search)
+        public IActionResult OrderShowSent()
         {
-            var Order = _backService.GetOrderSent(search);
+            var Order = _backService.GetOrderSent();
             if(Order != null && Order.Any())
             {
                 var response = new { Status = 200, Message = Order };
@@ -177,9 +177,9 @@ namespace MP.Controllers
         #endregion
         #region 已完成訂單顯示
         [HttpGet("OrderShowFinish")]
-        public IActionResult OrderShowFinish([FromForm] string search)
+        public IActionResult OrderShowFinish()
         {
-            var Order = _backService.GetOrderFinish(search);
+            var Order = _backService.GetOrderFinish();
             if(Order != null && Order.Any())
             {
                 var response = new { Status = 200, Message = Order };
