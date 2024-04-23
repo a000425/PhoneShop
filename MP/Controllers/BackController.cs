@@ -263,7 +263,7 @@ namespace MP.Controllers
         #endregion
         #region 搜尋(問答)
         [HttpGet("SearchQA")]
-        public IActionResult SearchQA([FromBody]string Search){
+        public IActionResult SearchQA([FromQuery]string Search){
             var result = _backService.SearchQA(Search);
             var response = new{Status=200,Message = result};
             var jsonresponse = JsonConvert.SerializeObject(response);
