@@ -140,40 +140,22 @@ namespace MP.Repository
             
         }
         #region 取得未回覆留言
-        public IEnumerable<BackQADto> GetQaUnreply(string search)
+        public IEnumerable<BackQADto> GetQaUnreply()
         {
             IEnumerable<BackQADto> result;
             try
             {
-                if(search==null){
-                    result = (from q in _phoneContext.QA
-                          join i in _phoneContext.Item on q.ItemId equals i.ItemId
-                          where q.ReplyTime == null
-                          select new BackQADto
-                          {
-                              ItemId = q.Id,
-                              ItemName = i.ItemName,
-                              Account = q.Account,
-                              Content = q.Content,
-                              CreateTime = q.CreateTime
-                          });
-                }
-                else{
-                    result = (from q in _phoneContext.QA
-                          join i in _phoneContext.Item on q.ItemId equals i.ItemId
-                          where q.ReplyTime == null 
-                          &&(i.ItemName.Contains(search) || q.Account.Contains(search) || q.Content.Contains(search))
-                          select new BackQADto
-                          {
-                              ItemId = q.Id,
-                              ItemName = i.ItemName,
-                              Account = q.Account,
-                              Content = q.Content,
-                              CreateTime = q.CreateTime
-                          });
-                }
-                
-                          
+                result = (from q in _phoneContext.QA
+                        join i in _phoneContext.Item on q.ItemId equals i.ItemId
+                        where q.ReplyTime == null
+                        select new BackQADto
+                        {
+                            ItemId = q.Id,
+                            ItemName = i.ItemName,
+                            Account = q.Account,
+                            Content = q.Content,
+                            CreateTime = q.CreateTime
+                        });
             }
             catch (Exception e){
                 throw new Exception(e.ToString());
@@ -198,44 +180,25 @@ namespace MP.Repository
         }
         #endregion
         #region 取得已回覆留言
-        public IEnumerable<BackQADto> GetQaReply(string search)
+        public IEnumerable<BackQADto> GetQaReply()
         {
             IEnumerable<BackQADto> result;
             try
             {
-                if(search==null)
-                {
-                    result = (from q in _phoneContext.QA
-                          join i in _phoneContext.Item on q.ItemId equals i.ItemId
-                          where q.ReplyTime != null 
-                          select new BackQADto
-                          {
-                              ItemId = i.ItemId,
-                              ItemName = i.ItemName,
-                              Account = q.Account,
-                              Content = q.Content,
-                              CreateTime = q.CreateTime,
-                              Reply = q.Reply,
-                              ReplyTime = q.ReplyTime
-                          });
-                }
-                else
-                {
-                    result = (from q in _phoneContext.QA
-                          join i in _phoneContext.Item on q.ItemId equals i.ItemId
-                          where q.ReplyTime != null 
-                          &&(i.ItemName.Contains(search) || q.Account.Contains(search)
-                          || q.Content.Contains(search) || q.Reply.Contains(search))
-                          select new BackQADto
-                          {
-                              ItemName = i.ItemName,
-                              Account = q.Account,
-                              Content = q.Content,
-                              CreateTime = q.CreateTime,
-                              Reply = q.Reply,
-                              ReplyTime = q.ReplyTime
-                          });
-                }
+            result = (from q in _phoneContext.QA
+                    join i in _phoneContext.Item on q.ItemId equals i.ItemId
+                    where q.ReplyTime != null 
+                    select new BackQADto
+                    {
+                        ItemId = i.ItemId,
+                        ItemName = i.ItemName,
+                        Account = q.Account,
+                        Content = q.Content,
+                        CreateTime = q.CreateTime,
+                        Reply = q.Reply,
+                        ReplyTime = q.ReplyTime
+                    });
+                
             }
             catch (Exception e){
                 throw new Exception(e.ToString());
@@ -270,17 +233,11 @@ namespace MP.Repository
         }
         #endregion
         #region 取得所有未出貨訂單
-        public IEnumerable<BackOrderShowDto> getOrderUnsend(string search)
+        public IEnumerable<BackOrderShowDto> getOrderUnsend()
         {   
             IEnumerable<BackOrderShowDto> order;
             string orderstatus = "未出貨";
-            if(search==null){
-                order = getOrder(orderstatus);
-            }
-            else
-            {
-                order = getOrder(orderstatus,search);
-            }
+            order = getOrder(orderstatus);
             return order;
         }
         #endregion

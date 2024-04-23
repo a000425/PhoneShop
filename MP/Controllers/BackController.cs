@@ -72,9 +72,9 @@ namespace MP.Controllers
         #endregion
         #region 顯示所有未回覆QA
         [HttpGet("QA/Unreply")]
-        public IActionResult GetQAUnreply([FromBody]string search)
+        public IActionResult GetQAUnreply()
         {
-            var result = _backService.GetQAUnreply(search);
+            var result = _backService.GetQAUnreply();
             if (result != null && result.Any())
             {
                 var response = new { Status = 200, Message = result };
@@ -101,9 +101,9 @@ namespace MP.Controllers
         #endregion
         #region 顯示所有已回覆QA
         [HttpGet("QA/Reply")]
-        public IActionResult GetQAReply([FromBody]string search)
+        public IActionResult GetQAReply()
         {
-            var result = _backService.GetQAReply(search);
+            var result = _backService.GetQAReply();
             if (result != null && result.Any())
             {
                 var response = new { Status = 200, Message = result };
@@ -139,9 +139,9 @@ namespace MP.Controllers
         #endregion
         #region 未出貨訂單顯示
         [HttpGet("OrderShowUnsend")]
-        public IActionResult OrderShowUnsend([FromForm] string search)
+        public IActionResult OrderShowUnsend()
         {
-            var Order = _backService.GetOrderUnsend(search);
+            var Order = _backService.GetOrderUnsend();
             if(Order != null && Order.Any())
             {
                 var response = new { Status = 200, Message = Order };
@@ -204,9 +204,9 @@ namespace MP.Controllers
             return Content(jsonresponse,"application/json");
         }
         #endregion
-        #region 搜尋(商品&問答)
+        #region 搜尋(商品)
         [HttpGet("SearchProduct")]
-        public IActionResult SearchProduct(string Search){
+        public IActionResult SearchProduct([FromBody]string Search){
             var result = _backService.SearchProduct(Search);
             var response = new{Status=200,Message = result};
             var jsonresponse = JsonConvert.SerializeObject(response);
@@ -263,7 +263,7 @@ namespace MP.Controllers
         #endregion
         #region 搜尋(問答)
         [HttpGet("SearchQA")]
-        public IActionResult SearchQA(string Search){
+        public IActionResult SearchQA([FromBody]string Search){
             var result = _backService.SearchQA(Search);
             var response = new{Status=200,Message = result};
             var jsonresponse = JsonConvert.SerializeObject(response);
@@ -272,7 +272,7 @@ namespace MP.Controllers
         #endregion
         #region 商品庫存搜尋
         [HttpGet("ItemSearch")]
-        public IActionResult ItemSearch([FromForm]string search)
+        public IActionResult ItemSearch([FromBody]string search)
         {
             var result = _backService.ItemSearch(search);
             var response = new{Status=200,Message= result};

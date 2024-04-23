@@ -49,9 +49,9 @@ namespace MP.Services
         }
         #endregion
         #region 取得所有QA未回覆
-        public IEnumerable<BackQADto> GetQAUnreply(string search)
+        public IEnumerable<BackQADto> GetQAUnreply()
         {
-            var result = _repository.GetQaUnreply(search);
+            var result = _repository.GetQaUnreply();
             return result;
 
         }
@@ -64,9 +64,9 @@ namespace MP.Services
         }
         #endregion
         #region 取得所有QA已回覆
-        public IEnumerable<BackQADto> GetQAReply(string search)
+        public IEnumerable<BackQADto> GetQAReply()
         {
-            var result = _repository.GetQaReply(search);
+            var result = _repository.GetQaReply();
             return result;
         }
         #endregion
@@ -78,9 +78,9 @@ namespace MP.Services
         }
         #endregion
         #region 取得未出貨訂單
-        public IEnumerable<BackOrderShowDto> GetOrderUnsend(string search)
+        public IEnumerable<BackOrderShowDto> GetOrderUnsend()
         {
-            var Order = _repository.getOrderUnsend(search);
+            var Order = _repository.getOrderUnsend();
             return Order;
         }
         #endregion
