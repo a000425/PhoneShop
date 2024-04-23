@@ -72,7 +72,11 @@ namespace MP.Repository
                         FormatId =  (from c in _phoneContext.Cart 
                                     where c.Id == item.Id 
                                     select c.FormatId).FirstOrDefault(),
-                        ItemNum = (from c in _phoneContext.Cart where c.Id == item.Id select c.ItemNum).FirstOrDefault()
+                        ItemNum = (from c in _phoneContext.Cart where c.Id == item.Id select c.ItemNum).FirstOrDefault(),
+                        ItemPrice = (from a in _phoneContext.Cart
+                                     join b in _phoneContext.Format on a.FormatId equals b.FormatId
+                                     where a.Id == item.Id
+                                     select b.ItemPrice).FirstOrDefault()
                     };
                     _phoneContext.OrderItem.Add(orderItem);
                     var format = _phoneContext.Format.SingleOrDefault(f => f.FormatId == orderItem.FormatId);

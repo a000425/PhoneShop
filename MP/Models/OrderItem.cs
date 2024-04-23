@@ -15,5 +15,7 @@ public partial class OrderItem
 
     public int ItemNum { get; set; }
 
+    public int ItemPrice { get; set; }
+    
     public virtual Order Order { get; set; } = null!;
 }

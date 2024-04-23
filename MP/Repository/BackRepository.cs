@@ -284,7 +284,7 @@ namespace MP.Repository
                               {
                                   ItemName = it.ItemName,
                                   ItemFormat = f.Space + "-" + f.Color,
-                                  ItemPrice = f.ItemPrice,
+                                  ItemPrice = i.ItemPrice,
                                   ItemNum = i.ItemNum
                               }).ToList()
                  }).GroupBy(o => o.OrderId).Select(g => g.First());
