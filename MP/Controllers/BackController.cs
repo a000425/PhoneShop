@@ -206,7 +206,7 @@ namespace MP.Controllers
         #endregion
         #region 搜尋(商品)
         [HttpGet("SearchProduct")]
-        public IActionResult SearchProduct([FromBody]string Search){
+        public IActionResult SearchProduct([FromQuery]string Search){
             var result = _backService.SearchProduct(Search);
             var response = new{Status=200,Message = result};
             var jsonresponse = JsonConvert.SerializeObject(response);
@@ -272,7 +272,7 @@ namespace MP.Controllers
         #endregion
         #region 商品庫存搜尋
         [HttpGet("ItemSearch")]
-        public IActionResult ItemSearch([FromBody]string search)
+        public IActionResult ItemSearch([FromQuery]string search)
         {
             var result = _backService.ItemSearch(search);
             var response = new{Status=200,Message= result};
