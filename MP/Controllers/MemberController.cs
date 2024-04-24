@@ -93,8 +93,8 @@ namespace MP.Controllers
                 var cookieOption = new CookieOptions
                 {
                     Expires = DateTime.Now.AddMinutes(30),
-                    SameSite = SameSiteMode.None,
-                    Secure = true
+                    SameSite = SameSiteMode.Lax,
+                    // Secure = true
                 };
                 Response.Cookies.Append("Token", token, cookieOption);
                 var response = new { Status = 200, Message = "已登入" };
