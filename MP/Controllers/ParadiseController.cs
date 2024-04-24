@@ -131,25 +131,6 @@ namespace MP.Controllers
         }
         #endregion
 
-        #region 上傳圖檔
-        [HttpPost("uploadimg")]
-        public async Task<IActionResult> UploadImages(List<IFormFile> images)
-        {
-            foreach (var image in images)
-            {
-                if (image.Length > 0)
-                {
-                    var filePath = Path.Combine("C:/Users/User/Desktop/frontstage/mobile_paradise-front-end/Index/image", image.FileName);
-                    using (var stream = new FileStream(filePath, FileMode.Create))
-                    {
-                        await image.CopyToAsync(stream);
-                    }
-                }
-            }
-
-            return Ok();
-        }
-        #endregion
 
     }
 }
