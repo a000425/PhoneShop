@@ -28,8 +28,8 @@ namespace MP.Controllers
             return Content(jsongoodResponse, "application/json");
         }
         #endregion
-        #region 上傳圖檔
-        [HttpPost("uploadImages")]
+        #region 上傳圖檔測試
+        [HttpPost("uploadtrytrysee")]
         public async Task<IActionResult> UploadImages(List<IFormFile> images)
         {
             foreach (var image in images)
