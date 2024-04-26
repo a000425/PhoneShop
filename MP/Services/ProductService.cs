@@ -210,7 +210,8 @@ namespace MP.Services
             }
             var result = (from item in _phoneContext.Item  
             join format in _phoneContext.Format on item.ItemId equals format.ItemId
-            join img in _phoneContext.Img on format.FormatId equals img.FormatId
+            join img in _phoneContext.Img on format.FormatId equals img.FormatId into imgGroup
+            from img in imgGroup.DefaultIfEmpty()
             where item.ItemId == ItemId && item.IsAvailable==true
             select new ItemDto
             {
