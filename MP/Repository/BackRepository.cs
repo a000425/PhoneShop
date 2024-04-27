@@ -440,7 +440,9 @@ namespace MP.Repository
                             Brand = f.Brand,
                             ItemName = i.ItemName,
                             Space = f.Space,
-                            Color = f.Color
+                            Color = f.Color,
+                            ItemPrice = f.ItemPrice,
+                            Store = f.Store
                                  
 
                         }).FirstOrDefault();
@@ -457,36 +459,30 @@ namespace MP.Repository
         public string updateItem(int FormatId,int Store,int Price)
         {
             var format = _phoneContext.Format.SingleOrDefault(f => f.FormatId == FormatId);
-            int storecheck = format.Store+Store;
+            //int storecheck = format.Store+Store;
             if(format!=null)
             {
-                if(storecheck>=0)
+                if(Store>=0 && Price>0)
                 {
-                    if(Price>0 && Store!=0)
-                    {
-                        format.Store+=Store;
-                        format.ItemPrice = Price;
-                        _phoneContext.SaveChanges();
-                        return("商品庫存與單價更新成功");
-                        
-                    }
-                    else if(Store==0)
-                    {
-                        format.ItemPrice = Price;
-                        _phoneContext.SaveChanges();
-                        return("商品單價更新成功");
-                    }
-                    else
-                    {
-                        format.Store+=Store;
-                        _phoneContext.SaveChanges();
-                        return("商品庫存更新成功");
-                    }
+                    format.Store = Store;
+                    format.ItemPrice = Price;
+                    _phoneContext.SaveChanges();
+                    return("商品更新成功");
+
+                }else if(Store>=0 && Price<=0)
+                {
+                    format.Store = Store;
+                    _phoneContext.SaveChanges();
+                    return("商品庫存更新成功");
+                }else if (Store<0 && Price>0)
+                {
+                    format.ItemPrice = Price;
+                    _phoneContext.SaveChanges();
+                    return("商品單價更新成功");
                 }else
                 {
-                    return("商品庫存不得小於0");
+                    return("輸入商品單價或數量有誤");
                 }
-                
                 
             }
             else

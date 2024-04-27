@@ -270,7 +270,7 @@ namespace MP.Controllers
             }
         }
         #endregion
-        #region 加入商品庫存與更改價格
+        #region 更改商品庫存與價格
         [HttpPost("ItemUpdate")]
         public IActionResult UpdateItemSaP([FromBody] ItemDto Item)
         {
