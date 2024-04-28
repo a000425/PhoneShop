@@ -103,6 +103,13 @@ namespace MP.Services
             }
         }
         #endregion
+        #region 修改單筆購物車內商品數量
+        public bool UpdateCart(int cartId, string account, int itemnum)
+        {
+            bool result = _repository.updateCart(cartId,account,itemnum);
+            return result;
+        }
+        #endregion
         #region 下訂單
         public string getOrder(string account,string address){
             try{
@@ -112,6 +119,9 @@ namespace MP.Services
                     if(_repository.AddOrder(Cart,account,address)){
                     _repository.AddOrderItem(Cart);
                     _repository.DeleteCart(account);
+                    }else
+                    {
+                        return "下單失敗，商品數量不足";
                     }
                 }else
                 {

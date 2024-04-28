@@ -56,6 +56,24 @@ namespace MP.Controllers
             }
         } 
         #endregion
+
+        #region 修改單筆購物車商品數量
+        [HttpPost("UpdateItemNum")]
+        public IActionResult UpdateItemFromCart([FromBody]Cart cart)
+        {
+            if(_service.UpdateCart(cart.Id,HttpContext.User.Identity.Name, cart.ItemNum)){
+                var response = new{Status=200,Message="已修改"};
+                var jsonresponse = JsonConvert.SerializeObject(response);
+                return Content(jsonresponse,"application/json");
+            }else
+            {
+                var response = new{Status=400,Message= "查無項目"};
+                var jsonresponse = JsonConvert.SerializeObject(response);
+                return Content(jsonresponse,"application/json");
+            }
+        } 
+        #endregion
+
         #region 下訂單
         [HttpPost("Order")]
         public IActionResult getOrder([FromBody]string address){
