@@ -89,5 +89,39 @@ namespace MP.Repository
             return result;
         }
         #endregion
+        #region 忘記密碼
+        public bool CheckAccountByEmail(string Account,string Email){
+            var result = _phoneContext.Account.SingleOrDefault(a=> a.Account1 == Account && a.Email == Email);
+            if(result!= null){
+                return true;
+            }
+            return false;
+        }
+        public string GetNewPassword(string Email,string Account){
+            string[] Code = { "A","B","C","D","E","F","G","H","I","J","K","L","M","N",
+                              "P","Q","R","S","T","U","V","W","X","Y","Z","a","b","c",
+                              "d","e","f","g","h","i","j","k","l","m","n","p","q","r",
+                              "s","t","u","v","w","x","y","z","1","2","3","4","5","6","7","8","9"};
+            string NewPassword = string.Empty;
+            Random rd = new Random();
+            for(int i=0;i<10;i++)
+            {
+                NewPassword += Code[rd.Next(Code.Count())];
+            }
+            return NewPassword;
+        }
+        public void ForgetPasswodChange(string Account, string Password){
+            try{
+                var result = _phoneContext.Account.Single(a=> a.Account1 == Account);
+                if(result != null){
+                    result.Password = Password;
+                    _phoneContext.SaveChanges();
+                }
+            }
+            catch(Exception ex){
+                throw new Exception(ex.ToString());
+            }
+        }
+        #endregion
     }
 }

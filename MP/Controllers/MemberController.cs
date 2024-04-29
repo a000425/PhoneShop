@@ -156,5 +156,24 @@ namespace MP.Controllers
             return Content(jsonresponse, "application/json");
         }
         #endregion
+        #region 忘記密碼
+        [HttpPost("ForgetPasswod")]
+        public IActionResult ForgetPasswod([FromBody]Account account){
+            var result = _services.ForgetPasswod(account.Email,account.Account1);
+            if(!string.IsNullOrEmpty(result)){
+                string TempMail = System.IO.File.ReadAllText("../MP/MailBody/PasswordMail.html");
+                string mailBody = _mail.GetPasswordMailBody(TempMail,account.Account1,result);
+                _mail.SendMail(mailBody,account.Email);
+                var response = new { Status = 200 };
+                var jsonresponse = JsonConvert.SerializeObject(response);
+                return Content(jsonresponse, "application/json");
+            }
+            else{
+                var response = new { Status = 400 , Message = account.Email + account.Account1};
+                var jsonresponse = JsonConvert.SerializeObject(response);
+                return Content(jsonresponse, "application/json");                
+            }
+        }
+        #endregion
     }
 }

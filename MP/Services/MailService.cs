@@ -41,10 +41,17 @@ namespace MP.Services
             MailMessage mail = new MailMessage();
             mail.From = new MailAddress(gmail_mail);
             mail.To.Add(toEmail);
-            mail.Subject = "會員註冊信";
+            mail.Subject = "會員信";
             mail.Body = mailBody;
             mail.IsBodyHtml = true;
             smtp.Send(mail);
+        }
+        #endregion
+        #region 忘記密碼
+        public string GetPasswordMailBody(string Temp, string Account ,string Password){
+            Temp = Temp.Replace("{{UserName}}", Account);
+            Temp = Temp.Replace("{{NewPassword}}",Password);
+            return Temp;
         }
         #endregion
     }

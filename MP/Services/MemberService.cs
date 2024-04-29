@@ -150,7 +150,17 @@ namespace MP.Services
             }
         }
         #endregion
-    
+        #region 忘記密碼
+        public string ForgetPasswod(string Email, string Account){
+            if(_repository.CheckAccountByEmail(Account, Email)){
+                var result = _repository.GetNewPassword(Email,Account);
+                var password = HashPassword(result);
+                _repository.ForgetPasswodChange(Account, password);
+                return result;
+            }
+            return "";
+        }
+        #endregion
         
     }
 }
