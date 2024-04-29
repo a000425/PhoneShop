@@ -27,8 +27,15 @@ namespace MP.Repository
                                select f).FirstOrDefault();
                     if(format.Store >= itemnum)
                     {
-                        cart.ItemNum = itemnum;
-                        _phoneContext.SaveChanges();
+                        if(itemnum >=1)
+                        {
+                            cart.ItemNum = itemnum;
+                            _phoneContext.SaveChanges();
+                        }else
+                        {
+                            return "購物車商品數量不得等於0或小於0";
+                        }
+                        
                     }else
                     {
                         return "超過庫存數量";
