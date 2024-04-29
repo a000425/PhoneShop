@@ -11,6 +11,32 @@ namespace MP.Repository
         {
             _phoneContext = phoneContext;
         }
+
+        #region 修改單筆購物車內商品數量
+        public bool updateCart(int cartId, string account, int itemnum)
+        {
+            try
+            {
+                var cart = (from c in _phoneContext.Cart
+                            where c.Account == account && c.Id == cartId
+                            select c).FirstOrDefault();
+                if(cart != null)
+                {
+                    cart.ItemNum = itemnum;
+                    _phoneContext.SaveChanges();
+                    
+                }else
+                {
+                    return false;
+                }
+            }
+            catch (Exception e){
+                throw new Exception(e.ToString());
+                return false;
+            }
+            return true;
+        }
+        #endregion
         public List<Cart> GetCarts(string account){
                 var Cart = (from a in _phoneContext.Cart
                             where a.Account == account
@@ -38,7 +64,16 @@ namespace MP.Repository
                                 select format.ItemPrice).FirstOrDefault();
 
                     var itemnum = (from c in _phoneContext.Cart where c.Id == num.Id select c.ItemNum).FirstOrDefault();
-                    totalPrice += price * itemnum; 
+                    var formatnum = (from f in _phoneContext.Format where f.FormatId == num.FormatId select f.Store).FirstOrDefault();
+                    if(itemnum<=formatnum)
+                    {
+                        totalPrice += price * itemnum;
+                    }else
+                    {
+                        return false;
+                    }
+                     
+
                 }
 
                 var order = new Order
