@@ -27,9 +27,19 @@ namespace MP.Controllers
         public IActionResult AddCart(Cart cart)
         {
             var result = _service.AddCart(HttpContext.User.Identity.Name,cart.ItemId,cart.ItemNum,cart.FormatId);
-            var response = new { Status = 200, Message = result };
-            var jsongoodResponse = JsonConvert.SerializeObject(response); // 序列化為 JSON 格式的字符串
-            return Content(jsongoodResponse, "application/json");
+            if(result == "加入成功")
+            {
+                var response = new { Status = 200, Message = result };
+                var jsongoodResponse = JsonConvert.SerializeObject(response); // 序列化為 JSON 格式的字符串
+                return Content(jsongoodResponse, "application/json");
+            }
+            else
+            {
+                var response = new { Status = 400, Message = result };
+                var jsongoodResponse = JsonConvert.SerializeObject(response); // 序列化為 JSON 格式的字符串
+                return Content(jsongoodResponse, "application/json");
+            }
+            
         }
         #endregion
         #region 顯示購物車內的商品資訊
