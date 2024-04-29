@@ -13,7 +13,7 @@ namespace MP.Repository
         }
 
         #region 修改單筆購物車內商品數量
-        public bool updateCart(int cartId, string account, int itemnum)
+        public string updateCart(int cartId, string account, int itemnum)
         {
             try
             {
@@ -22,19 +22,29 @@ namespace MP.Repository
                             select c).FirstOrDefault();
                 if(cart != null)
                 {
-                    cart.ItemNum = itemnum;
-                    _phoneContext.SaveChanges();
+                    var format = (from f in _phoneContext.Format
+                               where f.FormatId == cart.FormatId
+                               select f).FirstOrDefault();
+                    if(format.Store >= itemnum)
+                    {
+                        cart.ItemNum = itemnum;
+                        _phoneContext.SaveChanges();
+                    }else
+                    {
+                        return "超過庫存數量";
+                    }
+                    
                     
                 }else
                 {
-                    return false;
+                    return "無此購物車項目";
                 }
             }
             catch (Exception e){
                 throw new Exception(e.ToString());
-                return false;
+                return "修改出現錯誤";
             }
-            return true;
+            return "修改成功";
         }
         #endregion
         public List<Cart> GetCarts(string account){

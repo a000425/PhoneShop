@@ -104,9 +104,9 @@ namespace MP.Services
         }
         #endregion
         #region 修改單筆購物車內商品數量
-        public bool UpdateCart(int cartId, string account, int itemnum)
+        public string UpdateCart(int cartId, string account, int itemnum)
         {
-            bool result = _repository.updateCart(cartId,account,itemnum);
+            var result = _repository.updateCart(cartId,account,itemnum);
             return result;
         }
         #endregion

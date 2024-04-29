@@ -71,13 +71,14 @@ namespace MP.Controllers
         [HttpPost("UpdateItemNum")]
         public IActionResult UpdateItemFromCart([FromBody]Cart cart)
         {
-            if(_service.UpdateCart(cart.Id,HttpContext.User.Identity.Name, cart.ItemNum)){
-                var response = new{Status=200,Message="已修改"};
+            var result = _service.UpdateCart(cart.Id,HttpContext.User.Identity.Name, cart.ItemNum);
+            if(result == "修改成功"){
+                var response = new{Status=200,Message=result};
                 var jsonresponse = JsonConvert.SerializeObject(response);
                 return Content(jsonresponse,"application/json");
             }else
             {
-                var response = new{Status=400,Message= "查無項目"};
+                var response = new{Status=400,Message= result};
                 var jsonresponse = JsonConvert.SerializeObject(response);
                 return Content(jsonresponse,"application/json");
             }
