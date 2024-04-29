@@ -10,6 +10,7 @@
         public string Space { get; set; } = null!;
         public int ItemNum { get; set; }
         public int ItemPrice { get; set; }
+        public int ItemStore{ get; set; }
         public List<CartDto> Items { get; set; }
 
     }

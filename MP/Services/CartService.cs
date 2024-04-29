@@ -82,7 +82,8 @@ namespace MP.Services
                                  Color = format.Color,
                                  Space = format.Space,
                                  ItemNum = cart.ItemNum,
-                                 ItemPrice = format.ItemPrice
+                                 ItemPrice = format.ItemPrice,
+                                 ItemStore = format.Store
                              }).ToList();
 
             return shoppingCartItems;
