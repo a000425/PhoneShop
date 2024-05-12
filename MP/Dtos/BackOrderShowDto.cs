@@ -14,6 +14,7 @@ namespace MP.Dtos
         public int TotalPrice {get;set;}
         public string Address {get;set;}
         public string OrderStatus {get;set;}
+        public int Discount{get;set;}
         
     }
 }

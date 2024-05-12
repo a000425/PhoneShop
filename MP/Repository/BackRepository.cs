@@ -275,6 +275,7 @@ namespace MP.Repository
                      OrderTime = o.OrderTime,
                      Account = o.Account,
                      TotalPrice = o.TotalPrice,
+                     Discount = o.Discount,
                      Address = o.Address,
                      OrderStatus = o.OrderStatus,
                      Items = (from i in _phoneContext.OrderItem
@@ -314,6 +315,7 @@ namespace MP.Repository
                      OrderTime = o.OrderTime,
                      Account = o.Account,
                      TotalPrice = o.TotalPrice,
+                     Discount = o.Discount,
                      Address = o.Address,
                      OrderStatus = o.OrderStatus,
                      Items = (from i in _phoneContext.OrderItem
@@ -524,6 +526,74 @@ namespace MP.Repository
                 throw new Exception(e.ToString());
             }
             return Items;
+        }
+        #endregion
+        #region 取得所有會員
+        public IEnumerable<Account> getAllAccount()
+        {
+            IEnumerable<Account> result;
+            try
+            {
+                
+                result= (from a in _phoneContext.Account
+                        where a.IsAdmin ==false
+                        select new Account
+                        {
+                            Account1 = a.Account1,
+                            Name = a.Name,
+                            Email = a.Email,
+                            Cellphone = a.Cellphone,
+                            MemberKind = a.MemberKind,
+                            MemberTime = a.MemberTime
+                        }).ToList();
+                
+                          
+            }
+            catch (Exception e){
+                throw new Exception(e.ToString());
+            }
+            return result;
+        }
+        #endregion
+        #region 變更會員等級
+        public bool changeAccountLevel(int level,string account)
+        {
+            
+            try
+            {
+                var member = _phoneContext.Account.SingleOrDefault(a => a.IsAdmin == false && a.Account1 == account);
+                if(member == null)
+                {
+                    return false;
+                }else
+                {
+                    if(level == 0)
+                    {
+                        member.MemberKind = null;
+                        member.MemberTime = null;
+                        _phoneContext.SaveChanges();
+                    }else if(level == 1)
+                    {
+                        member.MemberKind = "銀級會員";
+                        member.MemberTime = DateTime.Now;
+                        _phoneContext.SaveChanges();
+                    }else if(level == 2)
+                    {
+                        member.MemberKind = "金級會員";
+                        member.MemberTime = DateTime.Now;
+                        _phoneContext.SaveChanges();
+                    }else
+                    {
+                        return false;
+                    }
+                }
+                
+                          
+            }
+            catch (Exception e){
+                throw new Exception(e.ToString());
+            }
+            return true;
         }
         #endregion
     }

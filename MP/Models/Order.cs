@@ -11,6 +11,8 @@ public partial class Order
 
     public int TotalPrice { get; set; }
 
+    public int Discount { get; set; }
+
     public DateTime OrderTime { get; set; }
 
     public string OrderStatus { get; set; }

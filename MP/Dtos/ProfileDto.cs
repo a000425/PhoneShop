@@ -9,5 +9,7 @@ namespace MP.Dtos
         public string Name { get; set; } = null!;
         public string Cellphone { get; set; }
         public string Email { get; set; } = null!;
+        public string? MemberKind{get; set;}
+        public DateTime? MemberTime{get;set; }
     }
 }

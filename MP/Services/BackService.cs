@@ -145,5 +145,19 @@ namespace MP.Services
             return result;
         }
         #endregion
+        #region 取得所有會員
+        public IEnumerable<Account> GetAllAccount()
+        {
+            var result = _repository.getAllAccount();
+            return result;
+        }
+        #endregion
+        #region 變更會員等級
+        public bool ChangeAccountLevel(int level, string account)
+        {
+            bool result = _repository.changeAccountLevel(level,account);
+            return result;
+        }
+        #endregion
     }
 }

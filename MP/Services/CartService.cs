@@ -70,6 +70,15 @@ namespace MP.Services
         #region 顯示購物車內的商品資訊
         public IEnumerable<CartDto> GetAllCartList(string userAccount)
         {
+            double discount = 0;
+            var member =  _phoneContext.Account.SingleOrDefault(a=> a.Account1 == userAccount);
+            if(member.MemberKind == "銀級會員")
+            {
+                discount = 0.1;
+            }else if(member.MemberKind == "金級會員")
+            {
+                discount = 0.15;
+            }
             var shoppingCartItems = (from cart in _phoneContext.Cart
                              join item in _phoneContext.Item on cart.ItemId equals item.ItemId
                              join format in _phoneContext.Format on cart.FormatId equals format.FormatId
@@ -83,7 +92,8 @@ namespace MP.Services
                                  Space = format.Space,
                                  ItemNum = cart.ItemNum,
                                  ItemPrice = format.ItemPrice,
-                                 ItemStore = format.Store
+                                 ItemStore = format.Store,
+                                 discount = (int)(discount*format.ItemPrice)
                              }).ToList();
 
             return shoppingCartItems;

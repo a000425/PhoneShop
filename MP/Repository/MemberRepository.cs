@@ -123,5 +123,21 @@ namespace MP.Repository
             }
         }
         #endregion
+        #region 會員等級檢查
+        public bool MemberKindCheck(string Account)
+        {
+            var member = _phoneContext.Account.SingleOrDefault(a=> a.Account1 == Account);
+            var memberTime = member.MemberTime;
+            var EXPTime = DateTime.Now.AddYears(-1);
+            if(memberTime < EXPTime)
+            {
+                member.MemberKind = null;
+                member.MemberTime = null;
+                _phoneContext.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+        #endregion
     }
 }

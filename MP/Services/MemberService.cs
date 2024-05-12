@@ -68,6 +68,10 @@ namespace MP.Services
                 Account data = _repository.GetAccountData(account);
                 if(string.IsNullOrEmpty(data.AuthCode)){
                     if(PasswordCheck(data,password)){
+                        if(_repository.MemberKindCheck(account))
+                        {
+                            return "登入成功，會員等級已變更";
+                        }
                         return "登入成功";
                     }
                     else{

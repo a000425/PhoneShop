@@ -19,6 +19,44 @@ namespace MP.Controllers
         public BackController(BackService backService){
             _backService = backService;
         }
+        #region 查看所有會員資訊
+        [HttpGet("GetAllAccountInfo")]
+        public IActionResult GetAllAccountInfo()
+        {
+            var result = _backService.GetAllAccount();
+            if (result != null && result.Any())
+            {
+                var response = new { Status = 200, Message = result };
+                var jsonresponse = JsonConvert.SerializeObject(response);
+                return Content(jsonresponse, "application/json");
+            }
+            else
+            {
+                var response = new { Status = 400, Messae = "出現問題" };
+                var jsonresponse = JsonConvert.SerializeObject(response);
+                return Content(jsonresponse, "application/json");
+            }
+        }
+        #endregion
+        #region 變更會員等級
+        [HttpPost("ChangeAccountLevel")]
+        public IActionResult ChangeAccountLevel([FromQuery]int level, Account account)
+        {
+            bool result = _backService.ChangeAccountLevel(level,account.Account1);
+            if (result)
+            {
+                var response = new { Status = 200, Message = "變更成功" };
+                var jsonresponse = JsonConvert.SerializeObject(response);
+                return Content(jsonresponse, "application/json");
+            }
+            else
+            {
+                var response = new { Status = 400, Messae = "出現問題" };
+                var jsonresponse = JsonConvert.SerializeObject(response);
+                return Content(jsonresponse, "application/json");
+            }
+        }
+        #endregion
         #region 新增商品
         [HttpPost("AddProduct")]
         public IActionResult AddProduct([FromBody]ItemDto itemDto){

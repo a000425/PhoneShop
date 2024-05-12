@@ -16,6 +16,7 @@ namespace MP.Dtos
         public string Cellphone { get; set; }
         public string Email { get; set; } = null!;
         public string Address { get; set; }
+        public int Discount{ get; set; }
 
     }
 }

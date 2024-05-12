@@ -18,6 +18,8 @@ public partial class Account
     public string? AuthCode { get; set; }
 
     public bool IsAdmin { get; set; }
+    public string? MemberKind{get; set;}
+    public DateTime? MemberTime{get;set; }
 
     public virtual ICollection<Cart> Cart { get; set; } = new List<Cart>();
 

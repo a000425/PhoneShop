@@ -68,10 +68,18 @@ namespace MP.Repository
         }
 
         public bool AddOrder(List<Cart> carts,string account,string address){
-           
+            double discount = 0;
             decimal totalPrice = 0;
             try
             {
+                var member = (from a in _phoneContext.Account where a.Account1 == account select a.MemberKind).FirstOrDefault();
+                if(member == "銀級會員")
+                {
+                    discount = 0.1;
+                }else if(member == "金級會員")
+                {
+                    discount = 0.15;
+                }
                 foreach (var num in carts)
                 {
                     var price = (from cart in _phoneContext.Cart
@@ -82,6 +90,8 @@ namespace MP.Repository
 
                     var itemnum = (from c in _phoneContext.Cart where c.Id == num.Id select c.ItemNum).FirstOrDefault();
                     var formatnum = (from f in _phoneContext.Format where f.FormatId == num.FormatId select f.Store).FirstOrDefault();
+                    
+
                     if(itemnum<=formatnum)
                     {
                         totalPrice += price * itemnum;
@@ -92,11 +102,13 @@ namespace MP.Repository
                      
 
                 }
-
+                int alldis = (int)((int)(totalPrice)*discount);
+                totalPrice = (int)(totalPrice-alldis);
                 var order = new Order
                 {
                     Account = account,
                     TotalPrice = (int)totalPrice, 
+                    Discount = alldis,
                     OrderTime = DateTime.Now,
                     OrderStatus = "未出貨",
                     Address = address
@@ -175,6 +187,16 @@ namespace MP.Repository
         #region 訂單查詢
         public IEnumerable<OrderInfoDto> OrderDetail(string account,int id)
         {
+                
+                var member = (from a in _phoneContext.Account where a.Account1 == account select a.MemberKind).FirstOrDefault();
+                double discount = 0;
+                if(member == "銀級會員")
+                {
+                    discount = 0.1;
+                }else if(member == "金級會員")
+                {
+                    discount = 0.15;
+                }
                 var Detail = (from order in _phoneContext.Order
                           join orderitem in _phoneContext.OrderItem
                           on order.OrderId equals orderitem.OrderId
@@ -196,6 +218,7 @@ namespace MP.Repository
                             Cellphone = Account.Cellphone,
                             Email = Account.Email,
                             Address = order.Address,
+                            Discount = (int)(discount*format.ItemPrice)
                           }).ToList();
             return Detail;
         }
@@ -210,7 +233,9 @@ namespace MP.Repository
                             Account1 = a.Account1,
                             Name = a.Name,
                             Cellphone = a.Cellphone,
-                            Email = a.Email
+                            Email = a.Email,
+                            MemberKind = a.MemberKind,
+                            MemberTime = a.MemberTime
                            }).Distinct().FirstOrDefault();
             return profile;
         }
@@ -219,12 +244,20 @@ namespace MP.Repository
         public string OrderStatusFinish(int orderId, string account)
         {
             var order =  _phoneContext.Order.SingleOrDefault(o => o.OrderId == orderId && o.Account == account);
+            var member =  _phoneContext.Account.SingleOrDefault(a => a.Account1 == account);
             if(order!=null)
             {
                 if(order.OrderStatus == "已出貨")
                 {
                     order.OrderStatus = "已完成";
                     _phoneContext.SaveChanges();
+                    if(member.MemberKind == null || member.MemberKind == "銀級會員")
+                    {
+                        if(MemberUpgrade(account,member.MemberKind))
+                        {
+                            return("訂單已完成，達成升級會員標準");
+                        }
+                    }
                     return("訂單已完成");
                 }else
                 {
@@ -235,6 +268,42 @@ namespace MP.Repository
             {
                 return("未找到此訂單");
             }
+            
+        }
+        #endregion
+        #region 會員升級
+        public bool MemberUpgrade(string account,string MemberKind)
+        {
+            var member =  _phoneContext.Account.SingleOrDefault(a => a.Account1 == account);
+            DateTime OneYear = DateTime.Now.AddYears(-1);
+            var orderyear = _phoneContext.Order.Where(o => o.Account == account && o.OrderTime >= OneYear);
+            int allbuy = 0;
+            foreach(var item in orderyear)
+            {
+                allbuy+=item.TotalPrice;
+            }
+            if(MemberKind == null)
+            {
+                if(allbuy>=50000)
+                {
+                    member.MemberKind = "銀級會員";
+                    member.MemberTime = DateTime.Now;
+                    _phoneContext.SaveChanges();
+                    return true;
+                }
+            }else if(MemberKind == "銀級會員")
+            {
+                if(allbuy>=100000)
+                {
+                    member.MemberKind = "金級會員";
+                    member.MemberTime = DateTime.Now;
+                    _phoneContext.SaveChanges();
+                    return true;
+                }
+            }
+            return false;
+            
+                
             
         }
         #endregion

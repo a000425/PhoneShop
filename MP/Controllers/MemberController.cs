@@ -87,7 +87,7 @@ namespace MP.Controllers
         [HttpPost("Login")]
         public IActionResult Login([FromBody]LoginDto loginDto){
             var result = _services.Login(loginDto.Account1,loginDto.Password);
-            if (result == "登入成功")
+            if (result == "登入成功" || result == "登入成功，會員等級已變更")
             {
                 string token = _services.GenerateToken(loginDto);
                 var cookieOption = new CookieOptions
