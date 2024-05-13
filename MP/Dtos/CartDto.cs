@@ -13,6 +13,10 @@
         public int ItemStore{ get; set; }
 
         public int discount{ get ; set; }
+
+        public int AllDiscount{get; set;}
+        public int AllPrice{get;set;}
+        public int PriceAfterDis{get;set;}
         public List<CartDto> Items { get; set; }
 
     }

@@ -79,6 +79,23 @@ namespace MP.Services
             {
                 discount = 0.15;
             }
+             var CartItems = (from cart in _phoneContext.Cart
+                             join item in _phoneContext.Item on cart.ItemId equals item.ItemId
+                             join format in _phoneContext.Format on cart.FormatId equals format.FormatId
+                             where cart.Account == userAccount
+                             select new CartDto
+                             {
+                                 ItemPrice = format.ItemPrice,
+                                 discount = (int)(discount*format.ItemPrice)
+                             }).ToList();
+            int Alldiscount = 0;
+            int Pricesum = 0;
+            foreach(var countnum in CartItems)
+            {
+                Alldiscount += countnum.discount;
+                Pricesum +=  countnum.ItemPrice;
+            }
+            int PriceAfterDiscount = Pricesum - Alldiscount;
             var shoppingCartItems = (from cart in _phoneContext.Cart
                              join item in _phoneContext.Item on cart.ItemId equals item.ItemId
                              join format in _phoneContext.Format on cart.FormatId equals format.FormatId
@@ -93,7 +110,10 @@ namespace MP.Services
                                  ItemNum = cart.ItemNum,
                                  ItemPrice = format.ItemPrice,
                                  ItemStore = format.Store,
-                                 discount = (int)(discount*format.ItemPrice)
+                                 discount = (int)(discount*format.ItemPrice),
+                                 AllDiscount = Alldiscount,
+                                 AllPrice = Pricesum,
+                                 PriceAfterDis = PriceAfterDiscount
                              }).ToList();
 
             return shoppingCartItems;
