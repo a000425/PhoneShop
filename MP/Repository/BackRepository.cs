@@ -596,5 +596,223 @@ namespace MP.Repository
             return true;
         }
         #endregion
+        #region 取得圖表所需資訊(年初至今月每月銷售)
+        public ChartDataDto getAllMonthsell()
+        {
+            int IsMonth = DateTime.Now.Month;
+            int IsYear = DateTime.Now.Year;
+           var data = new ChartDataDto();
+           data.Labels = Enumerable.Range(1, IsMonth).Select(i => i.ToString()+"月").ToArray();
+           try
+            {
+                data.Datasets = new[]
+                {
+                    new ChartDatasetDto
+                    {
+                        Label = "月銷售額",
+                        Data = new int[IsMonth],
+                        BorderWidth = 1
+                    }
+                };
+
+                for(int i = 1 ;i<=IsMonth;i++)
+                {
+                    var sell = (from o in _phoneContext.Order
+                                where o.OrderTime.Year == IsYear && o.OrderTime.Month == i
+                                select new Order
+                                {
+                                    TotalPrice = o.TotalPrice
+                                }).ToList();
+                    int MonthSell  = sell.Sum(o => o.TotalPrice);
+                    data.Datasets[0].Data[i-1] = MonthSell;
+                }
+                
+                
+            }
+            catch (Exception e){
+                throw new Exception(e.ToString());
+            }
+            return data;
+        }
+        #endregion
+
+       #region 取得圖表資訊(今月各品牌銷售量圓餅圖)
+        public ChartDataDto getAllBrandMonthNum()
+        {
+            int IsMonth = DateTime.Now.Month;
+            int IsYear = DateTime.Now.Year;
+            var data = new ChartDataDto();
+        
+            try
+            {
+                var sell = (from o in _phoneContext.Order
+                            join oi in _phoneContext.OrderItem on o.OrderId equals oi.OrderId
+                            join f in _phoneContext.Format on oi.FormatId equals f.FormatId
+                            join i in _phoneContext.Item on f.ItemId equals i.ItemId
+                            where o.OrderTime.Year == IsYear && o.OrderTime.Month == IsMonth
+                            select new OrderInfoDto
+                            {
+                                    Brand = f.Brand+" "+i.ItemName+"/"+f.Space,
+                                    ItemNum = oi.ItemNum
+                            }).ToList();
+                List<string> Brand = new List<string>();
+                
+                foreach(var order in sell)
+                {
+                    if(!Brand.Contains(order.Brand))
+                    {
+                        Brand.Add(order.Brand);
+                    }
+                }
+                int[] num = new int[Brand.Count];
+                data.Labels = Brand.ToArray();
+                data.Datasets = new[]
+                {
+                    new ChartDatasetDto
+                    {
+                        Label = "月銷售量",
+                        Data = new int[Brand.Count],
+                        BorderWidth = 1
+                    }
+                };
+                foreach(var order in sell)
+                {
+                    num[Brand.IndexOf(order.Brand)]+=order.ItemNum;
+                }
+                data.Datasets[0].Data= num;
+            }
+            catch (Exception e){
+                throw new Exception(e.ToString());
+            }
+            return data;
+        }
+        #endregion
+        #region 取得圖表資訊(今年品牌商品銷售量圓餅圖)
+        public ChartDataDto getBrandYearNum(string brand)
+        {
+           var data = new ChartDataDto();
+           try
+            {
+               var sell = (from o in _phoneContext.Order
+                            join oi in _phoneContext.OrderItem on o.OrderId equals oi.OrderId
+                            join f in _phoneContext.Format on oi.FormatId equals f.FormatId
+                            join i in _phoneContext.Item on f.ItemId equals i.ItemId
+                            where o.OrderTime.Year == DateTime.Now.Year && f.Brand == brand
+                            select new OrderInfoDto
+                            {
+                                    Brand = f.Brand+" "+i.ItemName+"/"+f.Space,
+                                    ItemNum = oi.ItemNum
+                            }).ToList();
+                List<string> Brand = new List<string>();
+                
+                foreach(var order in sell)
+                {
+                    if(!Brand.Contains(order.Brand))
+                    {
+                        Brand.Add(order.Brand);
+                    }
+                }
+                int[] num = new int[Brand.Count];
+                data.Labels = Brand.ToArray();
+                data.Datasets = new[]
+                {
+                    new ChartDatasetDto
+                    {
+                        Label = "年總銷售量",
+                        Data = new int[Brand.Count],
+                        BorderWidth = 1
+                    }
+                };
+                foreach(var order in sell)
+                {
+                    num[Brand.IndexOf(order.Brand)]+=order.ItemNum;
+                }
+                data.Datasets[0].Data= num;
+   
+            }
+            catch (Exception e){
+                throw new Exception(e.ToString());
+            }
+            return data;
+        }
+        #endregion
+
+        #region 取得圖表資訊(年初至今月兩品牌銷售比較)
+        public ChartDataDto compareTwoBrand(string brand1,string brand2)
+        {
+            int IsMonth = DateTime.Now.Month;
+            int IsYear = DateTime.Now.Year;
+           var data = new ChartDataDto();
+           data.Labels = Enumerable.Range(1, IsMonth).Select(i => i.ToString()+"月").ToArray();
+           try
+            {
+                if(brand2!=null)
+                {
+                    data.Datasets = new[]
+                    {
+                        new ChartDatasetDto
+                        {
+                            Label = brand1+"銷售量",
+                            Data = new int[IsMonth],
+                            BorderWidth = 1
+                        },
+                        new ChartDatasetDto
+                        {
+                            Label = brand2+"銷售量",
+                            Data = new int[IsMonth],
+                            BorderWidth = 1
+                        }
+                    };
+                }else
+                {
+                    data.Datasets = new[]
+                    {
+                        new ChartDatasetDto
+                        {
+                            Label = brand1+"銷售量",
+                            Data = new int[IsMonth],
+                            BorderWidth = 1
+                        }
+                    };
+                }
+                
+
+                for(int x = 1 ;x<=IsMonth;x++)
+                {
+                    var sell = (from o in _phoneContext.Order
+                            join oi in _phoneContext.OrderItem on o.OrderId equals oi.OrderId
+                            join f in _phoneContext.Format on oi.FormatId equals f.FormatId
+                            join i in _phoneContext.Item on f.ItemId equals i.ItemId
+                            where o.OrderTime.Year == DateTime.Now.Year &&o.OrderTime.Month == x &&f.Brand == brand1
+                            select new OrderInfoDto
+                            {
+                                    Brand = f.Brand,
+                                    ItemNum = oi.ItemNum
+                            }).ToList();
+                    data.Datasets[0].Data[x-1] = sell.Sum(o => o.ItemNum);
+                    if(brand2!=null)
+                    {
+                        var sell2 = (from o in _phoneContext.Order
+                            join oi in _phoneContext.OrderItem on o.OrderId equals oi.OrderId
+                            join f in _phoneContext.Format on oi.FormatId equals f.FormatId
+                            join i in _phoneContext.Item on f.ItemId equals i.ItemId
+                            where o.OrderTime.Year == DateTime.Now.Year && o.OrderTime.Month == x && f.Brand == brand2
+                            select new OrderInfoDto
+                            {
+                                    Brand = f.Brand,
+                                    ItemNum = oi.ItemNum
+                            }).ToList();
+                        data.Datasets[1].Data[x-1] = sell2.Sum(oa => oa.ItemNum);
+                    }
+                }
+                
+                
+            }
+            catch (Exception e){
+                throw new Exception(e.ToString());
+            }
+            return data;
+        }
+        #endregion
     }
 }

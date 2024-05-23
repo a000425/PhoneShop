@@ -337,5 +337,84 @@ namespace MP.Controllers
             return Content(jsonresponse,"application/json");
         }
         #endregion
+
+        #region 取得圖表資訊(年初至今月銷售額折線圖)
+        [HttpGet("GetAllMonthsell")]
+        public IActionResult GetAllMonthsell()
+        {
+            var result = _backService.GetAllMonthsell();
+            if(result != null)
+            {
+                var response = new { Status = 200, Message = result };
+                var jsonresponse = JsonConvert.SerializeObject(response);
+                return Content(jsonresponse, "application/json");
+            }
+            else
+            {
+                var response = new { Status = 400, Messaeg = result };
+                var jsonresponse = JsonConvert.SerializeObject(response);
+                return Content(jsonresponse, "application/json");
+            }
+        }
+        #endregion
+        #region 取得圖表資訊(年初至今月兩品牌銷售比較)
+        [HttpGet("CompareTwoBrand")]
+        public IActionResult CompareTwoBrand([FromQuery] string brand1, string brand2)
+        {
+            var result = _backService.CompareTwoBrand(brand1,brand2);
+            if(result != null)
+            {
+                var response = new { Status = 200, Message = result };
+                var jsonresponse = JsonConvert.SerializeObject(response);
+                return Content(jsonresponse, "application/json");
+            }
+            else
+            {
+                var response = new { Status = 400, Messaeg = result };
+                var jsonresponse = JsonConvert.SerializeObject(response);
+                return Content(jsonresponse, "application/json");
+            }
+        }
+        #endregion
+        #region 取得圖表資訊(今月各品牌銷售量圓餅圖)
+        [HttpGet("GetAllBrandMonthNum")]
+        public IActionResult GetAllBrandMonthNum()
+        {
+            var result = _backService.GetAllBrandMonthNum();
+            if(result != null)
+            {
+                var response = new { Status = 200, Message = result };
+                var jsonresponse = JsonConvert.SerializeObject(response);
+                return Content(jsonresponse, "application/json");
+            }
+            else
+            {
+                var response = new { Status = 400, Messaeg = result };
+                var jsonresponse = JsonConvert.SerializeObject(response);
+                return Content(jsonresponse, "application/json");
+            }
+        }
+        #endregion 
+
+        #region 取得圖表資訊(今年品牌商品銷售量圓餅圖)
+        [HttpGet("GetBrandYearNum")]
+        public IActionResult GetBrandYearNum([FromQuery] string Brand)
+        {
+            var result = _backService.GetBrandYearNum(Brand);
+            if(result != null)
+            {
+                var response = new { Status = 200, Message = result };
+                var jsonresponse = JsonConvert.SerializeObject(response);
+                return Content(jsonresponse, "application/json");
+            }
+            else
+            {
+                var response = new { Status = 400, Messaeg = result };
+                var jsonresponse = JsonConvert.SerializeObject(response);
+                return Content(jsonresponse, "application/json");
+            }
+        }
+        #endregion 
+        
     }
 }

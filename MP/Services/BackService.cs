@@ -159,5 +159,34 @@ namespace MP.Services
             return result;
         }
         #endregion
+        #region 取得圖表所需資訊(年初至今月每月銷售)
+        public ChartDataDto GetAllMonthsell()
+        {
+            ChartDataDto chartData = _repository.getAllMonthsell();
+            return chartData;
+        }
+        #endregion
+        #region 取得圖表資訊(今月各品牌銷售量圓餅圖)
+        public ChartDataDto GetAllBrandMonthNum()
+        {
+            ChartDataDto chartData = _repository.getAllBrandMonthNum();
+            return chartData;
+        }
+        #endregion
+
+        #region 取得圖表資訊(今年品牌商品銷售量圓餅圖)
+        public ChartDataDto GetBrandYearNum(string Brand)
+        {
+            ChartDataDto chartData = _repository.getBrandYearNum(Brand);
+            return chartData;
+        }
+        #endregion
+        #region 取得圖表資訊(年初至今月兩品牌銷售比較)
+        public ChartDataDto CompareTwoBrand(string brand1,string brand2)
+        {
+            ChartDataDto chartData = _repository.compareTwoBrand(brand1,brand2);
+            return chartData;
+        }
+        #endregion
     }
 }
