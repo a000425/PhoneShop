@@ -68,11 +68,18 @@ namespace MP.Services
                 Account data = _repository.GetAccountData(account);
                 if(string.IsNullOrEmpty(data.AuthCode)){
                     if(PasswordCheck(data,password)){
-                        if(_repository.MemberKindCheck(account))
+                        if(_repository.MemberCanUseCheck(account))
                         {
-                            return "登入成功，會員等級已變更";
+                            if(_repository.MemberKindCheck(account))
+                            {
+                                return "登入成功，會員等級已變更";
+                            }
+                            return "登入成功";
+                        }else
+                        {
+                            return "此帳號已被停權，請聯絡管理者";
                         }
-                        return "登入成功";
+                        
                     }
                     else{
                         return "密碼錯誤，請重新輸入";

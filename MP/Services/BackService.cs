@@ -159,6 +159,21 @@ namespace MP.Services
             return result;
         }
         #endregion
+        #region 停權會員
+        
+        public bool UnUse(string Account)
+        {
+            var result = _repository.unUse(Account);
+            return result;
+        }
+        #endregion
+        #region 解除停權會員
+        public bool CanUse(string Account)
+        {
+            var result = _repository.canUse(Account);
+            return result;
+        }
+        #endregion
         #region 取得圖表所需資訊(年初至今月每月銷售)
         public ChartDataDto GetAllMonthsell()
         {

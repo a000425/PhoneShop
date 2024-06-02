@@ -57,6 +57,38 @@ namespace MP.Controllers
             }
         }
         #endregion
+        #region 會員停權
+        [HttpPost("UnUse")]
+        public IActionResult UnUse([FromBody]string Account){
+            
+            if(_backService.UnUse(Account)){
+                var response = new { Status = 200, message = "停權成功"};
+                var jsongoodResponse = JsonConvert.SerializeObject(response);
+                return Content(jsongoodResponse, "application/json");
+            }
+            else{
+                var response = new { Status = 400, message = "停權失敗"};
+                var jsongoodResponse = JsonConvert.SerializeObject(response);
+                return Content(jsongoodResponse, "application/json");                
+            }
+        }
+        #endregion
+        #region 會員解除停權
+        [HttpPost("CanUse")]
+        public IActionResult CanUse([FromBody]string Account){
+            
+            if(_backService.CanUse(Account)){
+                var response = new { Status = 200, message = "解除成功"};
+                var jsongoodResponse = JsonConvert.SerializeObject(response);
+                return Content(jsongoodResponse, "application/json");
+            }
+            else{
+                var response = new { Status = 400, message = "解除失敗"};
+                var jsongoodResponse = JsonConvert.SerializeObject(response);
+                return Content(jsongoodResponse, "application/json");                
+            }
+        }
+        #endregion
         #region 新增商品
         [HttpPost("AddProduct")]
         public IActionResult AddProduct([FromBody]ItemDto itemDto){

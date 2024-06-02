@@ -22,6 +22,8 @@ public partial class Account
     public DateTime? MemberTime{get;set; }
     public DateTime? RegisterTime{get;set; }
 
+    public bool CanUse{get; set;}
+
     public virtual ICollection<Cart> Cart { get; set; } = new List<Cart>();
 
     public virtual ICollection<Order> Order { get; set; } = new List<Order>();
