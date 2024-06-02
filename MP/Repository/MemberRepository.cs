@@ -140,5 +140,24 @@ namespace MP.Repository
             return false;
         }
         #endregion
+        #region 會員停權確認
+        public bool MemberCanUseCheck(string Account)
+        {
+            try{
+                var result = _phoneContext.Account.Single(a=> a.Account1 == Account);
+                if(result.CanUse == false){
+                    return false;
+                }else
+                {
+                    return true;
+                }
+            }
+            catch(Exception ex){
+                throw new Exception(ex.ToString());
+            }
+            
+            
+        }
+        #endregion
     }
 }

@@ -544,7 +544,8 @@ namespace MP.Repository
                             Email = a.Email,
                             Cellphone = a.Cellphone,
                             MemberKind = a.MemberKind,
-                            MemberTime = a.MemberTime
+                            MemberTime = a.MemberTime,
+                            CanUse = a.CanUse
                         }).ToList();
                 
                           
@@ -596,6 +597,43 @@ namespace MP.Repository
             return true;
         }
         #endregion
+        #region 停權會員
+        public bool unUse(string account){
+            try{
+                var member = _phoneContext.Account.SingleOrDefault(a => a.IsAdmin == false && a.Account1 == account);
+                member.CanUse = false;
+                
+                _phoneContext.Update(member);
+                _phoneContext.SaveChanges();
+                if(member == null)
+                    return false;
+            }
+            catch{
+                return false;
+            }
+            
+            return true;
+        }
+        #endregion
+        #region 解除停權會員
+        public bool canUse(string account){
+            try{
+                var member = _phoneContext.Account.SingleOrDefault(a => a.IsAdmin == false && a.Account1 == account);
+                member.CanUse = true;
+                _phoneContext.Update(member);
+                _phoneContext.SaveChanges();
+                if(member == null)
+                    return false;
+            }
+            catch{
+                return false;
+            }
+            
+            return true;
+        }
+        #endregion
+
+        
         #region 取得圖表所需資訊(年初至今月每月銷售)
         public ChartDataDto getAllMonthsell()
         {
