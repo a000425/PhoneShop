@@ -235,7 +235,8 @@ namespace MP.Repository
                             Cellphone = a.Cellphone,
                             Email = a.Email,
                             MemberKind = a.MemberKind,
-                            MemberTime = a.MemberTime
+                            MemberTime = a.MemberTime,
+                            RegisterTime = a.RegisterTime
                            }).Distinct().FirstOrDefault();
             return profile;
         }

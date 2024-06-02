@@ -11,5 +11,6 @@ namespace MP.Dtos
         public string Email { get; set; } = null!;
         public string? MemberKind{get; set;}
         public DateTime? MemberTime{get;set; }
+        public DateTime? RegisterTime{get;set; }
     }
 }

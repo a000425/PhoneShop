@@ -814,5 +814,42 @@ namespace MP.Repository
             return data;
         }
         #endregion
+        
+        #region 取得圖表所需資訊(年初至今月每月會員數量)
+        public ChartDataDto getAllMonthMenber()
+        {
+            int IsMonth = DateTime.Now.Month;
+            int IsYear = DateTime.Now.Year;
+           var data = new ChartDataDto();
+           data.Labels = Enumerable.Range(1, IsMonth).Select(i => i.ToString()+"月").ToArray();
+           try
+            {
+                data.Datasets = new[]
+                {
+                    new ChartDatasetDto
+                    {
+                        Label = "月註冊量",
+                        Data = new int[IsMonth],
+                        BorderWidth = 1
+                    }
+                };
+
+                for(int i = 1 ;i<=IsMonth;i++)
+                {
+                    var member =  _phoneContext.Account
+                                .Where(a=>a.RegisterTime.HasValue && a.RegisterTime.Value.Year == IsYear && a.RegisterTime.Value.Month == i)
+                                .Count();
+                    //int MonthSell  = sell.Sum(o => o.TotalPrice);
+                    data.Datasets[0].Data[i-1] = member;
+                }
+                
+                
+            }
+            catch (Exception e){
+                throw new Exception(e.ToString());
+            }
+            return data;
+        }
+        #endregion
     }
 }
