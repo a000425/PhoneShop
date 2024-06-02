@@ -379,26 +379,32 @@ namespace MP.Services
             var productFeatureVector = GetFeatureVector(product);
 
             var similarProducts = (from i in _phoneContext.Item
-                        join f in _phoneContext.Format on i.ItemId equals f.ItemId
-                        where i.ItemId != itemDto.ItemId
-                        let similarity = CosineSimilarity(productFeatureVector, GetFeatureVector(new ItemDto { Color = f.Color, Space = f.Space }))
-                        select new
-                        {
-                            Item = i,
-                            Format = f,
-                            Similarity = similarity
-                        })
-                        .AsEnumerable() // 将查询结果加载到内存中
-                        .OrderByDescending(p => p.Similarity)
-                        .Select(p => new ItemDto
-                        {
-                            ItemId = p.Item.ItemId,
-                            FormatId = p.Format.FormatId,
-                            Color = p.Format.Color,
-                            Space = p.Format.Space
-                        })
-                        .Take(topN)
-                        .ToList();
+                           join f in _phoneContext.Format on i.ItemId equals f.ItemId
+                           join pi in _phoneContext.Img on f.FormatId equals pi.FormatId
+                           where i.ItemId != itemDto.ItemId
+                           let similarity = CosineSimilarity(productFeatureVector, GetFeatureVector(new ItemDto { Color = f.Color, Space = f.Space }))
+                           select new
+                           {
+                               Item = i,
+                               Format = f,
+                               Img = pi.ItemImg, // 假設 Img 表的圖片列名為 ItemImg
+                               Similarity = similarity
+                           })
+                           .AsEnumerable() // 將查詢結果加載到內存中
+                           .GroupBy(p => new { p.Format.Brand, p.Item.ItemId, p.Format.FormatId, p.Format.Color, p.Format.Space, p.Item.ItemName, p.Format.ItemPrice })
+                           .Select(g => new ItemDto
+                           {
+                               ItemId = g.Key.ItemId,
+                               Brand = g.Key.Brand,
+                               FormatId = g.Key.FormatId,
+                               Color = g.Key.Color,
+                               Space = g.Key.Space,
+                               ItemName = g.Key.ItemName,
+                               ItemPrice = g.Key.ItemPrice,
+                               ItemImg = g.Select(x => x.Img).ToList(), // 收集所有圖片路徑
+                           })
+                           .Take(topN)
+                           .ToList();
 
 
             return similarProducts;
