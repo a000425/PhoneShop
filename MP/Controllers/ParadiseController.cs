@@ -130,7 +130,43 @@ namespace MP.Controllers
             }
         }
         #endregion
-        
-
+        #region 推薦系統(相似商品)
+        [Authorize]
+        [HttpGet("Similar")]
+        public IActionResult SimilarProducts([FromBody]ItemDto itemDto){
+            var result = _service.SimilarProducts(itemDto);
+            if (result != null && result.Any())
+            {
+                var response = new { Status = 200, Message = result };
+                var jsonresponse = JsonConvert.SerializeObject(response);
+                return Content(jsonresponse, "application/json");
+            }
+            else
+            {
+                var response = new { Status = 400, Messae = "錯誤" };
+                var jsonresponse = JsonConvert.SerializeObject(response);
+                return Content(jsonresponse, "application/json");
+            }
+        }
+        #endregion
+        #region 推薦系統(其他熱銷)
+        /*[Authorize]
+        [HttpGet("Other")]
+        public IActionResult OtherProducts([FromBody]ItemDto itemDto){
+            var result = _service.OtherProducts(itemDto);
+            if (result != null && result.Any())
+            {
+                var response = new { Status = 200, Message = result };
+                var jsonresponse = JsonConvert.SerializeObject(response);
+                return Content(jsonresponse, "application/json");
+            }
+            else
+            {
+                var response = new { Status = 400, Messae = "錯誤" };
+                var jsonresponse = JsonConvert.SerializeObject(response);
+                return Content(jsonresponse, "application/json");
+            }
+        }*/
+        #endregion
     }
 }

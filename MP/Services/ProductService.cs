@@ -291,7 +291,124 @@ namespace MP.Services
             }
         }
         #endregion
+        #region 推薦系統(相似)
+        private static Dictionary<string, int> _colorDictionary = new Dictionary<string, int>
+        {
+            { "Blue", 0 },
+            { "Black", 1 },
+            { "White", 2 },
+            { "Gold", 3 },
+            { "Red", 4 },
+        };
+        private static Dictionary<string, int> _spaceMapping = new Dictionary<string, int>
+        {
+            { "128GB", 0 },
+            { "256GB", 1 },
+            { "512GB", 2 },
+            { "1TB", 3 }
+        };
+        private static double[] GetColorVector(string color)
+        {
+            var vector = new double[_colorDictionary.Count];
+            if (_colorDictionary.ContainsKey(color))
+            {
+                vector[_colorDictionary[color]] = 1;
+            }
+            return vector;
+        }
+        private static double[] GetSpaceVector(string space)
+        {
+            var vector = new double[_spaceMapping.Count];
+            if (_spaceMapping.ContainsKey(space))
+            {
+                vector[_spaceMapping[space]] = 1;
+            }
+            return vector;
+        }
+        public static double[] GetFeatureVector(ItemDto product)
+        {
+            var colorVector = GetColorVector(product.Color);
+            var spaceVector = GetSpaceVector(product.Space);
+            var featureVector = new double[colorVector.Length + spaceVector.Length];
+            Array.Copy(colorVector, featureVector, colorVector.Length);
+            Array.Copy(spaceVector, 0, featureVector, colorVector.Length, spaceVector.Length);
+            return featureVector;
+        }
+        private static double CosineSimilarity(double[] vectorA, double[] vectorB)
+        {
+            if (vectorA.Length != vectorB.Length)
+                throw new ArgumentException("Vectors must be of same length");
 
+            double dotProduct = 0;
+            double magnitudeA = 0;
+            double magnitudeB = 0;
+
+            for (int i = 0; i < vectorA.Length; i++)
+            {
+                dotProduct += vectorA[i] * vectorB[i];
+                magnitudeA += Math.Pow(vectorA[i], 2);
+                magnitudeB += Math.Pow(vectorB[i], 2);
+            }
+
+            magnitudeA = Math.Sqrt(magnitudeA);
+            magnitudeB = Math.Sqrt(magnitudeB);
+
+            if (magnitudeA == 0 || magnitudeB == 0)
+                return 0;
+
+            return dotProduct / (magnitudeA * magnitudeB);
+        }
+
+        public List<ItemDto> SimilarProducts(ItemDto itemDto, int topN = 4)
+        {
+            var product = (from f in _phoneContext.Format
+                            where f.ItemId == itemDto.ItemId && f.FormatId == itemDto.FormatId
+                            select new ItemDto
+                            {
+                                ItemId = itemDto.ItemId,
+                                FormatId = itemDto.FormatId,
+                                Color = f.Color,
+                                Space = f.Space
+                            }).SingleOrDefault();
+
+            if (product == null)
+            {
+                throw new ArgumentException("错误");
+            }
+
+            var productFeatureVector = GetFeatureVector(product);
+
+            var similarProducts = (from i in _phoneContext.Item
+                        join f in _phoneContext.Format on i.ItemId equals f.ItemId
+                        where i.ItemId != itemDto.ItemId
+                        let similarity = CosineSimilarity(productFeatureVector, GetFeatureVector(new ItemDto { Color = f.Color, Space = f.Space }))
+                        select new
+                        {
+                            Item = i,
+                            Format = f,
+                            Similarity = similarity
+                        })
+                        .AsEnumerable() // 将查询结果加载到内存中
+                        .OrderByDescending(p => p.Similarity)
+                        .Select(p => new ItemDto
+                        {
+                            ItemId = p.Item.ItemId,
+                            FormatId = p.Format.FormatId,
+                            Color = p.Format.Color,
+                            Space = p.Format.Space
+                        })
+                        .Take(topN)
+                        .ToList();
+
+
+            return similarProducts;
+        }
+        #endregion
+        #region 推薦系統(其他)
+        /*public List<ItemDto> OtherProducts(ItemDto itemDto, int topN = 4){
+            
+        }*/
+        #endregion
         
     }
 }
