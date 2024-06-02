@@ -415,6 +415,24 @@ namespace MP.Controllers
             }
         }
         #endregion 
-        
+        #region 取得圖表資訊(年初至今月會員數成長圖)
+        [HttpGet("GetAllMonthMenber")]
+        public IActionResult GetAllMonthMenber()
+        {
+            var result = _backService.GetAllMonthMenber();
+            if(result != null)
+            {
+                var response = new { Status = 200, Message = result };
+                var jsonresponse = JsonConvert.SerializeObject(response);
+                return Content(jsonresponse, "application/json");
+            }
+            else
+            {
+                var response = new { Status = 400, Messaeg = result };
+                var jsonresponse = JsonConvert.SerializeObject(response);
+                return Content(jsonresponse, "application/json");
+            }
+        }
+        #endregion
     }
 }

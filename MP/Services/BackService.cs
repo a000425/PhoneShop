@@ -188,5 +188,13 @@ namespace MP.Services
             return chartData;
         }
         #endregion
+        
+        #region 取得圖表所需資訊(年初至今月每月會員數量)
+        public ChartDataDto GetAllMonthMenber()
+        {
+            ChartDataDto chartData = _repository.getAllMonthMenber();
+            return chartData;
+        }
+        #endregion
     }
 }
