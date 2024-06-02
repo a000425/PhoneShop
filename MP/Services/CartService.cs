@@ -86,14 +86,15 @@ namespace MP.Services
                              select new CartDto
                              {
                                  ItemPrice = format.ItemPrice,
-                                 discount = (int)(discount*format.ItemPrice)
+                                 discount = (int)(discount*format.ItemPrice),
+                                 ItemNum = cart.ItemNum
                              }).ToList();
             int Alldiscount = 0;
             int Pricesum = 0;
             foreach(var countnum in CartItems)
             {
-                Alldiscount += countnum.discount;
-                Pricesum +=  countnum.ItemPrice;
+                Alldiscount += countnum.discount*countnum.ItemNum;
+                Pricesum +=  countnum.ItemPrice*countnum.ItemNum;
             }
             int PriceAfterDiscount = Pricesum - Alldiscount;
             var shoppingCartItems = (from cart in _phoneContext.Cart
