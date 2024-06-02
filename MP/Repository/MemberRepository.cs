@@ -35,6 +35,7 @@ namespace MP.Repository
             if (result != null)
             {
                 result.AuthCode = null;
+                result.RegisterTime = DateTime.Now;
                 try
                 {
                     await _phoneContext.SaveChangesAsync();

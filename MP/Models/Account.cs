@@ -20,6 +20,7 @@ public partial class Account
     public bool IsAdmin { get; set; }
     public string? MemberKind{get; set;}
     public DateTime? MemberTime{get;set; }
+    public DateTime? RegisterTime{get;set; }
 
     public virtual ICollection<Cart> Cart { get; set; } = new List<Cart>();
 
