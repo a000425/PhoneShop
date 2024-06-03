@@ -168,5 +168,24 @@ namespace MP.Controllers
             }
         }*/
         #endregion
+        #region 推薦系統(其他人也購買)
+        [Authorize]
+        [HttpGet("Otherbuy")]
+        public IActionResult Otherbuy([FromForm]ItemDto itemDto){
+            var result = _service.Otherbuy(itemDto);
+            if (result != null && result.Any())
+            {
+                var response = new { Status = 200, Message = result };
+                var jsonresponse = JsonConvert.SerializeObject(response);
+                return Content(jsonresponse, "application/json");
+            }
+            else
+            {
+                var response = new { Status = 400, Messae = "錯誤" };
+                var jsonresponse = JsonConvert.SerializeObject(response);
+                return Content(jsonresponse, "application/json");
+            }
+        }
+        #endregion
     }
 }

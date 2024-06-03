@@ -26,86 +26,87 @@ namespace MP.Services
             pagingDto.Itemcount = totalitem;
             pagingDto.SetRightPage();
             var pageProduct = product.Skip((pagingDto.NowPage - 1) * pagingDto.Pageitem).Take(pagingDto.Pageitem);
-            pagingDto.Items = pageProduct.ToList(); 
+            pagingDto.Items = pageProduct.ToList();
             return new List<ForPagingDto<ProductDto>> { pagingDto };
         }
         #endregion
         #region 取得所有商品
-        public IEnumerable<ForPagingDto<ProductDto>> GetProduct(int sortway,int nowPage)
+        public IEnumerable<ForPagingDto<ProductDto>> GetProduct(int sortway, int nowPage)
         {
-        var result = (from p in _phoneContext.Item
-                  join f in _phoneContext.Format on p.ItemId equals f.ItemId
-                  where p.IsAvailable==true
-                  group new { p, f } by new { p.ItemId, p.ItemName,f.Brand } into g
-                  select new ProductDto
-                  {
-                      ItemId = g.Key.ItemId,
-                      Brand = g.Key.Brand,
-                      ItemName = g.Key.ItemName,
-                      ItemPriceMin = g.Min(x => x.f.ItemPrice),
-                      ItemImg = (from img in _phoneContext.Img
-                             where img.FormatId == g.Min(x => x.f.FormatId)
-                             orderby img.Id
-                             select img.ItemImg).FirstOrDefault()
-                  });
-            if(sortway==0)
+            var result = (from p in _phoneContext.Item
+                          join f in _phoneContext.Format on p.ItemId equals f.ItemId
+                          where p.IsAvailable == true
+                          group new { p, f } by new { p.ItemId, p.ItemName, f.Brand } into g
+                          select new ProductDto
+                          {
+                              ItemId = g.Key.ItemId,
+                              Brand = g.Key.Brand,
+                              ItemName = g.Key.ItemName,
+                              ItemPriceMin = g.Min(x => x.f.ItemPrice),
+                              ItemImg = (from img in _phoneContext.Img
+                                         where img.FormatId == g.Min(x => x.f.FormatId)
+                                         orderby img.Id
+                                         select img.ItemImg).FirstOrDefault()
+                          });
+            if (sortway == 0)
             {
                 result = result.OrderByDescending(x => x.ItemId);
             }
-            else if(sortway==1)
+            else if (sortway == 1)
             {
-                result = result.OrderBy(x=>x.ItemId);
+                result = result.OrderBy(x => x.ItemId);
             }
-            else if(sortway==2)
+            else if (sortway == 2)
             {
-                result=result.OrderByDescending(x=>x.ItemPriceMin);
+                result = result.OrderByDescending(x => x.ItemPriceMin);
             }
-            else if(sortway==3)
+            else if (sortway == 3)
             {
-                result=result.OrderBy(x=>x.ItemPriceMin);
+                result = result.OrderBy(x => x.ItemPriceMin);
             }
             else
             {
                 throw new ArgumentException("無此排序方式");
             }
-            return Page(result,nowPage);
+            return Page(result, nowPage);
         }
         #endregion
         #region 熱銷商品
-        public IEnumerable<ProductDto> GetHotProduct(int sortway){
+        public IEnumerable<ProductDto> GetHotProduct(int sortway)
+        {
             var result = (from p in _phoneContext.Item
-              join f in _phoneContext.Format on p.ItemId equals f.ItemId
-              join oi in _phoneContext.OrderItem on p.ItemId equals oi.ItemId into orderItemsGroup
-              orderby orderItemsGroup.Sum(x => x.ItemNum) descending
-              where p.IsAvailable == true
-              group new { p, f, orderItemsGroup } by new { p.ItemId, p.ItemName, f.Brand } into g
-              select new ProductDto
-              {
-                  ItemId = g.Key.ItemId,
-                  Brand = g.Key.Brand,
-                  ItemName = g.Key.ItemName,
-                  ItemPriceMin = g.Min(x => x.f.ItemPrice),
-                  ItemImg = (from img in _phoneContext.Img
-                             where img.FormatId == g.Min(x => x.f.FormatId)
-                             orderby img.Id
-                             select img.ItemImg).FirstOrDefault()
-              }).Take(8);
+                          join f in _phoneContext.Format on p.ItemId equals f.ItemId
+                          join oi in _phoneContext.OrderItem on p.ItemId equals oi.ItemId into orderItemsGroup
+                          orderby orderItemsGroup.Sum(x => x.ItemNum) descending
+                          where p.IsAvailable == true
+                          group new { p, f, orderItemsGroup } by new { p.ItemId, p.ItemName, f.Brand } into g
+                          select new ProductDto
+                          {
+                              ItemId = g.Key.ItemId,
+                              Brand = g.Key.Brand,
+                              ItemName = g.Key.ItemName,
+                              ItemPriceMin = g.Min(x => x.f.ItemPrice),
+                              ItemImg = (from img in _phoneContext.Img
+                                         where img.FormatId == g.Min(x => x.f.FormatId)
+                                         orderby img.Id
+                                         select img.ItemImg).FirstOrDefault()
+                          }).Take(8);
 
-            if(sortway==0)
+            if (sortway == 0)
             {
                 result = result.OrderByDescending(x => x.ItemId);
             }
-            else if(sortway==1)
+            else if (sortway == 1)
             {
-                result = result.OrderBy(x=>x.ItemId);
+                result = result.OrderBy(x => x.ItemId);
             }
-            else if(sortway==2)
+            else if (sortway == 2)
             {
-                result=result.OrderByDescending(x=>x.ItemPriceMin);
+                result = result.OrderByDescending(x => x.ItemPriceMin);
             }
-            else if(sortway==3)
+            else if (sortway == 3)
             {
-                result=result.OrderBy(x=>x.ItemPriceMin);
+                result = result.OrderBy(x => x.ItemPriceMin);
             }
             else
             {
@@ -115,137 +116,141 @@ namespace MP.Services
         }
         #endregion
         #region 取得品牌所有商品與排序方式
-        public IEnumerable<ForPagingDto<ProductDto>> GetProductByBrand(string Brand ,int sortway, int nowPage){
-           var result = (from p in _phoneContext.Item
-                  join f in _phoneContext.Format on p.ItemId equals f.ItemId
-                  where f.Brand == Brand && p.IsAvailable==true
-                  group new { p, f } by new { p.ItemId, p.ItemName,f.Brand } into g
-                  select new ProductDto
-                  {
-                      ItemId = g.Key.ItemId,
-                      Brand = g.Key.Brand,
-                      ItemName = g.Key.ItemName,
-                      ItemPriceMin = g.Min(x => x.f.ItemPrice),
-                      ItemImg = (from img in _phoneContext.Img
-                             where img.FormatId == g.Min(x => x.f.FormatId)
-                             orderby img.Id
-                             select img.ItemImg).FirstOrDefault()
-                     
-                  });
-            if(sortway==0)
+        public IEnumerable<ForPagingDto<ProductDto>> GetProductByBrand(string Brand, int sortway, int nowPage)
+        {
+            var result = (from p in _phoneContext.Item
+                          join f in _phoneContext.Format on p.ItemId equals f.ItemId
+                          where f.Brand == Brand && p.IsAvailable == true
+                          group new { p, f } by new { p.ItemId, p.ItemName, f.Brand } into g
+                          select new ProductDto
+                          {
+                              ItemId = g.Key.ItemId,
+                              Brand = g.Key.Brand,
+                              ItemName = g.Key.ItemName,
+                              ItemPriceMin = g.Min(x => x.f.ItemPrice),
+                              ItemImg = (from img in _phoneContext.Img
+                                         where img.FormatId == g.Min(x => x.f.FormatId)
+                                         orderby img.Id
+                                         select img.ItemImg).FirstOrDefault()
+
+                          });
+            if (sortway == 0)
             {
                 result = result.OrderByDescending(x => x.ItemId);
             }
-            else if(sortway==1)
+            else if (sortway == 1)
             {
-                result = result.OrderBy(x=>x.ItemId);
+                result = result.OrderBy(x => x.ItemId);
             }
-            else if(sortway==2)
+            else if (sortway == 2)
             {
-                result=result.OrderByDescending(x=>x.ItemPriceMin);
+                result = result.OrderByDescending(x => x.ItemPriceMin);
             }
-            else if(sortway==3)
+            else if (sortway == 3)
             {
-                result=result.OrderBy(x=>x.ItemPriceMin);
+                result = result.OrderBy(x => x.ItemPriceMin);
             }
             else
             {
                 throw new ArgumentException("無此排序方式");
             }
 
-            return Page(result,nowPage);
+            return Page(result, nowPage);
         }
         #endregion
         #region 取得商品一覽(價格)
-        public IEnumerable<ForPagingDto<ProductDto>> GetProductByPrice(int MaxPrice,int MinPrice,int sortway, int nowPage){
+        public IEnumerable<ForPagingDto<ProductDto>> GetProductByPrice(int MaxPrice, int MinPrice, int sortway, int nowPage)
+        {
             var result = (from p in _phoneContext.Item
-                  join f in _phoneContext.Format on p.ItemId equals f.ItemId
-                  where p.IsAvailable==true
-                  group new { p, f } by new { p.ItemId, p.ItemName,f.Brand } into g
-                  where g.Min(x => x.f.ItemPrice) <= MaxPrice && g.Min(x => x.f.ItemPrice) >= MinPrice
-                  select new ProductDto
-                  {
-                      ItemId = g.Key.ItemId,
-                      Brand = g.Key.Brand,
-                      ItemName = g.Key.ItemName,
-                      ItemPriceMin = g.Min(x => x.f.ItemPrice),
-                      ItemImg = (from img in _phoneContext.Img
-                             where img.FormatId == g.Min(x => x.f.FormatId)
-                             orderby img.Id
-                             select img.ItemImg).FirstOrDefault()
-                  });
-            if(sortway==0)
+                          join f in _phoneContext.Format on p.ItemId equals f.ItemId
+                          where p.IsAvailable == true
+                          group new { p, f } by new { p.ItemId, p.ItemName, f.Brand } into g
+                          where g.Min(x => x.f.ItemPrice) <= MaxPrice && g.Min(x => x.f.ItemPrice) >= MinPrice
+                          select new ProductDto
+                          {
+                              ItemId = g.Key.ItemId,
+                              Brand = g.Key.Brand,
+                              ItemName = g.Key.ItemName,
+                              ItemPriceMin = g.Min(x => x.f.ItemPrice),
+                              ItemImg = (from img in _phoneContext.Img
+                                         where img.FormatId == g.Min(x => x.f.FormatId)
+                                         orderby img.Id
+                                         select img.ItemImg).FirstOrDefault()
+                          });
+            if (sortway == 0)
             {
                 result = result.OrderByDescending(x => x.ItemId);
             }
-            else if(sortway==1)
+            else if (sortway == 1)
             {
-                result = result.OrderBy(x=>x.ItemId);
+                result = result.OrderBy(x => x.ItemId);
             }
-            else if(sortway==2)
+            else if (sortway == 2)
             {
-                result=result.OrderByDescending(x=>x.ItemPriceMin);
+                result = result.OrderByDescending(x => x.ItemPriceMin);
             }
-            else if(sortway==3)
+            else if (sortway == 3)
             {
-                result=result.OrderBy(x=>x.ItemPriceMin);
+                result = result.OrderBy(x => x.ItemPriceMin);
             }
             else
             {
                 throw new ArgumentException("無此排序方式");
             }
 
-            return Page(result,nowPage);
+            return Page(result, nowPage);
         }
         #endregion
         #region 取得ItemId的所有商品規格
         public IEnumerable<ItemDto> GetProductById(int ItemId)
         {
             var colorandspace = (from format in _phoneContext.Format
-                                 where format.ItemId==ItemId
-                                 select new {Color = format.Color,Space = format.Space}).Distinct().ToList();
+                                 where format.ItemId == ItemId
+                                 select new { Color = format.Color, Space = format.Space }).Distinct().ToList();
             foreach (var item in colorandspace)
             {
                 Console.WriteLine($"Color: {item.Color}, Space: {item.Space}");
             }
-            var result = (from item in _phoneContext.Item  
-            join format in _phoneContext.Format on item.ItemId equals format.ItemId
-            join img in _phoneContext.Img on format.FormatId equals img.FormatId into imgGroup
-            from img in imgGroup.DefaultIfEmpty()
-            where item.ItemId == ItemId && item.IsAvailable==true
-            select new ItemDto
-            {
-                FormatId = format.FormatId,
-                ItemId = item.ItemId,
-                Store = format.Store,
-                //ItemImg = img.ItemImg,
-                Brand = format.Brand,
-                ItemName = item.ItemName,
-                Color = format.Color,
-                Space = format.Space,
-                ItemPrice = format.ItemPrice,
-                Instruction = item.Instruction,
-                ItemImg = (from f in _phoneContext.Format
-                           join im in _phoneContext.Img on f.FormatId equals im.FormatId
-                           where f.ItemId == ItemId
-                           select im.ItemImg).ToList()
-            }).GroupBy(F => F.FormatId).Select(g => g.First());
+            var result = (from item in _phoneContext.Item
+                          join format in _phoneContext.Format on item.ItemId equals format.ItemId
+                          join img in _phoneContext.Img on format.FormatId equals img.FormatId into imgGroup
+                          from img in imgGroup.DefaultIfEmpty()
+                          where item.ItemId == ItemId && item.IsAvailable == true
+                          select new ItemDto
+                          {
+                              FormatId = format.FormatId,
+                              ItemId = item.ItemId,
+                              Store = format.Store,
+                              //ItemImg = img.ItemImg,
+                              Brand = format.Brand,
+                              ItemName = item.ItemName,
+                              Color = format.Color,
+                              Space = format.Space,
+                              ItemPrice = format.ItemPrice,
+                              Instruction = item.Instruction,
+                              ItemImg = (from f in _phoneContext.Format
+                                         join im in _phoneContext.Img on f.FormatId equals im.FormatId
+                                         where f.ItemId == ItemId
+                                         select im.ItemImg).ToList()
+                          }).GroupBy(F => F.FormatId).Select(g => g.First());
             return result;
         }
         #endregion
         #region 取得商品ID & 價格
-        public Format GetId(string color, string space,int ItemId){
+        public Format GetId(string color, string space, int ItemId)
+        {
             var result = (from a in _phoneContext.Format
-                        where a.Color == color && a.Space == space && a.ItemId == ItemId
-                        select new Format{ 
-                            FormatId = a.FormatId,
-                            Brand = a.Brand,
-                            Color = a.Color,
-                            Space = a.Space,
-                            ItemPrice = a.ItemPrice,
-                            ItemId = a.ItemId,
-                            Store = a.Store
-                            } ).SingleOrDefault();
+                          where a.Color == color && a.Space == space && a.ItemId == ItemId
+                          select new Format
+                          {
+                              FormatId = a.FormatId,
+                              Brand = a.Brand,
+                              Color = a.Color,
+                              Space = a.Space,
+                              ItemPrice = a.ItemPrice,
+                              ItemId = a.ItemId,
+                              Store = a.Store
+                          }).SingleOrDefault();
             return result;
         }
         #endregion
@@ -257,15 +262,15 @@ namespace MP.Services
                           where p.ItemId == itemId
                           select new FrontQADto
                           {
-                              Account=p.Account,
-                              Content=p.Content,
-                              CreateTime=p.CreateTime,
-                              Reply=p.Reply,
-                              ReplyTime=p.ReplyTime
+                              Account = p.Account,
+                              Content = p.Content,
+                              CreateTime = p.CreateTime,
+                              Reply = p.Reply,
+                              ReplyTime = p.ReplyTime
                           });
 
             return result;
-            
+
         }
         #endregion
         #region 提問ProductQA
@@ -279,7 +284,7 @@ namespace MP.Services
                     ItemId = ItemId,
                     Account = User,
                     Content = content,
-                    CreateTime = DateTime.Now 
+                    CreateTime = DateTime.Now
                 };
                 _phoneContext.QA.Add(qa);
                 _phoneContext.SaveChanges();
@@ -362,14 +367,14 @@ namespace MP.Services
         public List<ItemDto> SimilarProducts(ItemDto itemDto, int topN = 4)
         {
             var product = (from f in _phoneContext.Format
-                            where f.ItemId == itemDto.ItemId && f.FormatId == itemDto.FormatId
-                            select new ItemDto
-                            {
-                                ItemId = itemDto.ItemId,
-                                FormatId = itemDto.FormatId,
-                                Color = f.Color,
-                                Space = f.Space
-                            }).SingleOrDefault();
+                           where f.ItemId == itemDto.ItemId && f.FormatId == itemDto.FormatId
+                           select new ItemDto
+                           {
+                               ItemId = itemDto.ItemId,
+                               FormatId = itemDto.FormatId,
+                               Color = f.Color,
+                               Space = f.Space
+                           }).SingleOrDefault();
 
             if (product == null)
             {
@@ -379,19 +384,19 @@ namespace MP.Services
             var productFeatureVector = GetFeatureVector(product);
 
             var similarProducts = (from i in _phoneContext.Item
-                           join f in _phoneContext.Format on i.ItemId equals f.ItemId
-                           join pi in _phoneContext.Img on f.FormatId equals pi.FormatId
-                           join oi in _phoneContext.OrderItem on f.FormatId equals oi.FormatId into orderGroup
-                           where i.ItemId != itemDto.ItemId
-                           let similarity = CosineSimilarity(productFeatureVector, GetFeatureVector(new ItemDto { Color = f.Color, Space = f.Space }))
-                           select new
-                           {
-                               Item = i,
-                               Format = f,
-                               Img = pi.ItemImg,
-                               Similarity = similarity,
-                               Count = orderGroup.Sum(og => og.ItemNum)
-                           })
+                                   join f in _phoneContext.Format on i.ItemId equals f.ItemId
+                                   join pi in _phoneContext.Img on f.FormatId equals pi.FormatId
+                                   join oi in _phoneContext.OrderItem on f.FormatId equals oi.FormatId into orderGroup
+                                   where i.ItemId != itemDto.ItemId
+                                   let similarity = CosineSimilarity(productFeatureVector, GetFeatureVector(new ItemDto { Color = f.Color, Space = f.Space }))
+                                   select new
+                                   {
+                                       Item = i,
+                                       Format = f,
+                                       Img = pi.ItemImg,
+                                       Similarity = similarity,
+                                       Count = orderGroup.Sum(og => og.ItemNum)
+                                   })
                            .AsEnumerable() // 將查詢結果加載到內存中
                            .GroupBy(p => new { p.Format.Brand, p.Item.ItemId, p.Format.FormatId, p.Format.Color, p.Format.Space, p.Item.ItemName, p.Format.ItemPrice })
                            .OrderByDescending(g => g.Max(x => x.Similarity))
@@ -414,12 +419,51 @@ namespace MP.Services
             return similarProducts;
         }
         #endregion
-        #region 推薦系統(其他)
-        /*public List<ItemDto> OtherProducts(ItemDto itemDto, int topN = 4){
+        #region 推薦系統(其他人也購買)
+        public List<ItemDto> Otherbuy(ItemDto itemDto, int topN = 4)
+        {
+            var duplicate = (from oi in _phoneContext.OrderItem
+                            where oi.ItemId == itemDto.ItemId && oi.FormatId == itemDto.FormatId
+                            select new ItemDto{
+                                OrderId = oi.OrderId
+                            }).ToList();
             
-        }*/
+            var orderIds = duplicate.Select(d => d.OrderId).Distinct().ToList();
+
+            var otherItems = (from oi in _phoneContext.OrderItem
+                  join f in _phoneContext.Format on oi.FormatId equals f.FormatId
+                  join o in _phoneContext.Order on oi.OrderId equals o.OrderId 
+                  join img in _phoneContext.Img on oi.FormatId equals img.FormatId
+                  join i in _phoneContext.Item on oi.ItemId equals i.ItemId 
+                  where orderIds.Contains(oi.OrderId)
+                  && !(oi.ItemId == itemDto.ItemId && oi.FormatId == itemDto.FormatId)
+                  group new { oi, img } by new { f.Brand, i.ItemId, f.FormatId, f.Color, f.Space, i.ItemName, f.ItemPrice, img.ItemImg } into g
+                  select new ItemDto
+                  {
+                      // OrderId = g.First().OrderId,
+                      ItemId = g.Key.ItemId,
+                      FormatId = g.Key.FormatId,
+                      Brand = g.Key.Brand,
+                      Color = g.Key.Color,
+                      Space = g.Key.Space,
+                      ItemName = g.Key.ItemName,
+                      ItemPrice = g.Key.ItemPrice,
+                      TotalCount = g.Sum(x => x.oi.ItemNum),
+                      ItemImg = g.Select(x => x.img.ItemImg).ToList()
+                  })
+                  .OrderByDescending(x => x.TotalCount)
+                  .Take(topN)
+                  .ToList();
+
+                otherItems = otherItems.GroupBy(x => new { x.ItemId, x.FormatId, x.Brand, x.ItemName, x.ItemPrice })
+                       .Select(g => g.First())
+                       .ToList();
+
+                return otherItems;
+
+        }
         #endregion
-        
+
     }
 }
 //查詢所有商品LINQ傳SQL寫法
