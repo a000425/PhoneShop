@@ -409,16 +409,6 @@ namespace MP.Services
         public List<ItemDto> SimilarProducts(ItemDto itemDto, int topN = 4)
         {
             var product = (from f in _phoneContext.Format
-<<<<<<< HEAD
-                           where f.ItemId == itemDto.ItemId && f.FormatId == itemDto.FormatId
-                           select new ItemDto
-                           {
-                               ItemId = itemDto.ItemId,
-                               FormatId = itemDto.FormatId,
-                               Color = f.Color,
-                               Space = f.Space
-                           }).SingleOrDefault();
-=======
                             where f.ItemId == itemDto.ItemId && f.FormatId == itemDto.FormatId
                             select new ItemDto
                             {
@@ -429,7 +419,6 @@ namespace MP.Services
                                 ItemPrice = f.ItemPrice,
                                 Brand = f.Brand
                             }).SingleOrDefault();
->>>>>>> ef95b3815960ea70f2b72ce6b2d329f2897342d7
 
             if (product == null)
             {
@@ -439,21 +428,6 @@ namespace MP.Services
             var productFeatureVector = GetFeatureVector(product);
 
             var similarProducts = (from i in _phoneContext.Item
-<<<<<<< HEAD
-                                   join f in _phoneContext.Format on i.ItemId equals f.ItemId
-                                   join pi in _phoneContext.Img on f.FormatId equals pi.FormatId
-                                   join oi in _phoneContext.OrderItem on f.FormatId equals oi.FormatId into orderGroup
-                                   where i.ItemId != itemDto.ItemId
-                                   let similarity = CosineSimilarity(productFeatureVector, GetFeatureVector(new ItemDto { Color = f.Color, Space = f.Space }))
-                                   select new
-                                   {
-                                       Item = i,
-                                       Format = f,
-                                       Img = pi.ItemImg,
-                                       Similarity = similarity,
-                                       Count = orderGroup.Sum(og => og.ItemNum)
-                                   })
-=======
                            join f in _phoneContext.Format on i.ItemId equals f.ItemId
                            join pi in _phoneContext.Img on f.FormatId equals pi.FormatId
                            join oi in _phoneContext.OrderItem on f.FormatId equals oi.FormatId into orderGroup
@@ -467,7 +441,6 @@ namespace MP.Services
                                Similarity = similarity,
                                Count = orderGroup.Sum(og => og.ItemNum)
                            })
->>>>>>> ef95b3815960ea70f2b72ce6b2d329f2897342d7
                            .AsEnumerable() // 將查詢結果加載到內存中
                            .GroupBy(p => new { p.Format.Brand, p.Item.ItemId, p.Format.FormatId, p.Format.Color, p.Format.Space, p.Item.ItemName, p.Format.ItemPrice })
                            .OrderByDescending(g => g.Max(x => x.Similarity))
