@@ -13,6 +13,7 @@ namespace MP.Repository
         #region 新增資料
         public async Task AddAccountAsync(Account account)
         {
+            account.CanUse = true;
             _phoneContext.Account.Add(account);
             await _phoneContext.SaveChangesAsync();
         }
