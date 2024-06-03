@@ -479,8 +479,7 @@ namespace MP.Services
                   join o in _phoneContext.Order on oi.OrderId equals o.OrderId 
                   join img in _phoneContext.Img on oi.FormatId equals img.FormatId
                   join i in _phoneContext.Item on oi.ItemId equals i.ItemId 
-                  where orderIds.Contains(oi.OrderId)
-                  && !(oi.ItemId == itemDto.ItemId && oi.FormatId == itemDto.FormatId)
+                  where orderIds.Contains(oi.OrderId) && oi.ItemId != itemDto.ItemId
                   group new { oi, img } by new { f.Brand, i.ItemId, f.FormatId, f.Color, f.Space, i.ItemName, f.ItemPrice, img.ItemImg } into g
                   select new ItemDto
                   {
@@ -498,6 +497,8 @@ namespace MP.Services
                   .OrderByDescending(x => x.TotalCount)
                   .Take(topN)
                   .ToList();
+
+
 
                 otherItems = otherItems.GroupBy(x => new { x.ItemId, x.FormatId, x.Brand, x.ItemName, x.ItemPrice })
                        .Select(g => g.First())

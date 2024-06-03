@@ -133,7 +133,7 @@ namespace MP.Controllers
         #region 推薦系統(相似商品)
         [Authorize]
         [HttpGet("Similar")]
-        public IActionResult SimilarProducts([FromBody]ItemDto itemDto){
+        public IActionResult SimilarProducts([FromForm]ItemDto itemDto){
             var result = _service.SimilarProducts(itemDto);
             if (result != null && result.Any())
             {
