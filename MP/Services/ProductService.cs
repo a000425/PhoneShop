@@ -307,6 +307,24 @@ namespace MP.Services
             { "512GB", 2 },
             { "1TB", 3 }
         };
+        private static Dictionary<string, int> _brandMapping = new Dictionary<string, int>
+        {
+            { "Apple", 0 },
+            { "SAMSUNG", 1 },
+            { "ASUS", 2 },
+            { "SONY", 3 },
+            { "vivo", 4 },
+            { "htc", 5 },
+            { "OPPO", 6 },
+            { "realme", 7 },
+            { "Nokia", 8 },
+            { "小米", 9 },
+            { "HUAWEI", 10 },
+            { "Google", 11 }
+        };
+        private static readonly int[] PriceRanges = { 5000, 10000, 15000, 20000, 25000, 30000, 35000, 40000 };
+        private static int VectorLength = PriceRanges.Length + 1;
+
         private static double[] GetColorVector(string color)
         {
             var vector = new double[_colorDictionary.Count];
@@ -325,13 +343,37 @@ namespace MP.Services
             }
             return vector;
         }
+        private static double[] GetBrandVector(string brand)
+        {
+            var vector = new double[_brandMapping.Count];
+            if (_brandMapping.ContainsKey(brand))
+            {
+                vector[_brandMapping[brand]] = 3;
+            }
+            return vector;
+        }
+        private static double[] GetPriceVector(int price)
+        {
+            var vector = new double[VectorLength];
+            int index = PriceRanges.Length;
+            for (int i = 0; i < PriceRanges.Length; i++)
+            {
+                if (price <= PriceRanges[i])
+                {
+                    index = i;
+                    break;
+                }
+            }
+            vector[index] = 2;
+            return vector;
+        }
         public static double[] GetFeatureVector(ItemDto product)
         {
             var colorVector = GetColorVector(product.Color);
             var spaceVector = GetSpaceVector(product.Space);
-            var featureVector = new double[colorVector.Length + spaceVector.Length];
-            Array.Copy(colorVector, featureVector, colorVector.Length);
-            Array.Copy(spaceVector, 0, featureVector, colorVector.Length, spaceVector.Length);
+            var brandVector = GetBrandVector(product.Brand);
+            var priceVector = GetPriceVector(product.ItemPrice);
+            var featureVector = colorVector.Concat(spaceVector).Concat(brandVector).Concat(priceVector).ToArray();
             return featureVector;
         }
         private static double CosineSimilarity(double[] vectorA, double[] vectorB)
@@ -368,7 +410,9 @@ namespace MP.Services
                                 ItemId = itemDto.ItemId,
                                 FormatId = itemDto.FormatId,
                                 Color = f.Color,
-                                Space = f.Space
+                                Space = f.Space,
+                                ItemPrice = f.ItemPrice,
+                                Brand = f.Brand
                             }).SingleOrDefault();
 
             if (product == null)
@@ -383,7 +427,7 @@ namespace MP.Services
                            join pi in _phoneContext.Img on f.FormatId equals pi.FormatId
                            join oi in _phoneContext.OrderItem on f.FormatId equals oi.FormatId into orderGroup
                            where i.ItemId != itemDto.ItemId
-                           let similarity = CosineSimilarity(productFeatureVector, GetFeatureVector(new ItemDto { Color = f.Color, Space = f.Space }))
+                           let similarity = CosineSimilarity(productFeatureVector, GetFeatureVector(new ItemDto { Color = f.Color, Space = f.Space, ItemPrice = f.ItemPrice, Brand = f.Brand}))
                            select new
                            {
                                Item = i,
