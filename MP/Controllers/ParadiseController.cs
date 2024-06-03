@@ -133,7 +133,7 @@ namespace MP.Controllers
         #region 推薦系統(相似商品)
         [Authorize]
         [HttpGet("Similar")]
-        public IActionResult SimilarProducts([FromForm]ItemDto itemDto){
+        public IActionResult SimilarProducts([FromQuery]ItemDto itemDto){
             var result = _service.SimilarProducts(itemDto);
             if (result != null && result.Any())
             {
@@ -171,7 +171,7 @@ namespace MP.Controllers
         #region 推薦系統(其他人也購買)
         [Authorize]
         [HttpGet("Otherbuy")]
-        public IActionResult Otherbuy([FromForm]ItemDto itemDto){
+        public IActionResult Otherbuy([FromQuery]ItemDto itemDto){
             var result = _service.Otherbuy(itemDto);
             if (result != null && result.Any())
             {
