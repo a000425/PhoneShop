@@ -381,17 +381,22 @@ namespace MP.Services
             var similarProducts = (from i in _phoneContext.Item
                            join f in _phoneContext.Format on i.ItemId equals f.ItemId
                            join pi in _phoneContext.Img on f.FormatId equals pi.FormatId
+                           join oi in _phoneContext.OrderItem on f.FormatId equals oi.FormatId into orderGroup
                            where i.ItemId != itemDto.ItemId
                            let similarity = CosineSimilarity(productFeatureVector, GetFeatureVector(new ItemDto { Color = f.Color, Space = f.Space }))
                            select new
                            {
                                Item = i,
                                Format = f,
-                               Img = pi.ItemImg, // 假設 Img 表的圖片列名為 ItemImg
-                               Similarity = similarity
+                               Img = pi.ItemImg,
+                               Similarity = similarity,
+                               Count = orderGroup.Sum(og => og.ItemNum)
                            })
                            .AsEnumerable() // 將查詢結果加載到內存中
                            .GroupBy(p => new { p.Format.Brand, p.Item.ItemId, p.Format.FormatId, p.Format.Color, p.Format.Space, p.Item.ItemName, p.Format.ItemPrice })
+                           .OrderByDescending(g => g.Max(x => x.Similarity))
+                           .ThenByDescending(g => g.Sum(x => x.Count))
+                           .Take(topN)
                            .Select(g => new ItemDto
                            {
                                ItemId = g.Key.ItemId,
@@ -401,9 +406,8 @@ namespace MP.Services
                                Space = g.Key.Space,
                                ItemName = g.Key.ItemName,
                                ItemPrice = g.Key.ItemPrice,
-                               ItemImg = g.Select(x => x.Img).ToList(), // 收集所有圖片路徑
+                               ItemImg = g.Select(x => x.Img).ToList(),
                            })
-                           .Take(topN)
                            .ToList();
 
 
